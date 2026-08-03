@@ -1,0 +1,151 @@
+# ©AngelaMos | 2026
+# Copyright (C) 2026 Murilo Miacci
+# .style.yapf
+#
+# Configuração do yapf, nosso formatador de código Python. O yapf reescreve
+# arquivos Python para seguir estas regras, garantindo que todos os arquivos
+# tenham a mesma aparência, independentemente de quem os escreveu.
+#
+# As duas configurações mais importantes para conhecer:
+#   based_on_style = pep8   → começa a partir da PEP 8 (o estilo oficial)
+#   column_limit = 75       → quebra linhas em 75 caracteres
+#
+# Execute com: `just format`
+
+[style]
+
+# Começa a partir da PEP 8 (o guia oficial de estilo do Python). Todas as demais
+# configurações abaixo ajustam a PEP 8 em direções específicas.
+based_on_style = pep8
+
+# Quebra qualquer linha que ultrapasse este número de colunas.
+column_limit = 75
+
+# Usa 4 espaços por nível de indentação (padrão da PEP 8).
+indent_width = 4
+
+# Linhas de continuação (quando uma instrução é quebrada) também usam indentação de 4 espaços.
+continuation_indent_width = 4
+
+# Não indenta o colchete/parêntese/chave de fechamento de uma chamada/lista/dicionário multilinha.
+indent_closing_brackets = false
+
+# Faz o de-indent do colchete/parêntese/chave de fechamento — alinha-o com o de abertura.
+dedent_closing_brackets = true
+
+# Não adiciona 4 espaços de indentação em linhas em branco dentro de funções.
+indent_blank_lines = false
+
+# Dois espaços entre o código e o # de um comentário ao final da linha.
+spaces_before_comment = 2
+
+# Sem espaços ao redor do operador ** (potência): 2**3 e não 2 ** 3.
+spaces_around_power_operator = false
+
+# Espaços ao redor de = em argumentos padrão: foo(x = 1) e não foo(x=1).
+spaces_around_default_or_named_assign = true
+
+# Sem espaço extra antes de uma vírgula seguida por um colchete/parêntese/chave de fechamento.
+space_between_ending_comma_and_closing_bracket = false
+
+# Sem espaços imediatamente dentro de colchetes [ ]: [a, b] e não [ a, b ].
+space_inside_brackets = false
+
+# Espaços ao redor de dois-pontos em slices: x[1 : 5] e não x[1:5].
+spaces_around_subscript_colon = true
+
+# Sem linha em branco antes de uma def/class aninhada.
+blank_line_before_nested_class_or_def = false
+
+# Sem linha em branco entre uma classe e sua docstring.
+blank_line_before_class_docstring = false
+
+# Duas linhas em branco ao redor de funções e classes de nível superior (PEP 8).
+blank_lines_around_top_level_definition = 2
+
+# Duas linhas em branco entre imports de nível superior e variáveis de nível de módulo.
+blank_lines_between_top_level_imports_and_variables = 2
+
+# Sem linha em branco antes da docstring do módulo.
+blank_line_before_module_docstring = false
+
+# Ao quebrar `a and b`, coloca `and` no início da nova linha.
+split_before_logical_operator = true
+
+# Ao quebrar uma chamada de função, coloca o primeiro argumento em uma nova linha.
+split_before_first_argument = true
+
+# Coloca cada argumento nomeado em sua própria linha quando houver quebra.
+split_before_named_assigns = true
+
+# Comprehensions multilinha são quebradas em linhas separadas.
+split_complex_comprehension = true
+
+# Não quebra imediatamente após o parêntese de abertura.
+split_before_expression_after_opening_paren = false
+
+# Coloca o colchete/parêntese/chave de fechamento em sua própria linha quando houver quebra.
+split_before_closing_bracket = true
+
+# Ao quebrar em vírgulas, coloca cada valor em sua própria linha.
+split_all_comma_separated_values = true
+
+# Mas não força recursivamente TODAS as vírgulas de nível superior para novas linhas.
+split_all_top_level_comma_separated_values = false
+
+# Não mescla colchetes/parênteses/chaves separados em um único conjunto.
+coalesce_brackets = false
+
+# Cada entrada de dicionário recebe sua própria linha em dicionários multilinha.
+each_dict_entry_on_separate_line = true
+
+# Não permite lambdas que ocupem várias linhas.
+allow_multiline_lambdas = false
+
+# Não permite chaves de dicionário que ocupem várias linhas.
+allow_multiline_dictionary_keys = false
+
+# Penalidade para quebrar em nomes de import — 0 significa que a quebra é livre.
+split_penalty_import_names = 0
+
+# Não tenta condensar novamente uma instrução já quebrada em menos linhas.
+join_multiple_lines = false
+
+# O colchete/parêntese/chave de fechamento alinha-se com a indentação visual da abertura.
+align_closing_bracket_with_visual_indent = true
+
+# Não adiciona automaticamente parênteses para esclarecer precedência de operadores.
+arithmetic_precedence_indication = false
+
+# Penalidade por adicionar cada nova quebra de linha — o yapf pondera isso contra as regras.
+split_penalty_for_added_line_split = 275
+
+# Usa espaços para indentação, nunca tabulações (PEP 8).
+use_tabs = false
+
+# Não quebra em um `.` ao dividir linhas (assim `obj.method()` permanece junto).
+split_before_dot = false
+
+# Quando o último argumento de uma chamada termina com vírgula, força a quebra de linha.
+split_arguments_when_comma_terminated = true
+
+# Nomes de funções que o yapf trata como chamadas de i18n — deixa seus argumentos intactos.
+i18n_function_call = ['_', 'N_', 'gettext', 'ngettext']
+
+# Marcadores de comentário que o yapf trata como metadados de i18n.
+i18n_comment = ['# Translators:', '# i18n:']
+
+# Penalidade para quebrar iteráveis em comprehensions.
+split_penalty_comprehension = 80
+
+# Penalidade para quebrar imediatamente após um colchete/parêntese/chave de abertura.
+split_penalty_after_opening_bracket = 280
+
+# Penalidade para quebrar antes de um `if` em uma expressão ternária.
+split_penalty_before_if_expr = 0
+
+# Penalidade para quebrar antes de um operador bit a bit.
+split_penalty_bitwise_operator = 290
+
+# Penalidade para quebrar antes de um operador lógico (já reduzida).
+split_penalty_logical_operator = 0

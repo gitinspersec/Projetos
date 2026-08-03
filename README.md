@@ -1,2 +1,3 @@
-# Projetos
-Repositório central do ecossistema de projetos da Insper Sec
+# Respositório oficial de projetos da Liga Insper Sec
+
+Informações dos projetos...

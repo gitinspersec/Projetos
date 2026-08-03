@@ -1,0 +1,71 @@
+# ©AngelaMos | 2026
+# Copyright (C) 2026 Murilo Miacci
+# .gitignore
+# Este arquivo lista padrões de arquivos e pastas que o git NUNCA
+# deve rastrear. Qualquer coisa que corresponda a um padrão abaixo ficará
+# invisível para o `git status` e não será commitada. Fazemos isso para evitar dois problemas:
+#
+#   1. Privacidade — nunca queremos commitar acidentalmente um arquivo sensível
+#      que um usuário possa fornecer à ferramenta.
+#
+#   2. Ruído — artefatos de build e caches mudam constantemente. Rastreá-los
+#      deixaria cada commit mais poluído e criaria conflitos de merge.
+#
+# Cada linha é um padrão "glob" (* corresponde a qualquer sequência de caracteres).
+
+# -----------------------------------------------------------------------------
+# Artefatos de build/instalação do Python
+# -----------------------------------------------------------------------------
+# __pycache__: bytecode que o Python gera a partir de arquivos .py quando os executa.
+# Nunca editamos esses arquivos, e eles são regenerados a cada execução, então os ignoramos.
+__pycache__/
+# *.py[cod] = .pyc, .pyo, .pyd — formatos mais antigos de bytecode que o Python pode gerar.
+*.py[cod]
+*$py.class
+# Saídas de build do `pip wheel`, hatchling, etc.
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+*.so
+
+# -----------------------------------------------------------------------------
+# Ambientes virtuais — criados por `uv venv`, nunca commitados
+# -----------------------------------------------------------------------------
+# Um ambiente virtual é uma instalação do Python específica para um projeto.
+# Ele fica dentro do diretório do projeto. Commitá-lo aumentaria
+# desnecessariamente o repositório e prenderia o usuário ao seu sistema operacional.
+# Sempre recrie-o localmente.
+.venv/
+venv/
+env/
+
+# -----------------------------------------------------------------------------
+# Caches de ferramentas — aceleram execuções repetidas, mas nunca precisam ser commitados
+# -----------------------------------------------------------------------------
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+# Arquivos de relatório de cobertura gerados pelo pytest-cov.
+.coverage
+htmlcov/
+
+# -----------------------------------------------------------------------------
+# Arquivos temporários da IDE / editor
+# -----------------------------------------------------------------------------
+# Cada editor cria seus próprios arquivos de metadados. Nenhum deles pertence ao repositório.
+.vscode/
+.idea/
+*.swp
+*.swo
+# O Finder do macOS cria esses arquivos em todos os diretórios que abre.
+.DS_Store
+
+# -----------------------------------------------------------------------------
+# Arquivos de ambiente local (podem conter segredos)
+# -----------------------------------------------------------------------------
+# Nunca usamos .env neste projeto, mas o listamos por precaução. Qualquer arquivo
+# que contenha segredos nunca deve chegar ao repositório público.
+.env
+.env.local

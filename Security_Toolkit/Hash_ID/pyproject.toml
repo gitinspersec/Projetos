@@ -1,0 +1,215 @@
+# ©AngelaMos | 2026
+# Copyright (C) Murilo Miacci 2026
+# pyproject.toml
+#
+# Este arquivo é o "manual de instruções" para o nosso projeto Python. Todo
+# projeto Python moderno possui um. Ele informa a ferramentas como uv, pip, pytest,
+# ruff, mypy e pylint:
+#
+#   - Como o nosso projeto se chama
+#   - De quais bibliotecas de terceiros dependemos
+#   - Como compilá-lo e instalá-lo
+#   - Como realizar linting, verificação de tipos e testes
+#
+# O formato do arquivo é chamado de TOML — uma linguagem de configuração simples
+# e legível por humanos. Colchetes como [project] iniciam uma "tabela" (uma seção).
+# Linhas como name = "..." são pares de chave-valor dentro dessa tabela.
+#
+# Leia isto de cima para baixo. Cada seção tem um comentário curto explicando
+# o que ela faz e por que está aqui.
+
+
+# =============================================================================
+# [project] — os metadados que descrevem O QUE este projeto é
+# =============================================================================
+# Esta seção é padronizada em todo o ecossistema Python (PEP 621).
+# Qualquer pessoa que execute `pip install` ou `uv sync` lê as informações daqui.
+[project]
+# O nome sob o qual as pessoas instalarão este pacote.
+# Deve ser único no PyPI se algum dia o publicarmos lá.
+name = "hash-identifier"
+
+# Versão semântica: MAJOR.MINOR.PATCH.
+# 1.0.0 significa "primeiro lançamento estável".
+# Quando adicionamos recursos → aumentamos MINOR (1.1.0). Quando quebramos algo → MAJOR.
+version = "1.0.0"
+
+# Descrição de uma linha que aparece no `pip show` e no PyPI.
+description = "Identifica tipos de hash por prefixo, comprimento e charset (nível fundamentos)"
+
+# A versão mínima do Python que este projeto suporta.
+# >=3.13 significa "Python 3.13 ou qualquer versão mais recente".
+# Precisamos da 3.13 porque usamos a sintaxe moderna de type-hint (X | None).
+requires-python = ">=3.13"
+
+# Quem escreveu o projeto. Aparece nos metadados do pacote.
+authors = [
+    {name = "CarterPerez-dev", email = "support@certgames.com"}
+]
+
+# O arquivo README é exibido no PyPI e no `pip show`.
+readme = "README.md"
+
+# AGPL-3.0 significa: qualquer pessoa pode usar, mas se modificar e rodar como um
+# serviço, deve publicar suas alterações. Isso protege o projeto de ser privatizado.
+license = {text = "AGPL-3.0-or-later"}
+
+# -----------------------------------------------------------------------------
+# dependencies — bibliotecas de terceiros que DEVEMOS ter em tempo de execução
+# -----------------------------------------------------------------------------
+# Quando um usuário executa `pip install hash-identifier`, estas também são instaladas.
+# O formato da string é "<nome><operador><versão>". Usamos intervalos para receber
+# correções de bugs (>=), mas nunca uma versão principal incompatível (<).
+#
+# Apenas uma dependência de execução — a lógica de detecção é biblioteca padrão pura.
+dependencies = [
+    # rich: saída de terminal bonita — cores, tabelas, painéis.
+    # Usado para renderizar os resultados da identificação como uma tabela limpa.
+    "rich>=15.0.0",
+]
+
+# -----------------------------------------------------------------------------
+# optional-dependencies — bibliotecas extras que NÃO são necessárias na execução
+# -----------------------------------------------------------------------------
+# Estas só importam para desenvolvedores (testes, linting, formatação). Usuários
+# finais não as instalam. Ativado com: `uv sync --extra dev` ou `--all-extras`.
+[project.optional-dependencies]
+dev = [
+    # pytest — executa nossa suíte de testes (o arquivo test_*.py neste diretório).
+    "pytest>=9.0.3",
+
+    # ruff — linter e formatador extremamente rápido. Captura bugs, problemas
+    # de estilo e imports mortos. Substituto moderno para flake8/black/isort.
+    "ruff>=0.15.12",
+
+    # mypy — verificador de tipos estático. Lê nossas dicas de tipo e nos diz se
+    # passamos uma string onde um int era esperado, ANTES de rodar o código.
+    "mypy>=2.1.0",
+
+    # pylint — segundo linter que captura problemas lógicos mais profundos que o ruff ignora.
+    "pylint>=4.0.5",
+
+    # yapf — formatador de código. Mantém todos os arquivos com aparência idêntica.
+    "yapf>=0.43.0,<1.0.0",
+]
+
+# -----------------------------------------------------------------------------
+# project.scripts — pontos de entrada da linha de comando
+# -----------------------------------------------------------------------------
+# Após o `uv sync`, o usuário pode digitar `hashid <hash>` em vez de
+# `python hash_identifier.py <hash>`. O lado direito é "<módulo>:<função>" —
+# a função é chamada quando o comando é executado.
+# Aqui, aponta para a função `main` dentro de hash_identifier.py.
+[project.scripts]
+hashid = "hash_identifier:main"
+
+
+# =============================================================================
+# [build-system] — como COMPILAR este projeto em um pacote instalável
+# =============================================================================
+# Exigido pela PEP 517. Ferramentas como o uv leem isso para saber qual construtor
+# usar. Escolhemos o hatchling — moderno, rápido e sem configuração para o nosso caso.
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Diz ao hatchling exatamente qual arquivo empacotar. Este projeto é um arquivo
+# Python ÚNICO (sem layout src/<pacote>/), então usamos `only-include` para
+# apontar diretamente para ele. Sem isso, o hatchling não saberia o que enviar.
+[tool.hatch.build.targets.wheel]
+only-include = ["hash_identifier.py"]
+
+
+# =============================================================================
+# [tool.ruff] — configuração do linter / formatador
+# =============================================================================
+# O Ruff é o mais RÁPIDO. Ele roda em milissegundos e captura 90% dos problemas.
+[tool.ruff]
+# Versão alvo do Python — o ruff ajusta quais avisos se aplicam.
+target-version = "py313"
+
+# Quebra linhas em 88 caracteres (a PEP 8 diz 79, mas 88 é a norma moderna).
+line-length = 88
+
+# -----------------------------------------------------------------------------
+# Quais regras de lint habilitar. Cada "código" é uma categoria de verificação.
+# -----------------------------------------------------------------------------
+[tool.ruff.lint]
+select = [
+    "E",    # erros pycodestyle — regras básicas de espaçamento/indentação PEP 8
+    "F",    # Pyflakes — imports não usados, nomes indefinidos, bugs reais
+    "W",    # avisos pycodestyle — problemas de estilo mais leves
+    "B",    # Bugbear — bugs sutis (argumentos padrão mutáveis, etc.)
+    "C4",   # Comprehensions — incentiva compreensões de lista/dict mais limpas
+    "UP",   # Pyupgrade — sinaliza sintaxe antiga que devemos modernizar
+    "SIM",  # Simplify — sugere equivalentes mais limpos
+]
+
+# Algumas regras que ignoramos deliberadamente.
+ignore = [
+    # O comprimento da linha é tratado pelo yapf, não pelo ruff. Evita avisos duplos.
+    "E501",
+]
+
+
+# =============================================================================
+# [tool.mypy] — configuração do verificador de tipos estático
+# =============================================================================
+# O Mypy lê nossas dicas de tipo (as partes `: int`, `-> str`) e as verifica
+# sem rodar o código. Captura categorias inteiras de bugs em tempo de edição.
+[tool.mypy]
+python_version = "3.13"
+
+# Exige anotações de tipo em cada função — modo estrito.
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+# Não adiciona Optional automaticamente só porque o padrão é None. Seja explícito.
+no_implicit_optional = true
+
+# Avisa se convertermos um valor para um tipo que ele já possui (código morto).
+warn_redundant_casts = true
+
+# Avisa se uma função pode terminar sem retornar nada explicitamente.
+warn_no_return = true
+
+# Saída de erro bonita — ajuda ao ler o log do mypy.
+show_error_codes = true
+pretty = true
+
+
+# =============================================================================
+# [tool.pylint] — linter de "segunda opinião"
+# =============================================================================
+# Mais lento que o ruff, mas captura coisas diferentes — problemas de design de
+# classe, variáveis mortas, padrões de código complexos.
+[tool.pylint.main]
+# Corresponde à versão Python do projeto.
+py-version = "3.13"
+
+# Executa verificações de lint em paralelo em 4 núcleos para ganhar velocidade.
+jobs = 4
+
+# Avisos específicos do pylint que desativamos deliberadamente.
+[tool.pylint.messages_control]
+disable = [
+    "R0903",  # too-few-public-methods — classes de dados pequenas são aceitáveis
+    "C0103",  # invalid-name — nomes curtos como `s` para strings de hash são claros
+]
+
+
+# =============================================================================
+# [tool.pytest.ini_options] — configuração do executor de testes
+# =============================================================================
+[tool.pytest.ini_options]
+# Onde procurar por testes. "." = a raiz do projeto, já que o arquivo de teste
+# deste projeto vive ao lado do arquivo fonte.
+testpaths = ["."]
+
+# Arquivos que correspondem a este padrão são tratados como módulos de teste.
+python_files = ["test_*.py"]
+
+# Flags padrão que cada invocação do `pytest` recebe:
+#   -v          → verboso, mostra o nome de cada teste
+#   --tb=short  → tracebacks curtos em caso de falha (menos poluição visual)
+addopts = "-v --tb=short"
