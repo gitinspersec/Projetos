@@ -207,3 +207,15 @@ Monte um pequeno experimento:
 **O que você vai aprender:** o sistema baseado em regras provavelmente vence nos formatos comuns (ele já possui todas as prioridades estruturais embutidas) e o modelo de ML provavelmente vence em casos incomuns (ele aprende padrões que você não pensou em codificar). Ferramentas do mundo real combinam os dois — regras primeiro, ML para desempate. É assim que classificadores de spam, firewalls de aplicação web e motores de antivírus realmente funcionam.
 
 > **Não execute nenhum desses desafios com dados reais de usuários sem permissão.** Os desafios assumem arquivos de vazamentos publicamente divulgados, seus próprios dados de teste ou entradas de CTF. Identificar hashes a partir de dados que você não tem direito de usar é outra conversa e está fora do escopo deste projeto.
+
+&nbsp;
+
+## Fim
+
+<p align="center">
+  <img src="../assets/cat.gif" width="300" alt="Cat">
+</p>
+
+Agora você chegou ao final de seu projeto. Se conseguiu realizar os níveis 4 e 5, saiba que estará pronto para o que virá em seguida. **Parabéns!**
+
+Minha recomendação agora é que você treine bem python e, se possível, _se arrisque em mais um projeto disponível_. Aliás, esse é o ponto mais forte de qualquer currículo ao lado das experiências: **os projetos**. Então, sem medo, quanto mais fizer, melhor.

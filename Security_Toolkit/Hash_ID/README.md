@@ -7,6 +7,8 @@
 ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚═╝╚═════╝
 ```
 
+[![Python 3.14](https://img.shields.io/badge/Python-3.14-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org)
+
 > Identifique o algoritmo por trás de uma string de hash por seu prefixo, comprimento e conjunto de caracteres — o primeiro passo em qualquer fluxo de trabalho de quebra de senhas.
 
 _Esta é uma visão geral rápida — teoria de segurança, arquitetura e tutoriais completos estão nos [módulos de aprendizado](#learn)._
