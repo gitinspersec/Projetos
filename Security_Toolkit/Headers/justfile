@@ -1,0 +1,230 @@
+```just
+# ©AngelaMos | 2026
+# Copyright (C) 2026 Murilo Miacci
+# justfile
+#
+# Um "justfile" é uma lista de comandos que podem ser executados com
+# `just <nome>`. Pense nele como a central de comandos do projeto —
+# em vez de memorizar `uv run pytest -v`, basta executar `just test`.
+#
+# Por que usar just em vez de make? Ele é mais simples, multiplataforma
+# e possui uma sintaxe mais fácil de ler.
+#
+# Mostrar todos os comandos:  `just`
+# Executar um comando:        `just <nome>`     (ex.: `just setup`)
+
+# Exporta toda variável definida aqui como variável de ambiente para
+# as receitas executadas pelo just.
+set export
+
+# No Linux/macOS, executa as receitas com bash usando:
+# -u (erro para variáveis não definidas)
+# -c (lê os comandos de uma string).
+set shell := ["bash", "-uc"]
+
+# No Windows, utiliza PowerShell em modo não interativo e sem logotipo.
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+
+# Disponibiliza os argumentos das receitas para scripts com shebang
+# como `$1`, `$2`, `$@` e `$#`. Sem isso, receitas com shebang só
+# enxergariam os argumentos pela substituição textual `{{args}}`,
+# que é insegura para entradas contendo `$`, pois o texto substituído
+# seria expandido novamente pelo bash.
+set positional-arguments
+
+# Mostra os comandos disponíveis quando `just` é executado sem argumentos.
+default:
+    @just --list --unsorted
+
+
+# =============================================================================
+# Comandos de configuração
+# =============================================================================
+
+# Configuração inicial em uma única etapa — cria o .venv e instala tudo
+[group('setup')]
+setup:
+    @echo "Criando ambiente virtual com uv..."
+
+    # `uv venv` cria a pasta `.venv/` utilizando a versão do Python do
+    # sistema compatível com `requires-python` definido no pyproject.toml.
+    #
+    # `--allow-existing` torna esta receita segura para ser executada
+    # novamente após uma instalação parcial.
+    uv venv --allow-existing
+
+    @echo ""
+    @echo "Instalando dependências (incluindo ferramentas de desenvolvimento)..."
+
+    # `--all-extras` instala todos os grupos definidos em
+    # optional-dependencies (para este projeto, apenas `dev`).
+    # Sem isso, ferramentas como pytest não seriam instaladas.
+    uv sync --all-extras
+
+    @echo ""
+    @echo "✓ Configuração concluída!"
+    @echo ""
+    @echo "Experimente:"
+    @echo "  just run -- https://example.com"
+    @echo "  just test"
+
+# Instala apenas as dependências de execução (sem ferramentas de desenvolvimento)
+[group('setup')]
+install:
+    uv sync
+
+# Instala dependências de execução e de desenvolvimento
+[group('setup')]
+install-dev:
+    uv sync --all-extras
+
+
+# =============================================================================
+# Testes e verificações de qualidade
+# =============================================================================
+
+# Executa a suíte de testes
+[group('test')]
+test:
+    @echo "Executando testes..."
+
+    # `uv run` executa um comando dentro do ambiente virtual do projeto,
+    # sem necessidade de executar `source .venv/bin/activate`.
+    uv run pytest
+
+# Executa todos os linters em sequência (ruff + pylint + mypy)
+[group('test')]
+lint:
+    @echo "=== Ruff ==="
+    uv run ruff check http_headers_scanner.py test_http_headers_scanner.py
+
+    @echo ""
+    @echo "=== Pylint ==="
+    uv run pylint http_headers_scanner.py
+
+    @echo ""
+    @echo "=== Mypy ==="
+    uv run mypy http_headers_scanner.py
+
+    @echo ""
+    @echo "✓ Todos os linters foram aprovados"
+
+# Formata automaticamente todos os arquivos Python usando yapf
+[group('test')]
+format:
+    @echo "Formatando o código com yapf..."
+
+    # -i = edição no próprio arquivo (in place), em vez de apenas exibir
+    # as diferenças.
+    uv run yapf -i http_headers_scanner.py test_http_headers_scanner.py
+
+    @echo "✓ Código formatado"
+
+# Corrige automaticamente tudo o que o Ruff consegue corrigir sozinho
+# (imports não utilizados, entre outros)
+[group('test')]
+fix:
+    uv run ruff check http_headers_scanner.py test_http_headers_scanner.py --fix
+
+
+# =============================================================================
+# Executar a CLI
+# =============================================================================
+
+# Executa o scanner de cabeçalhos — informe a URL após `--`
+#
+# Exemplos:
+#   just run -- https://example.com
+#   just run -- https://github.com --timeout 5
+#
+# [no-exit-message] impede que o just exiba a mensagem
+# "Recipe `run` failed with exit code N" quando o scanner termina com
+# código diferente de zero.
+#
+# O scanner utiliza:
+#   exit 1 → notas C/D
+#   exit 2 → nota F ou erro de rede
+#
+# Esses códigos são sinais significativos para CI, e não indicam que
+# a receita falhou. O código de saída continua sendo propagado para
+# quem executou o just.
+[group('run')]
+[no-exit-message]
+run *args:
+    #!/usr/bin/env bash
+
+    # Se nenhum argumento foi informado, exibe uma mensagem amigável
+    # de uso e encerra normalmente.
+    #
+    # Sem isso, `just run` executaria `uv run headers` sem parâmetros,
+    # o argparse encerraria com código 2 e o just acrescentaria uma
+    # mensagem dizendo que a receita falhou, o que seria confuso para
+    # quem apenas queria descobrir como utilizar o comando.
+    if [ $# -eq 0 ]; then
+        cat <<'EOF'
+    Uso: just run -- <url> [opções]
+
+    Exemplos:
+      just run -- https://example.com
+      just run -- https://github.com --timeout 5
+
+    Ver todas as opções:
+      just run -- --help
+    EOF
+        exit 0
+    fi
+
+    # Encaminha os argumentos usando "$@", e NÃO {{args}}.
+    #
+    # Motivo: `{{args}}` é uma substituição textual realizada pelo just
+    # antes de o bash executar o script. Se uma URL ou argumento contiver
+    # `$`, essas referências poderão ser expandidas como variáveis do bash,
+    # alterando o conteúdo original.
+    #
+    # "$@" preserva exatamente o vetor argv recebido.
+    uv run headers "$@"
+
+
+# =============================================================================
+# Utilitários / Limpeza
+# =============================================================================
+
+# Remove o ambiente virtual e todos os artefatos de compilação/cache
+[group('utility')]
+clean:
+    rm -rf .venv
+    rm -rf __pycache__
+    rm -rf .mypy_cache .ruff_cache .pytest_cache
+    rm -rf *.egg-info build dist
+    rm -rf .coverage htmlcov
+    @echo "✓ Limpeza concluída"
+
+# Atualiza uv.lock com as versões exatas das dependências
+[group('utility')]
+lock:
+    uv lock
+
+# Atualiza todas as dependências para as versões mais recentes permitidas
+[group('utility')]
+update:
+    uv lock --upgrade
+    uv sync --all-extras
+
+
+# =============================================================================
+# Pipeline de Integração Contínua (CI)
+# =============================================================================
+
+# Pipeline completo: configuração + lint + testes.
+# Indicado para a primeira execução.
+[group('ci')]
+all: setup lint test
+    @echo ""
+    @echo "✓ Configuração, lint e testes executados com sucesso"
+
+# Apenas lint + testes — utilizado pelo pipeline de CI após as
+# dependências já estarem instaladas.
+[group('ci')]
+ci: lint test
+    @echo "✓ Verificações de CI concluídas com sucesso"
+```

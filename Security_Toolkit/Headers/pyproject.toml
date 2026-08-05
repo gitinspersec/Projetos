@@ -1,0 +1,224 @@
+# ©AngelaMos | 2026
+# pyproject.toml
+#
+# This file is the "instruction manual" for our Python project. Every
+# modern Python project has one. It tells tools like uv, pip, pytest,
+# ruff, mypy, and pylint:
+#
+#   - What our project is called
+#   - Which third-party libraries we depend on
+#   - How to build and install it
+#   - How to lint, type-check, and test it
+#
+# The file format is called TOML — a simple, human-readable config
+# language. Square brackets like [project] start a "table" (a section).
+# Lines like name = "..." are key-value pairs inside that table.
+#
+# Read this top-to-bottom. Each section has a short comment explaining
+# what it does and why it is here.
+
+
+# =============================================================================
+# [project] — the metadata that describes WHAT this project is
+# =============================================================================
+# This section is standardized across the whole Python ecosystem (PEP 621).
+# Anyone who runs `pip install` or `uv sync` reads from here.
+[project]
+# The name people will install this package under.
+# Must be unique on PyPI if we ever publish there.
+name = "http-headers-scanner"
+
+# Semantic version: MAJOR.MINOR.PATCH.
+# 1.0.0 means "first stable release."
+# When we add features → bump MINOR (1.1.0). When we break things → MAJOR.
+version = "1.0.0"
+
+# One-line description that shows up in `pip show` and on PyPI.
+description = "Scan a URL for HTTP security headers and grade the result (foundations tier)"
+
+# The minimum Python version this project supports.
+# >=3.13 means "Python 3.13 or anything newer."
+# We need 3.13 because we use modern type-hint syntax (X | None).
+requires-python = ">=3.13"
+
+# Who wrote it. Shows up in package metadata.
+authors = [
+    {name = "CarterPerez-dev", email = "support@certgames.com"}
+]
+
+# The README file is shown on PyPI and in `pip show`.
+readme = "README.md"
+
+# AGPL-3.0 means: anyone can use it, but if they modify and run it as a
+# service, they must publish their changes. It protects the project
+# from being privatized.
+license = {text = "AGPL-3.0-or-later"}
+
+# -----------------------------------------------------------------------------
+# dependencies — third-party libraries we MUST have at runtime
+# -----------------------------------------------------------------------------
+# When a user runs `pip install http-headers-scanner`, these get installed.
+# The string format is "<name><operator><version>". We use ranges so we
+# get bug fixes (>=) but never an incompatible major version (<).
+dependencies = [
+    # httpx: a modern HTTP client. We use it instead of `requests` because
+    # it is async-ready, supports HTTP/2, and ships first-class type hints.
+    # (We use the SYNC API in this project for simplicity — async would
+    # be overkill for a single-URL scanner.)
+    "httpx>=0.28.1",
+
+    # rich: pretty terminal output — colors, tables, panels.
+    # Used to render the scan report as a clean grading table.
+    "rich>=15.0.0",
+]
+
+# -----------------------------------------------------------------------------
+# optional-dependencies — extra libraries that are NOT needed at runtime
+# -----------------------------------------------------------------------------
+# These only matter to developers (testing, linting, formatting). End users
+# don't install them. Activated with: `uv sync --extra dev` or `--all-extras`.
+[project.optional-dependencies]
+dev = [
+    # pytest — runs our test suite (the test_*.py file in this directory).
+    "pytest>=9.0.3",
+
+    # respx — mocks httpx responses so our tests don't need the network.
+    # Lets us assert "scan() correctly handles a missing-CSP response"
+    # without depending on a live server.
+    "respx>=0.23.1",
+
+    # ruff — extremely fast linter and formatter. Catches bugs, style
+    # issues, dead imports. Modern replacement for flake8/black/isort.
+    "ruff>=0.15.12",
+
+    # mypy — static type checker. Reads our type hints and tells us if
+    # we passed a string where an int was expected, BEFORE running the code.
+    "mypy>=2.1.0",
+
+    # pylint — second linter that catches deeper logic issues ruff misses.
+    "pylint>=4.0.5",
+
+    # yapf — code formatter. Keeps every file looking identical.
+    "yapf>=0.43.0,<1.0.0",
+]
+
+# -----------------------------------------------------------------------------
+# project.scripts — command-line entry points
+# -----------------------------------------------------------------------------
+# After `uv sync`, the user can type `headers <url>` instead of
+# `python http_headers_scanner.py <url>`. The right-hand side is
+# "<module>:<function>" — the function gets called when the command runs.
+[project.scripts]
+headers = "http_headers_scanner:main"
+
+
+# =============================================================================
+# [build-system] — how to BUILD this project into an installable package
+# =============================================================================
+# Required by PEP 517. Tools like uv read this to know which builder
+# to use. We chose hatchling — modern, fast, zero-config for our case.
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Tell hatchling exactly which file to package. This project is a SINGLE
+# Python file (no src/<package>/ layout), so we use `only-include` to
+# point at it directly. Without this, hatchling would not know what
+# to ship.
+[tool.hatch.build.targets.wheel]
+only-include = ["http_headers_scanner.py"]
+
+
+# =============================================================================
+# [tool.ruff] — linter / formatter configuration
+# =============================================================================
+# Ruff is the FAST one. It runs in milliseconds and catches 90% of issues.
+[tool.ruff]
+# Target Python version — ruff adjusts which warnings apply.
+target-version = "py313"
+
+# Wrap lines at 88 characters (PEP 8 says 79, but 88 is the modern norm).
+line-length = 88
+
+# -----------------------------------------------------------------------------
+# Which lint rules to enable. Each "code" is a category of check.
+# -----------------------------------------------------------------------------
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors — basic PEP 8 spacing/indent rules
+    "F",    # Pyflakes — unused imports, undefined names, real bugs
+    "W",    # pycodestyle warnings — softer style issues
+    "B",    # Bugbear — sneaky bugs (mutable default args, etc.)
+    "C4",   # Comprehensions — encourages cleaner list/dict comprehensions
+    "UP",   # Pyupgrade — flags old syntax we should modernize
+    "SIM",  # Simplify — suggests cleaner equivalents
+]
+
+# Some rules we deliberately ignore.
+ignore = [
+    # Line length is handled by yapf, not ruff. Avoids double-flagging.
+    "E501",
+]
+
+
+# =============================================================================
+# [tool.mypy] — static type checker configuration
+# =============================================================================
+# Mypy reads our type hints (the `: int`, `-> str` parts) and verifies them
+# without running the code. Catches whole categories of bugs at edit time.
+[tool.mypy]
+python_version = "3.13"
+
+# Require type annotations on every function — strict mode.
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+# Don't auto-add Optional just because a default is None. Be explicit.
+no_implicit_optional = true
+
+# Warn if we cast a value to a type it already has (dead code).
+warn_redundant_casts = true
+
+# Warn if a function might fall off the end without returning.
+warn_no_return = true
+
+# Pretty error output — helps when reading mypy output.
+show_error_codes = true
+pretty = true
+
+
+# =============================================================================
+# [tool.pylint] — second-opinion linter
+# =============================================================================
+# Slower than ruff but catches different things — class design issues,
+# dead variables, complex code patterns.
+[tool.pylint.main]
+# Match the project's Python version.
+py-version = "3.13"
+
+# Run lint checks in parallel across 4 cores for speed.
+jobs = 4
+
+# Specific pylint warnings we deliberately turn off.
+[tool.pylint.messages_control]
+disable = [
+    "R0903",  # too-few-public-methods — small data classes are fine
+    "C0103",  # invalid-name — short names are OK in small scripts
+]
+
+
+# =============================================================================
+# [tool.pytest.ini_options] — test runner configuration
+# =============================================================================
+[tool.pytest.ini_options]
+# Where to look for tests. "." = the project root, since this project's
+# test file lives next to the source file.
+testpaths = ["."]
+
+# Files that match this pattern are treated as test modules.
+python_files = ["test_*.py"]
+
+# Default flags every `pytest` invocation gets:
+#   -v          → verbose, show each test name
+#   --tb=short  → short tracebacks on failure (less wall of text)
+addopts = "-v --tb=short"

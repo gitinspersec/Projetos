@@ -82,21 +82,9 @@ Dentro de `Security_Toolkit/Hash_ID/`:
 
 ```bash
 sudo apt update
-```
-
-```bash
 wget -qO- https://astral.sh/uv/install.sh | sh
-```
-
-```bash
 uv venv --python 3.14
-```
-
-```bash
 source .venv/bin/activate
-```
-
-```bash
 ./install.sh
 ```
 
@@ -138,13 +126,13 @@ Hash_ID/
 ├── justfile                  atalhos para run / test / lint / format
 ├── pyproject.toml            configuração: dependências, regras dos linters etc.
 ├── README.md                 breve introdução apontando para esta pasta learn/
-├── learn/                    você está aqui
-│   ├── 00-Introdução.md        início rápido (este arquivo)
-│   ├── 01-Conceitos.md        o que são hashes e como a identificação funciona
-│   ├── 02-Arquitetura.md    como o código está estruturado, com diagramas
-│   ├── 03-Implementação.md  explicação linha por linha do código
-│   └── 04-Desafios.md      ideias de extensões caso queira ir além
-└── assets/                   imagens e capturas de tela
+├── assets/                   gif, imagens e capturas de tela
+└── learn/                    você está aqui
+    ├── 00-Introdução.md      início rápido (este arquivo)
+    ├── 01-Conceitos.md       o que são hashes e como a identificação funciona
+    ├── 02-Arquitetura.md     como o código está estruturado, com diagramas
+    ├── 03-Implementação.md   explicação linha por linha do código
+    └── 04-Desafios.md        ideias de extensões caso queira ir além
 ```
 
 O fato de existir apenas um arquivo de código é intencional. A estrutura foi projetada para que todo o código possa ser lido em uma única sessão.
