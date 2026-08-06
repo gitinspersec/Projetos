@@ -28,7 +28,7 @@ _Esta é uma visão geral rápida — teoria de segurança, arquitetura e tutori
 
 ## Início Rápido
 
-Dentro de `Security_Toolkit/Hash_ID/`:
+Dentro de `RedTeam/Individual/Hash_ID/`:
 
 ```bash
 sudo apt update

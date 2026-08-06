@@ -78,7 +78,7 @@ Você _não_ precisa de uma IDE — um editor de texto é suficiente. Recomendo 
 
 ## Início rápido
 
-Dentro de `Security_Toolkit/Hash_ID/`:
+Dentro de `RedTeam/Individual/Hash_ID/`:
 
 ```bash
 sudo apt update
