@@ -1,3 +1,0 @@
-# Security Toolkit
-
-Informações do projeto...

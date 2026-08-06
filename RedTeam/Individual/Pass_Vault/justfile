@@ -1,0 +1,184 @@
+# ©AngelaMos | 2026
+# justfile
+#
+# A "justfile" is a list of commands you can run with `just <name>`.
+# Think of it as a project's command center — instead of remembering
+# `uv run pytest tests/ -v --cov=src`, you just type `just test`.
+#
+# Why use just instead of make? It is simpler, cross-platform,
+# and the syntax is easier to read.
+#
+# Show all commands:    `just`
+# Run a command:        `just <name>`     (e.g. `just setup`)
+
+set export
+set shell := ["bash", "-uc"]
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+# Make recipe arguments available to shebang scripts as `$1`, `$2`,
+# `$@`, and `$#`. Without this, shebang recipes only see args via the
+# textual `{{args}}` substitution, which is unsafe for inputs that
+# contain `$` (the substituted text gets re-expanded by bash).
+set positional-arguments
+
+# Show available commands when you run `just` with no args.
+default:
+    @just --list --unsorted
+
+
+# =============================================================================
+# Setup Commands
+# =============================================================================
+
+# One-shot first-time setup — creates .venv and installs everything
+[group('setup')]
+setup:
+    @echo "Creating virtual environment with uv..."
+    uv venv --allow-existing
+    @echo ""
+    @echo "Installing dependencies (including dev tools)..."
+    uv sync --all-extras
+    @echo ""
+    @echo "✓ Setup complete!"
+    @echo ""
+    @echo "Try it out:"
+    @echo "  just run -- --help"
+    @echo "  just test"
+
+# Install runtime dependencies only (no dev tools)
+[group('setup')]
+install:
+    uv sync
+
+# Install runtime + dev dependencies
+[group('setup')]
+install-dev:
+    uv sync --all-extras
+
+
+# =============================================================================
+# Testing & Quality Checks
+# =============================================================================
+
+# Run the test suite
+[group('test')]
+test:
+    @echo "Running tests..."
+    uv run pytest
+
+# Run tests with a coverage report
+[group('test')]
+test-cov:
+    @echo "Running tests with coverage..."
+    uv run pytest --cov=password_manager --cov-report=term-missing
+
+# Run all linters (ruff + pylint + mypy)
+[group('test')]
+lint:
+    @echo "=== Ruff ==="
+    uv run ruff check src tests
+    @echo ""
+    @echo "=== Pylint ==="
+    uv run pylint src/password_manager
+    @echo ""
+    @echo "=== Mypy ==="
+    uv run mypy src/password_manager
+    @echo ""
+    @echo "✓ All linters passed"
+
+# Auto-format every Python file with yapf
+[group('test')]
+format:
+    @echo "Formatting code with yapf..."
+    uv run yapf -i -r src tests
+    @echo "✓ Code formatted"
+
+# Auto-fix what ruff can fix on its own (unused imports, etc.)
+[group('test')]
+fix:
+    uv run ruff check src tests --fix
+
+
+# =============================================================================
+# Run the CLI
+# =============================================================================
+
+# Run the password-vault CLI — pass extra args after `--`
+# Example:  just run -- list
+#           just run -- add github
+# [no-exit-message] silences just's "Recipe `run` failed with exit
+# code N" line when pv exits non-zero. pv uses non-zero exits to
+# signal "wrong password", "entry not found", etc — real outcomes
+# the CLI already explained, not "the recipe is broken." The exit
+# code itself is still propagated to whoever invoked just.
+[group('run')]
+[no-exit-message]
+run *args:
+    #!/usr/bin/env bash
+    # If no args were given, print a friendly usage block and exit
+    # cleanly. Without this, `just run` (no args) would invoke
+    # `uv run pv` with nothing, argparse would exit 2, and just
+    # would tack a "Recipe `run` failed" error on top — confusing for
+    # someone just trying to see how the command works.
+    if [ $# -eq 0 ]; then
+        cat <<'EOF'
+    Usage: just run -- <command> [args]
+
+    Examples:
+      just run -- list
+      just run -- add github
+      just run -- get github
+      just run -- remove github
+
+    See all commands:
+      just run -- --help
+    EOF
+        exit 0
+    fi
+    # Forward args via "$@" — NOT via {{args}}. Why: {{args}} is a
+    # TEXTUAL substitution done by just before bash runs the script,
+    # so a password with $ in it would get those $-references expanded
+    # as bash variables and arrive at pv mangled. "$@" hands bash the
+    # original argv unchanged.
+    uv run pv "$@"
+
+
+# =============================================================================
+# Utility / Cleanup
+# =============================================================================
+
+# Delete the venv and all build / cache artifacts
+[group('utility')]
+clean:
+    rm -rf .venv
+    rm -rf __pycache__ src/**/__pycache__ tests/__pycache__
+    rm -rf .mypy_cache .ruff_cache .pytest_cache
+    rm -rf *.egg-info build dist
+    rm -rf .coverage htmlcov
+    @echo "✓ Cleaned"
+
+# Lock the exact dependency versions to uv.lock
+[group('utility')]
+lock:
+    uv lock
+
+# Upgrade all dependencies to latest allowed versions
+[group('utility')]
+update:
+    uv lock --upgrade
+    uv sync --all-extras
+
+
+# =============================================================================
+# CI Pipeline (lint + test, no setup)
+# =============================================================================
+
+# Full pipeline: setup + lint + test. For first-time runs.
+[group('ci')]
+all: setup lint test
+    @echo ""
+    @echo "✓ Setup, lint, and tests all passed"
+
+# Lint + test only — what CI runs after dependencies are installed
+[group('ci')]
+ci: lint test
+    @echo "✓ CI checks passed"
