@@ -1,14 +1,9 @@
-```ruby
-██╗  ██╗███████╗ █████╗ ██████╗ ███████╗██████╗ ███████╗
-██║  ██║██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝
-███████║█████╗  ███████║██║  ██║█████╗  ██████╔╝███████╗
-██╔══██║██╔══╝  ██╔══██║██║  ██║██╔══╝  ██╔══██╗╚════██║
-██║  ██║███████╗██║  ██║██████╔╝███████╗██║  ██║███████║
-╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝
-```
+# Headers
 
-[![Python 3.14](https://img.shields.io/badge/Python-3.14-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![HTTP Client](https://img.shields.io/badge/httpx-0.28+-1f5582?style=flat)](https://www.python-httpx.org/)
+![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
+![Mode](https://img.shields.io/badge/Mode-Individual-555)
+![Difficulty](https://img.shields.io/badge/Difficulty-N2_B%C3%A1sico-green)
+![Stack](https://img.shields.io/badge/Stack-Python-3776AB)
 
 > Faz uma única requisição a uma URL e avalia seus cabeçalhos de segurança HTTP com uma nota de A a F usando o mesmo modelo de rubrica ponderada do Mozilla Observatory.
 
@@ -17,40 +12,91 @@ _Esta é uma visão geral rápida. A teoria de segurança, a arquitetura e os tu
 > [!NOTE]
 > Este projeto foi desenvolvido para alguém que nunca escreveu Python antes. O código-fonte é amplamente comentado como auxílio didático, a pasta `learn/` explica todos os conceitos do zero e toda a ferramenta está contida em um único arquivo legível.
 
-## O Que Ele Faz
+## 🎯 Objective
 
-- Realiza uma única requisição HTTPS educada para a URL fornecida e inspeciona os cabeçalhos da resposta
-- Avalia seis cabeçalhos críticos de segurança com uma rubrica ponderada (alta = 30 pts, média = 15 pts, baixa = 5 pts)
-- Exibe cada resultado como `ok`, `weak` ou `missing`, acompanhado de uma explicação em uma linha do motivo
-- Calcula uma pontuação de 0 a 100 e a converte em uma nota de A a F (90+ = A, 80+ = B, etc.)
-- Detecta valores sutilmente incorretos, como `Strict-Transport-Security: max-age=0` (cabeçalho presente, porém desativado ativamente), marcando-os como `weak`, e não `ok`
-- Segue redirecionamentos e avalia a URL **final**, aquela em que o navegador realmente terminaria
-- Exibe uma tabela colorida usando Rich, um painel com a nota e uma lista de recomendações para cada resultado diferente de `ok`
-- Retorna códigos de saída significativos: `0` para A/B, `1` para C/D e `2` para F ou erro de rede, úteis em pipelines de CI
+Construir uma ferramenta de linha de comando que faz uma requisição HTTP a uma URL, avalia seis cabeçalhos de segurança críticos e atribui uma nota de A a F usando uma rubrica ponderada.
 
-## Os Cabeçalhos Avaliados
+## 🧠 Learning Outcomes
 
-| Header                      | Severidade | O que impede                                                          |
-| --------------------------- | ---------- | --------------------------------------------------------------------- |
-| `Strict-Transport-Security` | alta       | SSL stripping em redes Wi-Fi públicas                                 |
-| `Content-Security-Policy`   | alta       | XSS por meio de tags `<script>` injetadas                             |
-| `X-Content-Type-Options`    | média      | MIME sniffing de arquivos enviados                                    |
-| `X-Frame-Options`           | média      | Clickjacking por meio de iframes ocultos                              |
-| `Referrer-Policy`           | baixa      | Vazamento de tokens secretos pelo cabeçalho Referer                   |
-| `Permissions-Policy`        | baixa      | Scripts de terceiros comprometidos abusando de câmera, microfone etc. |
+- O que é HTTP e o que são headers de segurança
+- Os seis cabeçalhos críticos e os ataques que eles previnem (SSL stripping, XSS, clickjacking, MIME sniffing, vazamento via referer)
+- Como usar `httpx` para fazer requisições HTTP
+- Fundamentos de Python: dataclasses, I/O fence (núcleo funcional / casca imperativa)
+- Como estruturar um pipeline de decisão em etapas
 
-Cada cabeçalho está associado a uma classe real de ataque, com histórico de exploração. O módulo [`01-Conceitos.md`](learn/01-Conceitos.md) explica cada um deles usando exemplos concretos de ataques.
+## 📋 Prerequisites
 
-## Início Rápido
+- **Nenhum conhecimento prévio de Python** — o projeto foi escrito para quem nunca programou
+- Terminal básico
+- Conexão ativa com a internet (para escanear URLs reais)
+
+### 📖 O que estudar antes
+
+> [!NOTE]
+> Este projeto ensina Python e HTTP nos módulos `learn/`, mas um estudo básico prévio ajuda.
+
+- [Tutorial oficial do Python](https://docs.python.org/3/tutorial/) — sintaxe e estruturas de dados
+- [MDN HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) — métodos, status codes e headers
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/) — contexto sobre falhas web comuns
+
+## 🛠️ Scope
+
+### Obrigatório
+
+- Realizar uma requisição HTTPS e inspecionar os cabeçalhos da resposta
+- Avaliar seis cabeçalhos: `Strict-Transport-Security`, `Content-Security-Policy`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
+- Exibir cada resultado como `ok`, `weak` ou `missing` com explicação
+- Calcular pontuação de 0 a 100 e converter em nota de A a F
+- Seguir redirecionamentos e avaliar a URL final
+- Retornar códigos de saída significativos (0/1/2)
+
+### Mínimo viável (MVP)
+
+- Avaliar os 3 cabeçalhos mais importantes (HSTS, CSP, X-Content-Type-Options)
+- Exibir nota e pontuação em texto simples
+
+### Stretch
+
+- Detectar valores sutilmente incorretos (ex: `max-age=0`)
+- Tabela colorida com Rich e recomendações
+- Integração com pipeline de CI via códigos de saída
+
+## ✅ Definition of Done
+
+- [ ] `just test` passa (11 testes, rede simulada com respx)
+- [ ] `just lint` passa (ruff + mypy --strict + pylint)
+- [ ] `just run -- <url>` retorna nota e pontuação corretas
+- [ ] Códigos de saída corretos para diferentes notas
+
+## 🧪 Validation
 
 ```bash
+just test       # executa o pytest (rede simulada, offline)
+just lint       # ruff + mypy --strict + pylint
+just run -- https://example.com
+# Nota: B, Pontuação: 85 / 100
+```
+
+Teste com as [URLs de demonstração](#urls-de-demonstração) abaixo.
+
+## 🎬 Demo
+
+Execute o scanner em URLs conhecidas e explique:
+
+- Como cada cabeçalho é avaliado e pontuado
+- Por que alguns sites recebem nota A e outros B/C/F
+- O que as recomendações sugerem para melhorar a nota
+
+## 🚀 Getting Started
+
+```
+bash
 sudo apt update
 wget -qO- https://astral.sh/uv/install.sh | sh
 uv venv --python 3.14
 source .venv/bin/activate
 ./install.sh
 just run -- https://example.com
-# Nota: B, Pontuação: 85 / 100  (example.com não possui CSP nem Permissions-Policy)
 ```
 
 > [!TIP]
@@ -60,103 +106,58 @@ just run -- https://example.com
 
 ## URLs de Demonstração
 
-Experimente estas URLs. Cada uma demonstra um caminho de avaliação diferente:
-
-| URL                   | Nota esperada | Motivo                                                                                           |
-| --------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| `https://github.com`  | A             | CSP abrangente, HSTS com `includeSubDomains` e praticamente todos os cabeçalhos configurados     |
-| `https://web.dev`     | A             | Site de documentação para desenvolvedores do Google, com conjunto moderno completo de cabeçalhos |
-| `https://mozilla.org` | A             | A Mozilla pratica aquilo que o Observatory recomenda                                             |
-| `https://example.com` | B / C         | Possui HSTS, mas não possui CSP, Permissions-Policy e outros cabeçalhos                          |
-| `http://neverssl.com` | F             | Serve propositalmente apenas HTTP puro, sem qualquer cabeçalho de segurança                      |
-
-```bash
-just run -- https://github.com
-just run -- https://example.com
-just run -- https://web.dev --timeout 5
-just run -- http://neverssl.com
-```
+| URL                   | Nota esperada | Motivo                                              |
+| --------------------- | ------------- | --------------------------------------------------- |
+| `https://github.com`  | A             | CSP abrangente, HSTS com `includeSubDomains`        |
+| `https://web.dev`     | A             | Conjunto moderno completo de cabeçalhos             |
+| `https://mozilla.org` | A             | A Mozilla pratica o que o Observatory recomenda     |
+| `https://example.com` | B / C         | Possui HSTS, mas não possui CSP, Permissions-Policy |
+| `http://neverssl.com` | F             | Serve propositalmente apenas HTTP puro              |
 
 > [!IMPORTANT]
-> Sempre inclua o esquema `http://` ou `https://`. O scanner rejeita nomes de host sem esquema, como `github.com`, porque não consegue adivinhar qual deles você pretendia usar, e adivinhar incorretamente é justamente o problema de SSL stripping que o HSTS existe para impedir.
+> Sempre inclua o esquema `http://` ou `https://`. O scanner rejeita nomes de host sem esquema.
 
-## Exemplo de Saída
+## Os Cabeçalhos Avaliados
 
-```
-                  Headers for https://github.com/ (HTTP 200)
-┌─────────────────────────────┬─────────┬──────────┬─────────────────────────┐
-│ header                      │ status  │ severity │ note                    │
-├─────────────────────────────┼─────────┼──────────┼─────────────────────────┤
-│ Strict-Transport-Security   │ ok      │ high     │ Present and contains... │
-│ Content-Security-Policy     │ ok      │ high     │ Present                 │
-│ X-Content-Type-Options      │ ok      │ medium   │ Present and contains... │
-│ X-Frame-Options             │ ok      │ medium   │ Present                 │
-│ Referrer-Policy             │ ok      │ low      │ Present                 │
-│ Permissions-Policy          │ missing │ low      │ Header ... is not set   │
-└─────────────────────────────┴─────────┴──────────┴─────────────────────────┘
-╭─ Result ───────────────────╮
-│ Grade: A                   │
-│ Score: 95 / 100            │
-╰────────────────────────────╯
-```
-
-Em seguida, é exibido um bloco `Recommendations:` para cada resultado diferente de `ok`, contendo exatamente o valor do cabeçalho que deve ser adicionado.
+| Header                      | Severidade | O que impede                                            |
+| --------------------------- | ---------- | ------------------------------------------------------- |
+| `Strict-Transport-Security` | alta       | SSL stripping em redes Wi-Fi públicas                   |
+| `Content-Security-Policy`   | alta       | XSS por meio de tags `<script>` injetadas               |
+| `X-Content-Type-Options`    | média      | MIME sniffing de arquivos enviados                      |
+| `X-Frame-Options`           | média      | Clickjacking por meio de iframes ocultos                |
+| `Referrer-Policy`           | baixa      | Vazamento de tokens secretos pelo Referer               |
+| `Permissions-Policy`        | baixa      | Scripts de terceiros abusando de câmera, microfone etc. |
 
 ## Códigos de Saída
 
-O scanner retorna códigos de saída compatíveis com shell para que você possa integrá-lo a pipelines de CI:
+| Nota              | Código de saída | Significado                          |
+| ----------------- | --------------- | ------------------------------------ |
+| A, B              | `0`             | Sinal verde, nenhuma ação necessária |
+| C, D              | `1`             | Vale a pena investigar               |
+| F ou erro de rede | `2`             | Falha crítica, deve ser corrigida    |
 
-| Nota              | Código de saída | Significado                                                             |
-| ----------------- | --------------- | ----------------------------------------------------------------------- |
-| A, B              | `0`             | Sinal verde, nenhuma ação necessária                                    |
-| C, D              | `1`             | Vale a pena investigar; muitas vezes é aceitável dependendo do contexto |
-| F ou erro de rede | `2`             | Falha crítica, deve ser corrigida                                       |
+## 📚 Learning Resources
 
-```bash
-just run -- https://my-deployed-site.com
-if [ $? -gt 1 ]; then exit 1; fi   # falha na build apenas em caso de F ou erro
-```
+| Módulo                                          | Tópico                                                    |
+| ----------------------------------------------- | --------------------------------------------------------- |
+| [00 - Introdução](learn/00-Introdução.md)       | Início rápido, pré-requisitos, saída esperada             |
+| [01 - Conceitos](learn/01-Conceitos.md)         | O que é HTTP, o que é um header, ataques reais por header |
+| [02 - Arquitetura](learn/02-Arquitetura.md)     | Pipeline de quatro etapas, dataclasses, I/O fence         |
+| [03 - Implementação](learn/03-Implementação.md) | Explicação função por função                              |
+| [04 - Desafios](learn/04-Desafios.md)           | Doze ideias de extensão                                   |
 
-## Ferramentas
+## 🔗 Referências externas
 
-```bash
-just            # lista os comandos disponíveis
-just test       # executa o pytest (11 testes, executa em menos de um segundo, rede simulada com respx)
-just lint       # ruff + mypy --strict + pylint
-just format     # yapf
-just run -- <url>  # escaneia uma URL
-```
+- MDN HTTP — https://developer.mozilla.org/en-US/docs/Web/HTTP
+- OWASP Cheat Sheet: Secure Headers — https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Security_Cheat_Sheet.html
+- HTTP Security Headers (Mozilla Observatory docs) — https://observatory.mozilla.org/
 
-## Requisitos
+## 🧭 Next Step
 
-- **Python 3.13+**, o script de instalação fará essa verificação.
-- [`uv`](https://github.com/astral-sh/uv), gerenciador moderno de pacotes Python (instalado automaticamente por `./install.sh`).
-- [`just`](https://github.com/casey/just), executor de comandos (instalado automaticamente por `./install.sh`).
-- Uma conexão ativa com a internet durante a execução (o scanner realiza uma requisição HTTPS real por análise, mas a suíte de testes simula a rede com `respx` e executa totalmente offline).
+Após concluir `Headers`, avance para o projeto em equipe do mesmo ramo: [`V_Scanner`](../../Team/b-V_Scanner/README.md) — scanner de dependências Python em busca de vulnerabilidades (supply chain).
 
-Nenhum compilador ou biblioteca de sistema é necessário. O projeto consiste em um único arquivo Python mais os testes.
-
-## Learn
-
-Este projeto inclui materiais de aprendizado passo a passo que cobrem teoria de segurança, arquitetura e implementação, escritos para alguém que nunca teve contato com Python.
-
-| Module                                          | Tópico                                                                                                                                                                  |
-| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [00 - Introdução](learn/00-Introdução.md)       | Início rápido, pré-requisitos, saída esperada e problemas comuns na primeira execução                                                                                   |
-| [01 - Conceitos](learn/01-Conceitos.md)         | O que é HTTP, o que é um header e cada cabeçalho de segurança com o ataque real que ele impede (SSL stripping, clickjacking, MIME sniffing, XSS, vazamento via referer) |
-| [02 - Arquitetura](learn/02-Arquitetura.md)     | Pipeline de quatro etapas, dataclasses como objetos de valor e o padrão I/O fence (núcleo funcional / casca imperativa)                                                 |
-| [03 - Implementação](learn/03-Implementação.md) | Explicação função por função, cada recurso de Python explicado quando aparece pela primeira vez, além de padrões de teste e ferramentas                                 |
-| [04 - Desafios](learn/04-Desafios.md)           | Doze ideias de extensão, desde "adicionar uma sétima regra de cabeçalho" até "empacotar a ferramenta em um serviço FastAPI com rate limiting"                           |
-
-## Contexto do Mundo Real
-
-Este scanner é uma versão em escala didática de ferramentas que realizam a mesma tarefa em escala de produção:
-
-- **[Mozilla Observatory](https://observatory.mozilla.org/)**, a versão canônica. Utiliza a mesma abordagem de rubrica ponderada, porém com análise mais profunda de CSP, verificação de cookies e avaliação da configuração TLS.
-- **[securityheaders.com](https://securityheaders.com)**, interface mais simples, mesma ideia.
-- **[nmap http-security-headers script](https://nmap.org/nsedoc/scripts/http-security-headers.html)**, voltado para fluxos de trabalho em linha de comando.
-
-Depois que você entender como este scanner toma suas decisões, essas ferramentas deixarão de parecer mágicas e passarão a ser compreensíveis. O módulo [04-Desafios.md](learn/04-Desafios.md) apresenta ideias para evoluir este projeto em direção ao que o Observatory faz.
+> [!NOTE]
+> **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
 
 ---
 
