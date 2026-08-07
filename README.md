@@ -37,7 +37,7 @@ Se você é **novo(a) no Insper Sec**, siga este fluxo:
 3. Comece pelo projeto **Individual** do ramo escolhido.
 4. Siga para o projeto **Team** do mesmo ramo (entrega final do semestre).
 5. Ao final do semestre, avance para o [**Blue Team**](./BlueTeam/README.md) (2º semestre).
-6. No 3º+ semestre, participe do [**Purple Capstone**](./PurpleTeam/README.md).
+6. No 3º+ semestre, você será parte do [**Purple Team**](./PurpleTeam/README.md).
 
 > [!IMPORTANT]
 > **Primeiro passo concreto:** abra [`RedTeam/Individual/a-Hash_ID/README.md`](./RedTeam/Individual/a-Hash_ID/README.md) e siga o início rápido. É o ponto de entrada recomendado para quem nunca fez um projeto de segurança.

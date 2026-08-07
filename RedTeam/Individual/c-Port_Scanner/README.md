@@ -21,22 +21,14 @@ Construir um scanner de portas TCP assíncrono que mapeia portas abertas em um a
 - Concorrência e controle de carga em escaneamento
 - Diferenças entre portas abertas, fechadas e filtradas
 
-## 📋 Prerequisites
-
-- **C++20** — conhecimento básico de C++ (variáveis, funções, classes)
-- **CMake** — build system (>= 3.31)
-- **Boost** — biblioteca de sistema (Boost.Asio)
-- Terminal Linux/Unix e familiaridade com linha de comando
-- **Conceitos de redes** (TCP, IP, portas) — recomendado, mas o `learn/` cobre do zero
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto ensina conceitos de redes e C++ nos módulos `learn/`. Um estudo básico prévio acelera a entrega.
+> Este projeto ensina conceitos de redes e C++ nos módulos `learn/`. Se você tiver dificuldade com sockets ou C++, estes recursos ajudam a avançar.
 
-- [learncpp.com](https://www.learncpp.com/) — fundamentos de C++ moderno
-- [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/) — sockets e modelos de cliente/servidor
-- [Computer Networking (Kurose & Ross)](https://gaia.cs.umass.edu/kurose_ross/index.php) — TCP/IP e conceitos de redes
+- [C++ Socket Programming Tutorial](https://www.youtube.com/watch?v=LtXEMwSG5-8) — introdução prática a sockets em C++
+- [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/) — referência consolidada para socket APIs
+- [YouTube: How TCP/IP Works — Computerphile](https://www.youtube.com/watch?v=3QhU9jd03a0) — visualize os principais conceitos de rede
 
 ## 🛠️ Scope
 

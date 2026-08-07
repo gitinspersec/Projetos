@@ -24,20 +24,14 @@ Construir uma ferramenta de linha de comando que faz uma requisição HTTP a uma
 - Fundamentos de Python: dataclasses, I/O fence (núcleo funcional / casca imperativa)
 - Como estruturar um pipeline de decisão em etapas
 
-## 📋 Prerequisites
-
-- **Nenhum conhecimento prévio de Python** — o projeto foi escrito para quem nunca programou
-- Terminal básico
-- Conexão ativa com a internet (para escanear URLs reais)
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto ensina Python e HTTP nos módulos `learn/`, mas um estudo básico prévio ajuda.
+> Este projeto ensina Python e HTTP nos módulos `learn/`. Se você tiver dúvidas básicas, estes recursos práticos ajudam.
 
-- [Tutorial oficial do Python](https://docs.python.org/3/tutorial/) — sintaxe e estruturas de dados
-- [MDN HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) — métodos, status codes e headers
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/) — contexto sobre falhas web comuns
+- [Curso em Vídeo — Python para Iniciantes](https://www.cursoemvideo.com/course/curso-python-3/) — vídeo-aula passo a passo
+- [HTTP Security Headers Crash Course — Traversy Media](https://www.youtube.com/watch?v=Uj_WgdgL7X4) — visão prática do que cada header faz
+- [MDN Web Docs: HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) — referência oficial de headers e métodos
 
 ## 🛠️ Scope
 

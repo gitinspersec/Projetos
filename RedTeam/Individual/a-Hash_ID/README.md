@@ -24,20 +24,14 @@ Construir uma ferramenta de linha de comando que identifica o algoritmo de hash 
 - Fundamentos de Python: funções puras, tipagem, testes, CLI
 - Como estruturar um pipeline de decisão em camadas
 
-## 📋 Prerequisites
-
-- **Nenhum conhecimento prévio de Python** — o projeto foi escrito para quem nunca programou
-- Terminal básico (navegar, executar comandos)
-- Git (opcional, para clonar o repositório)
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto **ensina Python do zero** nos módulos `learn/`. Mas ter familiaridade básica com sintaxe Python acelera muito o desenvolvimento.
+> Este projeto ensina Python do zero nos módulos `learn/`. Se você empacar na base, estes recursos rápidos ajudam a recuperar o fluxo.
 
-- [Tutorial oficial do Python](https://docs.python.org/3/tutorial/) — sintaxe, funções, estruturas de dados
-- [Python para iniciantes (Real Python)](https://realpython.com/python-first-steps/) — primeiros passos práticos
-- [Crypto 101](https://www.crypto101.io/) — o que são hashes e por que importam (capítulos 1–3)
+- [Curso em Vídeo — Python para Iniciantes](https://www.cursoemvideo.com/course/curso-python-3/) — vídeo-aula passo a passo
+- [Python Tutorial for Beginners — freeCodeCamp.org](https://www.youtube.com/watch?v=rfscVS0vtbw) — introdução prática a Python
+- [Hash functions explained — Computerphile](https://www.youtube.com/watch?v=TL4D7zGhjYU) — entenda hashes em 10 minutos
 
 ## 🛠️ Scope
 

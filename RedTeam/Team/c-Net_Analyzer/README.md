@@ -25,21 +25,14 @@ Construir um analisador de tráfego de rede que captura pacotes, analisa cabeça
 - Concorrência: threading produtor-consumidor (Python), mutex (C++)
 - Diferenças entre implementações de alto e baixo nível
 
-## 📋 Prerequisites
-
-- **Python 3.14+** (baseline) — conhecimento básico de Python
-- **C++20** (variante avançada) — conhecimento de C++, CMake, Boost
-- **Conceitos de redes** — TCP, IP, protocolos (recomendado concluir `Port_Scanner`)
-- **Permissões de root** ou `CAP_NET_RAW` para captura de pacotes
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto combina redes e captura de pacotes com níveis diferentes por implementação. Um estudo prévio de redes e ferramentas de captura é recomendado.
+> Este projeto combina captura de pacotes e análise de redes. Se você travar na base, estes recursos rápidos ajudam a avançar.
 
-- [Kurose & Ross — Computer Networking](https://gaia.cs.umass.edu/kurose_ross/index.php) — fundamentos de TCP/IP
-- [libpcap/pcap docs and tutorials](https://www.tcpdump.org/pcap.html) — captura de pacotes
-- [Scapy documentation](https://scapy.readthedocs.io/en/latest/) — análise e manipulação de pacotes em Python
+- [Wireshark Tutorial for Beginners — NetworkChuck](https://www.youtube.com/watch?v=TkCSr30UojM) — captura e análise de pacotes prática
+- [C++ Packet Sniffing Tutorial](https://www.youtube.com/watch?v=RJmA26QJeCE) — exemplo prático de leitura de pacotes em C++
+- [Scapy Crash Course — Tech With Tim](https://www.youtube.com/watch?v=mlvzAPI40eY) — análise de rede com Python
 
 ## 🛠️ Scope
 
@@ -118,13 +111,13 @@ Execute o analisador em uma interface de rede e explique:
 
 ## Milestones
 
-| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                    |
-| --------------- | -------------- | -------------------------------------------------------------------- |
-| M1 — Fundação   | Semana 1       | Captura de pacotes básica, estrutura de dados (ver `python/learn/00-OVERVIEW.md` or `cpp/learn/00-OVERVIEW.md`) |
-| M2 — Parsing    | Semana 2       | Análise de cabeçalhos de protocolo (ver `python/learn/01-CONCEPTS.md` or `cpp/learn/01-CONCEPTS.md`)            |
-| M3 — Stats      | Semana 3       | Engine de estatísticas em tempo real (ver `python/learn/03-IMPLEMENTATION.md`)          |
-| M4 — UI         | Semana 4       | Interface de terminal, tabelas, progresso (ver `python/learn/03-IMPLEMENTATION.md` or `cpp/learn/03-IMPLEMENTATION.md`)     |
-| M5 — Integração | Semana 5       | Integração, testes, demo (ver `python/learn/04-CHALLENGES.md` or `cpp/learn/04-CHALLENGES.md`)                      |
+| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                                                                        |
+| --------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| M1 — Fundação   | Semana 1       | Captura de pacotes básica, estrutura de dados (ver `python/learn/00-OVERVIEW.md` or `cpp/learn/00-OVERVIEW.md`)         |
+| M2 — Parsing    | Semana 2       | Análise de cabeçalhos de protocolo (ver `python/learn/01-CONCEPTS.md` or `cpp/learn/01-CONCEPTS.md`)                    |
+| M3 — Stats      | Semana 3       | Engine de estatísticas em tempo real (ver `python/learn/03-IMPLEMENTATION.md`)                                          |
+| M4 — UI         | Semana 4       | Interface de terminal, tabelas, progresso (ver `python/learn/03-IMPLEMENTATION.md` or `cpp/learn/03-IMPLEMENTATION.md`) |
+| M5 — Integração | Semana 5       | Integração, testes, demo (ver `python/learn/04-CHALLENGES.md` or `cpp/learn/04-CHALLENGES.md`)                          |
 
 ## 🚀 Getting Started
 

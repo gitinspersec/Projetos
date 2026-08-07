@@ -40,12 +40,71 @@ A lógica geral é simples:
 
 ## Estrutura das trilhas
 
-| Ramo | Área                   | Individual                          | Team                                   | Dificuldade (Ind → Team) |
-| ---- | ---------------------- | ----------------------------------- | -------------------------------------- | ------------------------ |
-| A    | Cryptography & Hashing | `Hash_ID` ![N1](https://img.shields.io/badge/N1_Iniciante-brightgreen) | `Hash_Cracker` ![N4](https://img.shields.io/badge/N4_Avan%C3%A7ado-orange) | N1 → N4                  |
-| B    | Web & Supply Chain     | `Headers` ![N2](https://img.shields.io/badge/N2_B%C3%A1sico-green) | `V_Scanner` ![N4](https://img.shields.io/badge/N4_Avan%C3%A7ado-orange) | N2 → N4                  |
-| C    | Network Security       | `Port_Scanner` ![N3](https://img.shields.io/badge/N3_Intermedi%C3%A1rio-yellow) | `Net_Analyzer` ![N5](https://img.shields.io/badge/N5_Especialista-red) | N3 → N5                  |
-| D    | Secrets & Detection    | `Pass_Vault` ![N4](https://img.shields.io/badge/N4_Avan%C3%A7ado-orange) | `Secrets` ![N5](https://img.shields.io/badge/N5_Especialista-red) | N4 → N5                  |
+<table>
+  <thead>
+    <tr>
+      <th>Ramo</th>
+      <th>Área</th>
+      <th>Individual</th>
+      <th>Team</th>
+      <th>Dificuldade (Ind → Team)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>Cryptography &amp; Hashing</td>
+      <td align="center">
+        <div><code>Hash_ID</code></div>
+        <div><img src="https://img.shields.io/badge/N1_Iniciante-brightgreen" alt="N1 Iniciante"></div>
+      </td>
+      <td align="center">
+        <div><code>Hash_Cracker</code></div>
+        <div><img src="https://img.shields.io/badge/N4_Avan%C3%A7ado-orange" alt="N4 Avançado"></div>
+      </td>
+      <td>N1 → N4</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>Web &amp; Supply Chain</td>
+      <td align="center">
+        <div><code>Headers</code></div>
+        <div><img src="https://img.shields.io/badge/N2_B%C3%A1sico-green" alt="N2 Básico"></div>
+      </td>
+      <td align="center">
+        <div><code>V_Scanner</code></div>
+        <div><img src="https://img.shields.io/badge/N4_Avan%C3%A7ado-orange" alt="N4 Avançado"></div>
+      </td>
+      <td>N2 → N4</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>Network Security</td>
+      <td align="center">
+        <div><code>Port_Scanner</code></div>
+        <div><img src="https://img.shields.io/badge/N3_Intermedi%C3%A1rio-yellow" alt="N3 Intermediário"></div>
+      </td>
+      <td align="center">
+        <div><code>Net_Analyzer</code></div>
+        <div><img src="https://img.shields.io/badge/N5_Especialista-red" alt="N5 Especialista"></div>
+      </td>
+      <td>N3 → N5</td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td>Secrets &amp; Detection</td>
+      <td align="center">
+        <div><code>Pass_Vault</code></div>
+        <div><img src="https://img.shields.io/badge/N4_Avan%C3%A7ado-orange" alt="N4 Avançado"></div>
+      </td>
+      <td align="center">
+        <div><code>Secrets</code></div>
+        <div><img src="https://img.shields.io/badge/N5_Especialista-red" alt="N5 Especialista"></div>
+      </td>
+      <td>N4 → N5</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -58,7 +117,7 @@ Esta trilha introduz conceitos fundamentais de criptografia aplicada à seguran�
 
 O ponto central aqui é perceber que hash não é criptografia reversível. Em vez disso, a trilha trabalha com identificação de algoritmos, análise de formatos, força de busca e custo computacional. No projeto em equipe, a discussão avança para recuperação controlada de entradas a partir de hashes conhecidos, explorando ataques de dicionário, brute force, salts e limitações práticas de cada abordagem.
 
-### `Hash_ID` — Individual · N1 (Iniciante)
+### `Hash_ID` — Individual
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N1_Iniciante-brightgreen)
 
@@ -66,7 +125,7 @@ Projeto voltado à identificação de algoritmos de hash com base em padrões ob
 
 Na prática, o foco é aprender a reconhecer o que um hash pode sugerir e, principalmente, o que ele não permite concluir com certeza.
 
-### `Hash_Cracker` — Team · N4 (Avançado)
+### `Hash_Cracker` — Team
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 
@@ -85,7 +144,7 @@ Esta trilha trabalha com a camada web e com a cadeia de dependências de softwar
 
 A base está em interpretar respostas HTTP, headers de segurança, cookies, políticas de navegador e sinais de configuração insegura. Depois, a trilha evolui para a construção de um scanner de **dependências Python** capaz de automatizar verificações de vulnerabilidades conhecidas (CVEs) e atualizações seguras.
 
-### `Headers` — Individual · N2 (Básico)
+### `Headers` — Individual
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N2_B%C3%A1sico-green)
 
@@ -93,7 +152,7 @@ Projeto focado em analisar headers HTTP e identificar configurações ausentes, 
 
 É um bom ponto de entrada para entender como muita coisa sobre um sistema pode ser inferida só olhando a forma como ele responde.
 
-### `V_Scanner` — Team · N4 (Avançado)
+### `V_Scanner` — Team
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 
@@ -112,7 +171,7 @@ Esta trilha aproxima segurança de redes e programação de sistemas.
 
 Aqui a pergunta principal é: o que está exposto, o que está acontecendo e como interpretar isso? O primeiro projeto costuma explorar descoberta de portas e serviços. O segundo amplia a visão para análise de tráfego e comportamento de comunicação entre hosts.
 
-### `Port_Scanner` — Individual · N3 (Intermediário)
+### `Port_Scanner` — Individual
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N3_Intermedi%C3%A1rio-yellow)
 
@@ -120,7 +179,7 @@ Projeto para mapear portas abertas em um alvo autorizado e descobrir serviços e
 
 Mesmo parecendo simples, esse projeto envolve conceitos importantes como sockets, estados de conexão, timeouts, concorrência e diferenças entre TCP e UDP.
 
-### `Net_Analyzer` — Team · N5 (Especialista)
+### `Net_Analyzer` — Team
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N5_Especialista-red)
 
@@ -142,7 +201,7 @@ Esta trilha trata de um dos problemas mais delicados em segurança: como lidar c
 
 A progressão começa com o armazenamento seguro de credenciais em um cofre e avança para a **detecção de segredos expostos** em bases de código e repositórios git.
 
-### `Pass_Vault` — Individual · N4 (Avançado)
+### `Pass_Vault` — Individual
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 
@@ -150,7 +209,7 @@ Projeto individual focado em construir um cofre seguro para armazenar senhas e o
 
 O objetivo aqui é colocar em prática criptografia, derivação de chaves, integridade e proteção de acesso de forma coerente.
 
-### `Secrets` — Team · N5 (Especialista)
+### `Secrets` — Team
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-N5_Especialista-red)
 
@@ -168,11 +227,9 @@ A discussão sai do "guardar com segurança" e entra em temas como exposição, 
 | Stack      | Recomendação prévia                                                                                       |
 | ---------- | --------------------------------------------------------------------------------------------------------- |
 | **Python** | [Tutorial oficial do Python](https://docs.python.org/3/tutorial/) — sintaxe, funções, estruturas de dados |
-| **C++**    | [learncpp.com](https://www.learncpp.com/) — fundamentos de C++ moderno (C++20/23)                         |
+| **C++**    | [learncpp.com](https://www.learncpp.com/) — fundamentos de C++ moderno                                    |
 | **Go**     | [Tour of Go](https://go.dev/tour/) — sintaxe, goroutines, pacotes                                         |
-| **Redes**  | [Computer Networking (Kurose & Ross)](https://gaia.cs.umass.edu/kurose_ross/index.php) — TCP/IP, sockets  |
-| **HTTP**   | [MDN HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) — headers, métodos, status codes            |
-| **Cripto** | [Crypto 101](https://www.crypto101.io/) — hashes, KDFs, cifras, modelagem de ameaça                       |
+| **SQL**    | [SQLBolt](https://sqlbolt.com/) - guia prático de SQL                                                     |
 
 > [!TIP]
 > Não precisa dominar tudo antes de começar. O objetivo é ter **familiaridade básica** com a sintaxe e os conceitos centrais. O projeto vai te guiar no resto.
@@ -186,16 +243,19 @@ Escolher uma trilha é como escolher um caminho no mapa — cada uma te leva a u
 ### Ramo A — Cryptography & Hashing
 
 > "Curte desmontar problemas e entender padrões? Ramo A é pra quem gosta de pensar como um analista: identificar formatos, padrões e limitações de hashes. Começa com reconhecimento (o que uma string pode — e não pode — nos dizer) e avança para técnicas práticas de recuperação controlada (dicionário, brute force, regras). Aqui o foco é medir custo e margem de erro, não só 'quebrar' por quebrar: por que um algoritmo, uma salt ou uma política de senha muda tudo."
+
 ### Ramo B — Web & Supply Chain
 
 > "Gosta de entender o que um serviço 'fala' quando responde a requisições? Ramo B é sobre interpretar essa linguagem: headers HTTP, políticas do navegador e sinais que revelam configuração insegura. Você aprende a avaliar e pontuar headers e, em seguida, aplica essa mentalidade ao supply chain — construindo uma ferramenta que escaneia dependências Python por vulnerabilidades e sugere atualizações seguras. Resultado: conhecimento aplicável tanto para auditoria quanto para mitigação."
+
 ### Ramo C — Network Security
 
 > "Curte ver o que está exposto e entender o quê e como se comunica na rede? Ramo C leva você do reconhecimento (scanner de portas eficiente) à observação aprofundada (captura de pacotes, parsing de protocolos, estatísticas em tempo real). É a trilha ideal para quem gosta de sistemas e quer entender as implicações práticas de exposição de serviços e comportamento da rede."}
+
 ### Ramo D — Secrets & Detection
 
 > "Ramo D é sobre segurança aplicada: proteger dados sensíveis e detectar quando eles vazam. Começa implementando práticas robustas de armazenamento (derivação de chaves, AES-GCM, escritas atômicas) e avança para a detecção em escala — regras confiáveis, análise de entropia e verificações de vazamento (HIBP/k-anonimato) que preservam privacidade. Aqui você trabalha tanto na proteção quanto na capacidade de descobrir exposição real, sempre com foco em reduzir risco operacional."
-No fim, a ideia é sempre a mesma: entender o problema antes de tentar automatizá-lo.
+> No fim, a ideia é sempre a mesma: entender o problema antes de tentar automatizá-lo.
 
 > [!TIP]
 > Leia a documentação da trilha antes de começar a codar. Isso costuma poupar bastante tempo.

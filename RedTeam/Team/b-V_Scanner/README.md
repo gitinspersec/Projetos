@@ -25,21 +25,14 @@ Construir uma ferramenta em Go que escaneia dependências Python (`pyproject.tom
 - Go: CLI, parsing de arquivos, concorrência, configuração TOML
 - Atualização de arquivos preservando comentários e formatação
 
-## 📋 Prerequisites
-
-- **Go 1.24+** — conhecimento básico de Go (variáveis, funções, structs, interfaces)
-- **Conceitos de supply chain** — recomendado, mas o `learn/` cobre do zero
-- Familiaridade com `pyproject.toml` e `requirements.txt` (formato Python)
-- Terminal Linux/Unix
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto ensina conceitos de supply chain e integração com OSV. Ser familiar com Go e formatos de projeto Python ajuda.
+> Este projeto combina Go, análise de dependências e consulta a APIs. Se você travar na base, estes recursos práticos ajudam.
 
-- [Tour of Go](https://go.dev/tour/) — sintaxe e goroutines
-- [PEP 440 — Version Identification and Dependency Specification](https://peps.python.org/pep-0440/) — formatação de versões
-- [OSV.dev docs](https://osv.dev/) — modelo de vulnerabilidades e API
+- [Learn Go in 1 Hour — freeCodeCamp.org](https://www.youtube.com/watch?v=YS4e4q9oBaU) — visão geral rápida de Go
+- [Go CLI Tutorial — Tech With Tim](https://www.youtube.com/watch?v=ysEN5RaKOlA) — construção de ferramentas de linha de comando em Go
+- [Supply Chain Security Overview — OWASP](https://www.youtube.com/watch?v=5D0GKaNkr4A) — introdução prática ao problema de segurança de dependências
 
 ## 🛠️ Scope
 
@@ -107,13 +100,13 @@ Execute o scanner em um projeto Python de exemplo e explique:
 
 ## Milestones
 
-| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                             |
-| --------------- | -------------- | --------------------------------------------------------------------------- |
+| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                                    |
+| --------------- | -------------- | ----------------------------------------------------------------------------------- |
 | M1 — Fundação   | Semana 1       | CLI, parsing de `requirements.txt`, estrutura de dados (ver `learn/00-OVERVIEW.md`) |
-| M2 — OSV        | Semana 2       | Consulta a OSV.dev e exibição de vulnerabilidades (ver `learn/01-CONCEPTS.md`)       |
-| M3 — PyPI       | Semana 3       | Consultas paralelas ao PyPI, cache de ETag (ver `learn/03-IMPLEMENTATION.md`)             |
-| M4 — Update     | Semana 4       | Atualização de arquivos preservando formatação (ver `learn/03-IMPLEMENTATION.md`)         |
-| M5 — Integração | Semana 5       | Configuração TOML, testes, demo (ver `learn/04-CHALLENGES.md`)                        |
+| M2 — OSV        | Semana 2       | Consulta a OSV.dev e exibição de vulnerabilidades (ver `learn/01-CONCEPTS.md`)      |
+| M3 — PyPI       | Semana 3       | Consultas paralelas ao PyPI, cache de ETag (ver `learn/03-IMPLEMENTATION.md`)       |
+| M4 — Update     | Semana 4       | Atualização de arquivos preservando formatação (ver `learn/03-IMPLEMENTATION.md`)   |
+| M5 — Integração | Semana 5       | Configuração TOML, testes, demo (ver `learn/04-CHALLENGES.md`)                      |
 
 ## 🚀 Getting Started
 

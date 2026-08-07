@@ -26,20 +26,14 @@ Construir um gerenciador de senhas de linha de comando que armazena credenciais 
 - Bloqueio de arquivo consultivo (fcntl) para concorrência
 - Geração de senhas criptograficamente seguras (`secrets`, nunca `random`)
 
-## 📋 Prerequisites
-
-- **Nenhum conhecimento prévio de Python ou criptografia** — o projeto ensina do zero
-- Terminal básico
-- Linux, macOS ou WSL2 (recomendado) — bloqueio de arquivos e fsync são POSIX
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto ensina criptografia aplicada e práticas de I/O nos módulos `learn/`. Um estudo básico de criptografia ajuda a entender os trade-offs.
+> Este projeto ensina criptografia aplicada e práticas de I/O nos módulos `learn/`. Se você tiver dúvidas sobre os fundamentos, estes recursos ajudam.
 
-- [Crypto 101](https://www.crypto101.io/) — conceitos básicos de cifragem e KDFs
-- [Argon2 specification](https://github.com/P-H-C/phc-winner-argon2) — parâmetros e segurança do Argon2
-- [Practical Cryptography for Developers (blog posts/books)](https://cryptobook.nakov.com/) — recomendações práticas
+- [Python Cryptography Tutorial — freeCodeCamp.org](https://www.youtube.com/watch?v=ro8BV1UUaS8) — uso prático de bibliotecas de criptografia em Python
+- [Argon2 Password Hashing Explained — YouTube](https://www.youtube.com/watch?v=wpvQ56Tq5z8) — entenda por que Argon2 é usado para senhas
+- [Diffie-Hellman, AES e hashing — HackerSploit](https://www.youtube.com/watch?v=Z6KQb7-ATVI) — visão geral de criptografia aplicada
 
 ## 🛠️ Scope
 

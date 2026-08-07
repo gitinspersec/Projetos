@@ -25,21 +25,14 @@ Construir um scanner que detecta segredos expostos (chaves, tokens, senhas, stri
 - Defesa contra falsos positivos em 5 camadas
 - Go: pipeline concorrente, pools de workers, parsing de TOML
 
-## 📋 Prerequisites
-
-- **Go 1.24+** — conhecimento básico de Go
-- **Conceitos de segredos/credenciais** — recomendado concluir `Pass_Vault`
-- Familiaridade com git e repositórios
-- Terminal Linux/Unix
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto aborda detecção de exposição e controle de falsos positivos. Estudar conceitos de secrets management e ferramentas de análise ajuda.
+> Este projeto exige compreensão de detecção de segredos e análise de git. Se você travar na base, estes recursos ajudam a recuperar o fluxo.
 
-- [Pass Vault (repositório)](../../Individual/d-Pass_Vault/README.md) — modelo de armazenamento seguro
-- [Have I Been Pwned API (HIBP)](https://haveibeenpwned.com/API/v3) — entender k-anonimato e consultas seguras
-- [Detecting secrets guides (GitGuardian/Trufflehog docs)](https://www.gitguardian.com/) — exemplos de regras e false-positive handling
+- [Secret Scanning Explained — Google Cloud](https://www.youtube.com/watch?v=2Z2EMDgkX0k) — por que secret scanning importa
+- [Git History and Secrets — freeCodeCamp.org](https://www.youtube.com/watch?v=UOc6-7Zl4cw) — varredura de repositórios e histórico
+- [How Have I Been Pwned works — Troy Hunt](https://www.youtube.com/watch?v=n7Xc-4IwJ58) — introdução a k-anonimato e vazamentos
 
 ## 🛠️ Scope
 
@@ -109,13 +102,13 @@ Execute o scanner em um repositório de exemplo e explique:
 
 ## Milestones
 
-| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                           |
-| --------------- | -------------- | -------------------------------------------------------------------------- |
-| M1 — Fundação   | Semana 1       | CLI, estrutura de dados, varredura de diretório (ver `learn/00-OVERVIEW.md`)      |
-| M2 — Regras     | Semana 2       | Regras de detecção para provedores principais (ver `learn/03-IMPLEMENTATION.md`)  |
-| M3 — Entropy    | Semana 3       | Análise de entropia, defesa contra falsos positivos (ver `learn/03-IMPLEMENTATION.md`)  |
-| M4 — Git/HIBP   | Semana 4       | Varredura de histórico git, verificação HIBP (ver `learn/03-IMPLEMENTATION.md`)         |
-| M5 — Integração | Semana 5       | Saída JSON/SARIF, pipeline concorrente, testes, demo (ver `learn/04-CHALLENGES.md`) |
+| Milestone       | Prazo estimado | Entregável (referência `learn/`)                                                       |
+| --------------- | -------------- | -------------------------------------------------------------------------------------- |
+| M1 — Fundação   | Semana 1       | CLI, estrutura de dados, varredura de diretório (ver `learn/00-OVERVIEW.md`)           |
+| M2 — Regras     | Semana 2       | Regras de detecção para provedores principais (ver `learn/03-IMPLEMENTATION.md`)       |
+| M3 — Entropy    | Semana 3       | Análise de entropia, defesa contra falsos positivos (ver `learn/03-IMPLEMENTATION.md`) |
+| M4 — Git/HIBP   | Semana 4       | Varredura de histórico git, verificação HIBP (ver `learn/03-IMPLEMENTATION.md`)        |
+| M5 — Integração | Semana 5       | Saída JSON/SARIF, pipeline concorrente, testes, demo (ver `learn/04-CHALLENGES.md`)    |
 
 ## 🚀 Getting Started
 

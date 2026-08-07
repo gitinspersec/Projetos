@@ -25,22 +25,14 @@ Construir uma ferramenta multi-threaded de quebra de hashes que suporta ataques 
 - Otimização de busca e particionamento de keyspace
 - Medição do custo real de quebrar um hash
 
-## 📋 Prerequisites
-
-- **C++ moderno** (C++20/C++23) — variáveis, funções, classes, templates
-- **Concorrência** — threads, mutexes (ou disposição para aprender durante)
-- **CMake** — build system
-- **Conceitos de hashing** — recomendado concluir `Hash_ID` antes
-- Terminal Linux/Unix
-
-### 📖 O que estudar antes
+## � Caso tenha dificuldades com a base do projeto
 
 > [!NOTE]
-> Este projeto requer conforto com C++ moderno e concorrência. Os módulos `learn/` cobrem muitos conceitos, mas recomenda-se revisão prévia.
+> Este projeto exige conforto com C++ e concorrência. Os módulos `learn/` cobrem o essencial, mas estes recursos ajudam a recuperar a base rapidamente.
 
-- [learncpp.com](https://www.learncpp.com/) — C++ moderno, templates e práticas
-- [C++ Concurrency in Action (Chap. sobre threading)](https://www.amazon.com/C-Concurrency-Action-Anthony-Williams/dp/1933988770) — threading patterns
-- [Introdução aux hashes e segurança (Crypto 101)](https://www.crypto101.io/)
+- [C++ Multithreading Tutorial — freeCodeCamp.org](https://www.youtube.com/watch?v=Z6RpuXlRytk) — explicação prática de threads e sincronização
+- [C++ Build System Tutorial | CMake — The Cherno](https://www.youtube.com/watch?v=BSwqK0mvb70) — introdução rápida ao CMake
+- [Hash Cracking Basics — Null Byte](https://www.youtube.com/watch?v=pmm6dseaT68) — conceitos práticos sobre ataques de dicionário e força bruta
 
 ## 🛠️ Scope
 
@@ -109,13 +101,13 @@ Execute a ferramenta com os hashes de demonstração e explique:
 
 ## Milestones
 
-| Milestone            | Prazo estimado | Entregável (referência `learn/`)                                            |
-| -------------------- | -------------- | -------------------------------------------------------------------------- |
-| M1 — Fundação        | Semana 1       | CMake setup, detecção de hash, interface de hashing (ver `learn/00-OVERVIEW.md`, `learn/01-CONCEPTS.md`)   |
-| M2 — Ataques básicos | Semana 2       | Dicionário + brute force em single-thread (ver `learn/03-IMPLEMENTATION.md`) |
-| M3 — Regras          | Semana 3       | Sistema de mutação baseada em regras (ver `learn/03-IMPLEMENTATION.md`, `learn/04-CHALLENGES.md`)                  |
-| M4 — Concorrência    | Semana 4       | Multi-threading com particionamento de trabalho (ver `learn/03-IMPLEMENTATION.md`)       |
-| M5 — Integração      | Semana 5       | Integração de todos os módulos, testes, demo (ver `learn/04-CHALLENGES.md`)          |
+| Milestone            | Prazo estimado | Entregável (referência `learn/`)                                                                         |
+| -------------------- | -------------- | -------------------------------------------------------------------------------------------------------- |
+| M1 — Fundação        | Semana 1       | CMake setup, detecção de hash, interface de hashing (ver `learn/00-OVERVIEW.md`, `learn/01-CONCEPTS.md`) |
+| M2 — Ataques básicos | Semana 2       | Dicionário + brute force em single-thread (ver `learn/03-IMPLEMENTATION.md`)                             |
+| M3 — Regras          | Semana 3       | Sistema de mutação baseada em regras (ver `learn/03-IMPLEMENTATION.md`, `learn/04-CHALLENGES.md`)        |
+| M4 — Concorrência    | Semana 4       | Multi-threading com particionamento de trabalho (ver `learn/03-IMPLEMENTATION.md`)                       |
+| M5 — Integração      | Semana 5       | Integração de todos os módulos, testes, demo (ver `learn/04-CHALLENGES.md`)                              |
 
 ## 🚀 Getting Started
 
