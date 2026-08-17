@@ -5,84 +5,84 @@
 
 Bem-vindo ao lugar em que a teoria deixa de ser só teoria.
 
-Aqui você encontra projetos de cibersegurança pensados para transformar conceitos em prática real: entender sistemas, construir ferramentas, analisar comportamento, tomar decisões técnicas e aprender como segurança funciona quando sai do slide e entra no terminal.
+Aqui você encontra projetos de cibersegurança feitos para sair do slide e entrar no terminal: entender sistemas, criar ferramentas, analisar comportamento, tomar decisões técnicas e aprender como a segurança funciona na prática.
 
-Este repositório é uma **trilha educacional**, não um inventário de ferramentas. Cada projeto tem um papel pedagógico claro: ensinar um conjunto de conceitos, exigir um esforço previsível e preparar você para o próximo passo.
+Isso aqui não é um inventário de ferramentas. É uma **trilha de aprendizado**: cada projeto tem um papel claro, exige um esforço previsível e te leva para o próximo passo sem perder a base.
 
 ---
 
-## 🧭 Como a trilha se organiza
+## 🧭 Como a trilha se organiza neste semestre
 
-A trilha é organizada em **semestres**, cada um com um objetivo pedagógico distinto:
+No contexto atual do **início do 2º semestre de 2026**, a estrutura da turma foi ajustada para refletir a realidade do momento:
 
-|                  Frente                   | Semestre | Cor |    Foco    | Papel pedagógico                                                    |
-| :---------------------------------------: | :------: | :-: | :--------: | ------------------------------------------------------------------- |
-|    [**Red Team**](./RedTeam/README.md)    |    1º    | 🔴  |  Ofensivo  | Observar, mapear, testar e explorar sistemas em contexto autorizado |
-|   [**Blue Team**](./BlueTeam/README.md)   |    2º    | 🔵  | Defensivo  | Observar, detectar, investigar, responder e endurecer sistemas      |
-| [**Purple Team**](./PurpleTeam/README.md) |   3º+    | 💜  | Integração | Executar Red → detectar Blue → refletir e melhorar a trilha         |
+|  Frente atual   |      Perfil do grupo       |     Situação neste semestre     |                              Papel pedagógico                               |
+| :-------------: | :------------------------: | :-----------------------------: | :-------------------------------------------------------------------------: |
+|  **Red Team**   | membros que estão entrando |              ativa              |    onboarding, base técnica e primeiros projetos em contexto autorizado     |
+|  **Blue Team**  |    membros mais antigos    |              ativa              | mesma trilha de projetos do Red Team, com aprofundamento e revisão aplicada |
+| **Purple Team** |         integração         | ainda não existe neste semestre |                        será estruturado futuramente                         |
 
-> **Modelo semestral:** dentro de cada semestre, o projeto **Individual** representa uma **entrega intermediária**, e o projeto **Team** representa a **entrega final do semestre**, com apresentação à Insper Sec.
+> No semestre atual, o **Blue Team** é composto por membros já no ciclo anterior, mas **executa o mesmo catálogo de 8 projetos do Red Team**. Os nomes que aparecem fora desse catálogo são apenas planejamento acadêmico, não conteúdo consolidado neste repositório. O **Purple Team** ainda não está ativo neste período.
+
+> Veja a [**documentação completa de projetos**](./projects/README.md) para a organização detalhada de todos os projetos e ramos.
+
+> **Modelo do semestre atual:** o projeto **Individual** representa uma entrega intermediária, e o projeto **Team** representa a entrega final do semestre. Neste ciclo, o **team é misto entre Blue e Red**, com grupos compartilhando a mesma janela de trabalho e o mesmo conjunto de projetos-base.
 
 > [!TIP]
-> A progressão **não é linear**. O currículo é organizado em **ramos temáticos paralelos** que convergem em uma atividade integradora (Purple). Veja o [mapa curricular completo](./docs/CURRICULUM.md).
+> A progressão **não é linear** e a trilha continua organizada em ramos temáticos paralelos. O mapa do semestre se ajusta à turma do momento. Veja o [mapa curricular completo](./docs/CURRICULUM.md).
 
 ---
 
 ## 🚀 Por onde começar?
 
-Se você é **novo(a) no Insper Sec**, siga este fluxo:
+Para este semestre, o caminho mais natural depende do perfil do membro:
 
-1. Leia este README para entender o mapa geral.
-2. Escolha um ramo temático no [**Red Team**](./RedTeam/README.md).
-3. Comece pelo projeto **Individual** do ramo escolhido.
-4. Siga para o projeto **Team** do mesmo ramo (entrega final do semestre).
-5. Ao final do semestre, avance para o [**Blue Team**](./BlueTeam/README.md) (2º semestre).
-6. No 3º+ semestre, você será parte do [**Purple Team**](./PurpleTeam/README.md).
+1. **Se você está entrando no Red Team**, comece pelo projeto individual do ramo que te interessa.
+2. **Se você já está no ciclo anterior e faz parte do Blue Team**, segue a mesma sequência de 8 projetos da trilha-base do semestre, com mais revisão e aprofundamento.
+3. O **team** desta edição é compartilhado entre Blue e Red, com grupos mistos e a mesma janela de entrega para os dois lados.
+4. O **Purple Team** ainda não está ativo neste período e vai ser estruturado mais para frente.
 
 > [!IMPORTANT]
-> **Primeiro passo concreto:** abra [`RedTeam/Individual/a-Hash_ID/README.md`](./RedTeam/Individual/a-Hash_ID/README.md) e siga o início rápido. É o ponto de entrada recomendado para quem nunca fez um projeto de segurança.
+> **Sugestão para completos iniciantes:** abra [Hash_ID](./projects/Individual/a-Hash_ID/README.md) para começar por uma base sólida e bem guiada.
 
 ---
 
-## 📚 Progressão sugerida
+## 📚 Estrutura atual do semestre (2026/2)
 
 ```mermaid
 flowchart TD
-    F[Onboarding: Git + terminal + programação básica]
+    A[Blue Team — membros antigos] --> B[Projeto Individual 1]
+    A --> C[Projeto Individual 2]
+    T[Team misto Blue + Red]
 
-    F --> H1[Hash_ID · N1]
-    F --> W1[Headers · N2]
-    F --> N1[Port_Scanner · N3]
-    F --> C1[Pass_Vault · N4]
+    R[Red Team — membros entrando] --> D[Projeto Individual]
 
-    H1 --> H2[Hash_Cracker · N4]
-    W1 --> V1[V_Scanner · N4]
-    N1 --> N2[Net_Analyzer · N5]
-    C1 --> S1[Secrets · N5]
+    B --> T
+    C --> T
+    D --> T
 
-    H2 & V1 & N2 & S1 --> R[Red Team — Competências do 1º Semestre]
-
-    R --> B[Blue Team — 2º Semestre]
+    T --> E[Entrega final — 14/10 a 02/12]
 ```
 
-> Todos os 8 projetos consolidados pertencem ao **Red Team** (1º semestre). O Blue Team (2º semestre) e o Purple Team (3º+ semestre) são fases posteriores da trilha.
+> Neste semestre, a lógica é bem prática: **o Blue Team e o Red Team compartilham o mesmo catálogo de 8 projetos**, com o mesmo fluxo de Individual → Team e a mesma janela final em grupo misto.
+
+> O **Purple Team** ainda não está ativo neste período; quando entrar em cena, ele vai ser estruturado de verdade.
 
 ---
 
 ## 📊 Resumo dos projetos
 
-| Projeto                                                         | Frente | Modo       | Dificuldade   | Nível | Stack        |
-| --------------------------------------------------------------- | ------ | ---------- | ------------- | ----- | ------------ |
-| [`Hash_ID`](./RedTeam/Individual/a-Hash_ID/README.md)           | Red    | Individual | Iniciante     | N1    | Python       |
-| [`Headers`](./RedTeam/Individual/b-Headers/README.md)           | Red    | Individual | Básico        | N2    | Python       |
-| [`Port_Scanner`](./RedTeam/Individual/c-Port_Scanner/README.md) | Red    | Individual | Intermediário | N3    | C++          |
-| [`Pass_Vault`](./RedTeam/Individual/d-Pass_Vault/README.md)     | Red    | Individual | Avançado      | N4    | Python       |
-| [`Hash_Cracker`](./RedTeam/Team/a-Hash_Cracker/README.md)       | Red    | Team       | Avançado      | N4    | C++          |
-| [`V_Scanner`](./RedTeam/Team/b-V_Scanner/README.md)             | Red    | Team       | Avançado      | N4    | Go           |
-| [`Net_Analyzer`](./RedTeam/Team/c-Net_Analyzer/README.md)       | Red    | Team       | Especialista  | N5    | Python / C++ |
-| [`Secrets`](./RedTeam/Team/d-Secrets/README.md)                 | Red    | Team       | Especialista  | N5    | Go           |
+| Projeto                                                          | Frente | Modo       | Dificuldade   | Nível | Stack        |
+| ---------------------------------------------------------------- | ------ | ---------- | ------------- | ----- | ------------ |
+| [`Hash_ID`](./projects/Individual/a-Hash_ID/README.md)           | Red    | Individual | Iniciante     | N1    | Python       |
+| [`Headers`](./projects/Individual/b-Headers/README.md)           | Red    | Individual | Básico        | N2    | Python       |
+| [`Port_Scanner`](./projects/Individual/c-Port_Scanner/README.md) | Red    | Individual | Intermediário | N3    | C++          |
+| [`Pass_Vault`](./projects/Individual/d-Pass_Vault/README.md)     | Red    | Individual | Avançado      | N4    | Python       |
+| [`Hash_Cracker`](./projects/Team/a-Hash_Cracker/README.md)       | Red    | Team       | Avançado      | N4    | C++          |
+| [`V_Scanner`](./projects/Team/b-V_Scanner/README.md)             | Red    | Team       | Avançado      | N4    | Go           |
+| [`Net_Analyzer`](./projects/Team/c-Net_Analyzer/README.md)       | Red    | Team       | Especialista  | N5    | Python / C++ |
+| [`Secrets`](./projects/Team/d-Secrets/README.md)                 | Red    | Team       | Especialista  | N5    | Go           |
 
-> **Blue Team** (2º semestre) e **Purple Team** (3º+ semestre) estão em construção. Veja [BlueTeam/README.md](./BlueTeam/README.md) e [PurpleTeam/README.md](./PurpleTeam/README.md) para o estado atual.
+> **Semestre atual (2026/2):** o **Blue Team** é formado por membros mais antigos, mas **segue o mesmo catálogo de 8 projetos do Red Team**. Veja [projects/README.md](./projects/README.md) para o estado atual.
 
 ---
 
@@ -109,7 +109,8 @@ Ao longo da trilha, você desenvolverá:
 
 ## 📚 Documentação transversal
 
-- [**Mapa curricular completo**](./docs/CURRICULUM.md) — progressão, ramos, dificuldades
+- [**Trilha de projetos unificada**](./projects/README.md) — catálogo completo, progressão, ramos, dificuldades
+- [**Mapa curricular**](./docs/CURRICULUM.md) — progressão, ramos, dificuldades, relações entre projetos
 - [**Padrões de README**](./CONTRIBUTING.md#-padrões-de-readme) — convenções e contrato educacional padrão
 - [**Guia de workflow**](./docs/WORKFLOW.md) — comandos, passo a passo e entregas de projeto
 - [**Guia de demo**](./docs/DEMO_GUIDE.md) — roteiro de apresentação e critérios de avaliação
@@ -118,4 +119,4 @@ Ao longo da trilha, você desenvolverá:
 
 ---
 
-Boa exploração — com responsabilidade. 🛡️
+Boa exploração — com responsabilidade.

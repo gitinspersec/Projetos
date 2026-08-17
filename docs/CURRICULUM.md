@@ -8,11 +8,13 @@
 
 O repositório é uma **trilha educacional**, não um inventário de ferramentas. Cada projeto tem um papel pedagógico claro: ensinar um conjunto de conceitos, exigir um esforço previsível e preparar o membro para o próximo passo.
 
-A progressão é organizada em **semestres**, cada um com um objetivo pedagógico distinto:
+A progressão geral continua sendo organizada em **semestres e frentes**, mas o **semestre atual (2026/2)** tem uma composição específica: o **Blue Team** é composto por membros mais antigos, o **Red Team** reúne os membros que estão entrando e o **Purple Team** ainda não está ativo neste período.
 
-- **1º Semestre — Red Team:** foco ofensivo, fundamentos e construção de ferramentas.
-- **2º Semestre — Blue Team:** foco defensivo, detecção, resposta e endurecimento.
-- **3º+ Semestre — Purple Team:** atividade integradora que une ofensiva e defensiva.
+A estrutura didática geral é:
+
+- **Red Team:** onboarding, fundamentos, observação, mapeamento e exploração em contexto autorizado.
+- **Blue Team:** mesma trilha-base do Red Team, com revisão e aprofundamento aplicado em prática.
+- **Purple Team:** integração ofensiva/defensiva, a ser estruturada em uma etapa futura.
 
 Dentro de cada semestre, a progressão **não é linear**. O currículo é organizado em **ramos temáticos paralelos**, cada um com sua própria cadeia de projetos (Individual → Team).
 
@@ -20,13 +22,19 @@ Dentro de cada semestre, a progressão **não é linear**. O currículo é organ
 
 ## 2. Frentes (Teams) e Semestres
 
-|     Frente      | Semestre | Cor |    Foco    | Papel pedagógico                                                    |
-| :-------------: | :------: | :-: | :--------: | ------------------------------------------------------------------- |
-|  **Red Team**   |    1º    | 🔴  |  Ofensivo  | Observar, mapear, testar e explorar sistemas em contexto autorizado |
-|  **Blue Team**  |    2º    | 🔵  | Defensivo  | Observar, detectar, investigar, responder e endurecer sistemas      |
-| **Purple Team** |   3º+    | 💜  | Integração | Executar Red → detectar Blue → refletir e melhorar a trilha         |
+|  Frente atual   |   Perfil do grupo    | Situação neste semestre | Papel pedagógico                                                     |
+| :-------------: | :------------------: | :---------------------: | -------------------------------------------------------------------- |
+|  **Red Team**   |   membros entrando   |          ativa          | onboarding, base técnica e exploração em contexto autorizado         |
+|  **Blue Team**  | membros mais antigos |          ativa          | mesma trilha-base do Red Team, com revisão e aprofundamento aplicado |
+| **Purple Team** |      integração      |     ainda não ativo     | será estruturado mais para frente                                    |
 
-> **Modelo semestral:** dentro de cada semestre, o projeto **Individual** representa uma **entrega intermediária**, e o projeto **Team** representa a **entrega final do semestre**, com apresentação à Insper Sec.
+> **Modelo do semestre atual:** o projeto **Individual** representa uma entrega intermediária, e o projeto **Team** representa a entrega final do semestre. Neste ciclo, o **Blue Team e o Red Team compartilham o mesmo catálogo de 8 projetos**, com o **team misto** entre os grupos e a mesma janela de trabalho.
+
+> **Calendário do semestre atual:**
+>
+> - **Red Team / Blue Team (individuais):** 09/09 a 07/10
+> - **Blue Team / Red Team (mesmo catálogo):** 20/08 a 08/10 para revisão e aprofundamento
+> - **Team (comum a ambos):** 14/10 a 02/12
 
 ---
 
@@ -86,23 +94,22 @@ flowchart TD
 
 ---
 
-## 6. Projetos Blue Team (2º Semestre — Planejados)
+## 6. Planejamento Acadêmico (não consolidado)
 
-A frente Blue está em construção. Os projetos abaixo estão **planejados** e serão detalhados conforme forem implementados:
+Os nomes abaixo aparecem como **planejamento didático**, mas **não fazem parte do catálogo ativo do semestre**. O conteúdo consolidado e executado no repositório continua sendo o mesmo conjunto de 8 projetos da trilha-base do Red Team.
 
-### Individual
+### Planejamento não consolidado
 
 - `Canary_Token_Generator` — geração de tokens canário para detecção de acesso não autorizado
 - `Metadata_Scrubber_Tool` — remoção de metadados sensíveis de arquivos
 - `Systemd_Persist_Scan` — detecção de persistência via systemd
-- `V_Scanner` — scanner de dependências (ponte com Red, perfil defensivo)
-
-### Team
-
 - `DLP_Scanner` — prevenção de vazamento de dados
 - `Docker_Security_Audit` — auditoria de segurança de containers
 - `Honeypot_Network` — rede de honeypots para detecção de intrusão
 - `SBOM_Generator&Vulnerability` — geração de SBOM e análise de vulnerabilidades
+
+> [!NOTE]
+> Esses itens não substituem o catálogo em execução do semestre. O modelo atual é: **Blue Team e Red Team seguem os mesmos 8 projetos consolidados**.
 
 ---
 
@@ -130,8 +137,8 @@ Em construção. 🏗️
 ## 9. Onboarding
 
 1. Leia o [`README.md`](../README.md) raiz.
-2. Escolha um ramo temático no [`RedTeam`](../RedTeam/README.md).
-3. Comece pelo projeto **Individual** do ramo escolhido.
-4. Siga para o projeto **Team** do mesmo ramo (entrega final do semestre).
-5. Ao final do semestre, avance para o **Blue Team** (2º semestre).
+2. Leia a [`trilha de projetos unificada`](../projects/README.md) para explorar os ramos temáticos.
+3. Comece pelo projeto **Individual** do ramo escolhido em [`projects/Individual/`](../projects/Individual/).
+4. Siga para o projeto **Team** do mesmo ramo em [`projects/Team/`](../projects/Team/) (entrega final do semestre).
+5. Ao final do semestre, avance para o **Blue Team** (2º semestre) — projetos em [`projects/Individual/`](../projects/Individual/) e [`projects/Team/`](../projects/Team/).
 6. No 3º+ semestre, participe do **Purple Team**.

@@ -27,22 +27,18 @@ Sec_Projects/
 ├── README.md                    # Landing page raiz
 ├── CONTRIBUTING.md              # Guia de contribuição
 ├── LICENSE
-├── TODO.md                      # Rastreador de tarefas
 ├── docs/
 │   ├── CURRICULUM.md            # Mapa curricular (progressão, ramos, dificuldades)
-│   ├── (padrões de README em CONTRIBUTING.md)
 │   ├── WORKFLOW.md              # Este guia — workflow central
 │   └── DEMO_GUIDE.md            # Guia de demo/apresentação
-├── RedTeam/
-│   ├── README.md                # Landing page Red
-│   ├── Individual/              # Projetos individuais (a-, b-, c-, d-)
-│   └── Team/                    # Projetos em equipe (a-, b-, c-, d-)
-├── BlueTeam/
-│   ├── README.md                # Landing page Blue
-│   ├── Individual/              # Projetos individuais planejados
-│   └── Team/                    # Projetos em equipe planejados
-└── PurpleTeam/
-    └── README.md                # Atividade integradora (capstone)
+├── projects/
+│   ├── README.md                # Landing page unificada de projetos
+│   ├── Individual/              # Projetos individuais (Red/Blue/Purple)
+│   └── Team/                    # Projetos em equipe (Red/Blue/Purple)
+└── submissions/
+    ├── README.md                # Instruções de entrega
+    ├── Individual/              # Entregas individuais por aluno
+    └── Team/                    # Entregas de equipe
 ```
 
 ### Convenção de nomes de pasta
@@ -53,6 +49,8 @@ Sec_Projects/
   - C: Network Security
   - D: Secrets & Detection
 - A **dificuldade** é sempre explícita no README (badge `Difficulty`), separada do tema.
+- Os projetos estão organizados fisicamente por tipo (`Individual/` ou `Team/`), não por frente (Red/Blue/Purple).
+- A frente é metadados/documentação, não uma pasta de primeiro nível.
 
 ---
 
@@ -133,9 +131,9 @@ Cada projeto é entregue seguindo este fluxo:
 ### 5.1 Antes de começar
 
 1. Leia o [`README.md`](../README.md) raiz para entender o mapa geral.
-2. Escolha a frente: **Red** ou **Blue**.
+2. Leia [`projects/README.md`](../projects/README.md) para explorar os ramos e projetos.
 3. Escolha um ramo temático (A/B/C/D) e um projeto.
-4. Leia o **README do projeto** — é o contrato educacional.
+4. Leia o **README do projeto** em [`projects/Individual/`](../projects/Individual/) ou [`projects/Team/`](../projects/Team/) — é o contrato educacional.
 5. Leia os módulos **`learn/`** em ordem (00 → 04).
 
 ### 5.2 Durante o desenvolvimento
@@ -161,7 +159,7 @@ Todo projeto é considerado concluído quando:
 
 1. Execute a **demo** (ver [`docs/DEMO_GUIDE.md`](./DEMO_GUIDE.md)).
 2. Documente o que foi feito, decisões técnicas e dificuldades.
-3. Crie a entrega dentro de `Entregas/` usando o modelo de `Entregas/README.md`.
+3. Crie a entrega dentro de `submissions/` usando o modelo de [`submissions/README.md`](../submissions/README.md).
 4. Siga o **Next Step** do README para avançar.
 
 ---
@@ -210,7 +208,7 @@ git status
 git add .
 
 # OU adicione arquivos específicos
-git add README.md RedTeam/README.md
+git add projects/Individual/a-Hash_ID/README.md
 ```
 
 ### 6. Crie um commit com mensagem clara
@@ -231,7 +229,7 @@ git push origin nome-da-branch
 
 1. Acesse o repositório no GitHub.
 2. Clique em **"Compare & pull request"** (aparece após o push).
-3. Certifique-se de que a entrega esteja na pasta `Entregas/<NomeDoAlunoOuEquipe>/<NomeDoProjeto>/`.
+3. Certifique-se de que a entrega esteja na pasta `submissions/<Modo>/<NomeDoAlunoOuEquipe>/<NomeDoProjeto>/`.
 4. Descreva:
    - **O que foi feito** — resumo das mudanças;
    - **Por que foi feito** — motivação;
@@ -249,7 +247,7 @@ git pull origin main
 ```
 
 > [!NOTE]
-> O avaliador responsável deve receber a entrega formatada em `Entregas/` e com o `README.md` de entrega preenchido.
+> O avaliador responsável deve receber a entrega formatada em `submissions/` e com o `README.md` de entrega preenchido.
 
 > [!TIP]
 > Se tiver conflitos no PR, o GitHub indica. Para resolver, atualize sua branch:

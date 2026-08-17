@@ -19,11 +19,14 @@ Obrigado por querer contribuir! Este repositório é uma trilha educacional, e t
 
 ### 1. Novo Projeto
 
-- Escolha uma frente (Red/Blue) e um ramo temático (A/B/C/D).
-- Crie a pasta seguindo a convenção: `Frente/Modo/letra-Nome_Projeto/`.
+- Escolha uma frente (Red/Blue/Purple) e um ramo temático (A/B/C/D).
+- Crie a pasta seguindo a convenção: `projects/<Modo>/letra-Nome_Projeto/`.
+  - `<Modo>` é `Individual` ou `Team`
+  - A frente (Red/Blue/Purple) é **metadados**, não parte do caminho
+  - O exemplo: `projects/Individual/a-Hash_ID/` ou `projects/Team/b-V_Scanner/`
 - Crie o README seguindo os [Padrões de README](#-padrões-de-readme).
 - Crie a pasta `learn/` com os módulos 00–04.
-- Adicione o projeto ao mapa curricular (`docs/CURRICULUM.md`) e à landing page da frente.
+- Adicione o projeto ao mapa curricular (`docs/CURRICULUM.md`) e à landing page unificada (`projects/README.md`).
 
 ### 2. Melhoria de Projeto Existente
 
