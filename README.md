@@ -50,17 +50,27 @@ Para este semestre, o caminho mais natural depende do perfil do membro:
 
 ```mermaid
 flowchart TD
-    A[Blue Team — membros antigos] --> B[Projeto Individual 1]
-    A --> C[Projeto Individual 2]
-    T[Team misto Blue + Red]
+    A[Blue Team] --> B[Projeto Individual 20/08-08/10]
+    T[Team Blue + Red]
 
-    R[Red Team — membros entrando] --> D[Projeto Individual]
+    R[Red Team] --> D[Projeto Individual 09/09-07/10]
 
     B --> T
-    C --> T
     D --> T
 
-    T --> E[Entrega final — 14/10 a 02/12]
+    T --> E[Entrega final 14/10-02/12]
+
+    classDef vermelho fill:#000,stroke:#ff3333,stroke-width:2px,color:#fff;
+    classDef azul fill:#000,stroke:#00a8cc,stroke-width:2px,color:#fff;
+    classDef roxo fill:#000,stroke:#9c27b0,stroke-width:2px,color:#fff;
+    classDef branco fill:#000,stroke:#ffffff,stroke-width:2px,color:#fff;
+
+    class A azul;
+    class B branco;
+    class R vermelho;
+    class D branco;
+    class E branco;
+    class T roxo;
 ```
 
 > Neste semestre, a lógica é bem prática: **o Blue Team e o Red Team compartilham o mesmo catálogo de 8 projetos**, com o mesmo fluxo de Individual → Team e a mesma janela final em grupo misto.
