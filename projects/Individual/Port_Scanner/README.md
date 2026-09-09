@@ -1,13 +1,12 @@
 # Port Scanner
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Individual-555)
+![Mode](https://img.shields.io/badge/Mode-Individual-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N3_Intermedi%C3%A1rio-yellow)
 ![Stack](https://img.shields.io/badge/Stack-C%2B%2B-00599C)
 
 > Scanner de portas TCP assíncrono construído com C++ e Boost.Asio para reconhecimento de rede de alta concorrência.
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [/learn](./learn/00-Introdução.md)._
 
 ## 🎯 Objective
 
@@ -28,28 +27,27 @@ Construir um scanner de portas TCP assíncrono que mapeia portas abertas em um a
 
 - [C++ Socket Programming Tutorial](https://www.youtube.com/watch?v=LtXEMwSG5-8) — introdução prática a sockets em C++
 - [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/) — referência consolidada para socket APIs
-- [YouTube: How TCP/IP Works — Computerphile](https://www.youtube.com/watch?v=3QhU9jd03a0) — visualize os principais conceitos de rede
+- [YouTube: What is TCP/IP? - Techquickie](https://youtu.be/PpsEaqJV_A0?si=c4rZo9wSYmt6hNQa) — visualize os principais conceitos de rede
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Scanner de portas TCP assíncrono com Boost.Asio
-- Intervalos de portas configuráveis (porta única até 65535)
-- Nível de concorrência ajustável
-- Configuração de timeout de conexão
-- Saída de terminal mostrando estados de porta (aberta, fechada, filtrada)
-
-### Mínimo viável (MVP)
-
-- Escanear um intervalo de portas em um único alvo
-- Exibir portas abertas em texto simples
+- Concluir os **Desafios 1–3 (fáceis)** em `learn/04-Desafios.md`: saída CSV, indicador de progresso e escaneamento de múltiplos hosts.
+- Manter o scanner TCP assíncrono, os intervalos de portas, o controle de concorrência/timeout e a classificação de estados definidos na base do projeto.
+- Demonstrar cada desafio com uma execução em alvo autorizado e testes/validações reproduzíveis.
 
 ### Stretch
 
-- Escaneamento completo de 65535 portas
-- Detecção de serviço por banner
-- Output em JSON/CSV para integração
+- **Desafios 4–5 (intermediários):** saída JSON e detecção de versão de serviço.
+
+### Conquer
+
+- **Desafios 6–7 (avançados):** SYN scan e fingerprinting de sistema operacional.
+- **Desafios 8–9 (especialistas):** engine de escaneamento completa estilo Nmap e técnicas de evasão de IDS.
+- **Integração no mundo real:** integração com Metasploit e implantação em AWS Lambda.
+- **Desempenho:** suporte a 100.000 conexões concorrentes e redução do uso de largura de banda.
+- **Segurança:** detecção de sequência de port knock e marca d'água de atribuição de scan.
 
 ## ✅ Definition of Done
 
@@ -119,7 +117,7 @@ make
 
 ## 🧭 Next Step
 
-Após concluir `Port_Scanner`, avance para o projeto em equipe do mesmo ramo: [`Net_Analyzer`](../../Team/c-Net_Analyzer/README.md) — análise de tráfego de rede e interpretação de protocolos.
+Após concluir `Port_Scanner`, avance para o projeto em equipe do mesmo ramo: [`Net_Analyzer`](../../Team/Net_Analyzer/README.md) — análise de tráfego de rede e interpretação de protocolos.
 
 > [!NOTE]
 > **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.

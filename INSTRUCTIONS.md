@@ -73,7 +73,7 @@ flowchart TD
 - Fundamentos de hashing criptográfico
 - Como hash é usado em contextos reais
 
-**Learning Resources:** Veja [`README`](./projects/Individual/a-Hash_ID/README.md).
+**Learning Resources:** Veja [`README`](./projects/Individual/Hash_ID/README.md).
 
 ---
 
@@ -92,7 +92,7 @@ flowchart TD
 - Performance crítica em C++
 - Integração de wordlists e estratégias de ataque
 
-**Learning Resources:** Veja [`README`](./projects/Team/a-Hash_Cracker/README.md).
+**Learning Resources:** Veja [`README`](./projects/Team/Hash_Cracker/README.md).
 
 **Progressão:** Evolução natural de Hash_ID com foco em engenharia prática.
 
@@ -115,7 +115,7 @@ flowchart TD
 - Fingerprinting de servidores e tecnologias
 - Descoberta de tecnologia via análise passiva
 
-**Learning Resources:** Veja [`README`](./projects/Individual/b-Headers/README.md).
+**Learning Resources:** Veja [`README`](./projects/Individual/Headers/README.md).
 
 ---
 
@@ -135,7 +135,7 @@ flowchart TD
 - Go para ferramentas de segurança
 - Integração com ecosistemas de pacotes
 
-**Learning Resources:** Veja [`README`](./projects/Team/b-V_Scanner/README.md).
+**Learning Resources:** Veja [`README`](./projects/Team/V_Scanner/README.md).
 
 **Progressão:** Evolução natural de Headers com foco em segurança de supply chain.
 
@@ -158,7 +158,7 @@ flowchart TD
 - Timeout e tratamento de erros de rede
 - Mapeamento de ativos e inventário de serviços
 
-**Learning Resources:** Veja [`README`](./projects/Individual/c-Port_Scanner/README.md).
+**Learning Resources:** Veja [`README`](./projects/Individual/Port_Scanner/README.md).
 
 ---
 
@@ -177,7 +177,7 @@ flowchart TD
 - Reconstrução de sessões
 - Análise forense de tráfego
 
-**Learning Resources:** Veja [`README`](./projects/Team/c-Net_Analyzer/README.md).
+**Learning Resources:** Veja [`README`](./projects/Team/Net_Analyzer/README.md).
 
 **Progressão:** Evolução natural de Port_Scanner com foco em análise profunda.
 
@@ -201,7 +201,7 @@ flowchart TD
 - Proteção de segredos contra ataques de side-channel
 - Boas práticas de gerenciamento de credenciais
 
-**Learning Resources:** Veja [`README`](./projects/Individual/d-Pass_Vault/README.md).
+**Learning Resources:** Veja [`README`](./projects/Individual/Pass_Vault/README.md).
 
 ---
 
@@ -221,7 +221,7 @@ flowchart TD
 - Resposta a vazamentos
 - Integração com CI/CD para detecção precoce
 
-**Learning Resources:** Veja [`README`](./projects/Team/d-Secrets/README.md).
+**Learning Resources:** Veja [`README`](./projects/Team/Secrets/README.md).
 
 **Progressão:** Evolução natural de Pass_Vault com foco em detecção operacional.
 

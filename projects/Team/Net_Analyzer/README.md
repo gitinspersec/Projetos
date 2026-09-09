@@ -1,16 +1,15 @@
 # Net Analyzer
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Team-555)
+![Mode](https://img.shields.io/badge/Mode-Team-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N5_Especialista-red)
 ![Stack](https://img.shields.io/badge/Stack-Python%20%2F%20C%2B%2B-3776AB)
 
 > Analisador de tráfego de rede com duas implementações — Python (baseline) e C++ (variante avançada). Ambas capturam pacotes no nível do kernel, analisam cabeçalhos de protocolo e exibem estatísticas em tempo real.
 
 > [!NOTE]
-> **Sucessor de:** [`Port_Scanner`](../../Individual/c-Port_Scanner/README.md) — da descoberta de portas para a observação e interpretação de tráfego.
+> **Sucessor de:** [`Port_Scanner`](../../Individual/Port_Scanner/README.md) — da descoberta de portas para a observação e interpretação de tráfego.
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [/learn](.)._
 
 ## 🎯 Objective
 
@@ -31,29 +30,32 @@ Construir um analisador de tráfego de rede que captura pacotes, analisa cabeça
 > Este projeto combina captura de pacotes e análise de redes. Se você travar na base, estes recursos rápidos ajudam a avançar.
 
 - [Wireshark Tutorial for Beginners — NetworkChuck](https://www.youtube.com/watch?v=TkCSr30UojM) — captura e análise de pacotes prática
-- [C++ Packet Sniffing Tutorial](https://www.youtube.com/watch?v=RJmA26QJeCE) — exemplo prático de leitura de pacotes em C++
-- [Scapy Crash Course — Tech With Tim](https://www.youtube.com/watch?v=mlvzAPI40eY) — análise de rede com Python
+- [C++ Packet Sniffing Tutorial](https://youtu.be/5PPfy-nUWIM?si=dOLh2h3DyWHoPKfP) — exemplo prático de leitura de pacotes em C++
+- [Scapy - Null Byte](https://youtu.be/yD8qrP8sCDs?si=tndom-P9g1s9n6Oa) — análise de rede com Python
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Capturar pacotes de uma interface de rede
-- Analisar cabeçalhos de protocolo (IP, TCP, UDP, ICMP)
-- Exibir estatísticas em tempo real (total de pacotes, volume, distribuição de protocolos)
-- Identificar top talkers (IPs mais ativos)
-- Calcular largura de banda
-
-### Mínimo viável (MVP)
-
-- **Python:** capturar pacotes e exibir distribuição de protocolos em texto simples
+- Escolher uma implementação (Python ou C++) e concluir os **Desafios 1–3** da trilha correspondente:
+  - Python: suporte a IPv6, consulta OUI de MAC e alerta de limite de largura de banda em `python/learn/04-CHALLENGES.md`.
+  - C++: detalhamento de tipos ICMP, protocolos por cores na TUI e contador de taxa de pacotes em `cpp/learn/04-CHALLENGES.md`.
+- Manter a captura de pacotes, a análise de protocolos e as estatísticas em tempo real da implementação escolhida.
+- Demonstrar cada desafio com testes automatizados e uma captura reproduzível em interface autorizada.
 
 ### Stretch
 
-- **C++:** TUI interativa com FTXUI, parser polimórfico, engine de estatísticas com mutex
-- Filtros BPF
-- Exportação de gráficos (Matplotlib)
-- Análise offline de arquivos `.pcap`
+- **Python, Desafios 4–6 (intermediários):** rastreamento TCP, correlação DNS e histograma de distribuição de tamanho de pacote.
+- **C++, Desafios 4–6 (intermediários):** remontagem de fluxo TCP, log de consultas DNS e engine de regras de alerta.
+
+### Conquer
+
+- **Python, Desafios 7–9 (avançados):** geolocalização de IP, extração de certificado SSL/TLS e detecção de anomalias em tempo real.
+- **C++, Desafios 7–10 (avançados):** hex dump, baseline de anomalias, exportação PCAP e detecção de port scanning.
+- **Desempenho:** lidar com tráfego de 10 Gbps na trilha Python.
+- **Segurança:** criptografia PCAP e atendimento ao checklist de benchmark do CIS na trilha Python.
+- **Integração no mundo real (Python):** enviar estatísticas para SIEM e implantar como DaemonSet no Kubernetes.
+- Implementar ambas as trilhas, filtros BPF, exportação de gráficos e análise offline de `.pcap` quando fizer sentido para a equipe.
 
 > [!IMPORTANT]
 > **Python é o baseline obrigatório.** A implementação C++ é uma **variante avançada opcional** para membros veteranos. A equipe deve escolher **uma** implementação como entregável principal, ou ambas se houver capacidade.
@@ -65,7 +67,7 @@ Construir um analisador de tráfego de rede que captura pacotes, analisa cabeça
 - [ ] Estatísticas em tempo real exibidas (distribuição, top talkers, largura de banda)
 - [ ] Implementação Python (baseline) completa
 - [ ] Testes automatizados passam
-- [ ] Completar pelo menos os Desafios Nível 1–3 listados em `python/learn/04-CHALLENGES.md` ou `cpp/learn/04-CHALLENGES.md` conforme implementação escolhida
+- [ ] Completar os desafios definidos no MVP da trilha escolhida (Desafios 1–3)
 
 ## 🧪 Validation
 
@@ -165,13 +167,6 @@ Cada subpasta contém os módulos `00-OVERVIEW.md`, `01-CONCEPTS.md`, `02-ARCHIT
 - Kurose & Ross — https://gaia.cs.umass.edu/kurose_ross/index.php
 - libpcap / pcap docs — https://www.tcpdump.org/pcap.html
 - Scapy docs — https://scapy.readthedocs.io/en/latest/
-
-## 🧭 Next Step
-
-Após concluir `Net_Analyzer`, você terá completado o **Ramo C** (Network Security). Avance para the [Purple Capstone](../../../PurpleTeam/README.md) ou explore outro ramo Red/Blue.
-
-> [!NOTE]
-> **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
 
 ---
 

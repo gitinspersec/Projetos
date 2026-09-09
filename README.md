@@ -4,7 +4,7 @@
 > Repositório educacional dos grandes projetos do **Insper Sec**.
 
 > [!TIP]
-> Veja as [Instruções do Repositório](INSTRUCTIONS.md) para direcionamento.
+> Veja as [Instruções](INSTRUCTIONS.md) do Repositório para direcionamento.
 
 ---
 
@@ -57,16 +57,16 @@ O caminho mais natural depende do perfil do membro:
 
 ## 📊 Resumo dos projetos
 
-| Projeto                                                          | Modo       | Dificuldade   | Nível | Stack        |
-| ---------------------------------------------------------------- | ---------- | ------------- | ----- | ------------ |
-| [`Hash_ID`](./projects/Individual/a-Hash_ID/README.md)           | Individual | Iniciante     | N1    | Python       |
-| [`Headers`](./projects/Individual/b-Headers/README.md)           | Individual | Básico        | N2    | Python       |
-| [`Port_Scanner`](./projects/Individual/c-Port_Scanner/README.md) | Individual | Intermediário | N3    | C++          |
-| [`Pass_Vault`](./projects/Individual/d-Pass_Vault/README.md)     | Individual | Avançado      | N4    | Python       |
-| [`Hash_Cracker`](./projects/Team/a-Hash_Cracker/README.md)       | Team       | Avançado      | N4    | C++          |
-| [`V_Scanner`](./projects/Team/b-V_Scanner/README.md)             | Team       | Avançado      | N4    | Go           |
-| [`Net_Analyzer`](./projects/Team/c-Net_Analyzer/README.md)       | Team       | Especialista  | N5    | Python / C++ |
-| [`Secrets`](./projects/Team/d-Secrets/README.md)                 | Team       | Especialista  | N5    | Go           |
+| Projeto                                                        | Modo       | Dificuldade   | Nível | Stack        |
+| -------------------------------------------------------------- | ---------- | ------------- | ----- | ------------ |
+| [`Hash_ID`](./projects/Individual/Hash_ID/README.md)           | Individual | Iniciante     | N1    | Python       |
+| [`Headers`](./projects/Individual/Headers/README.md)           | Individual | Básico        | N2    | Python       |
+| [`Port_Scanner`](./projects/Individual/Port_Scanner/README.md) | Individual | Intermediário | N3    | C++          |
+| [`Pass_Vault`](./projects/Individual/Pass_Vault/README.md)     | Individual | Avançado      | N4    | Python       |
+| [`Hash_Cracker`](./projects/Team/Hash_Cracker/README.md)       | Team       | Avançado      | N4    | C++          |
+| [`V_Scanner`](./projects/Team/V_Scanner/README.md)             | Team       | Avançado      | N4    | Go           |
+| [`Net_Analyzer`](./projects/Team/Net_Analyzer/README.md)       | Team       | Especialista  | N5    | Python / C++ |
+| [`Secrets`](./projects/Team/Secrets/README.md)                 | Team       | Especialista  | N5    | Go           |
 
 ---
 

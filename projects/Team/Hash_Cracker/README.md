@@ -1,16 +1,15 @@
 # Hash Cracker
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Team-555)
+![Mode](https://img.shields.io/badge/Mode-Team-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 ![Stack](https://img.shields.io/badge/Stack-C%2B%2B-00599C)
 
 > Ferramenta multi-threaded de quebra de hash com ataques de dicionário, força bruta e mutação baseada em regras.
 
 > [!NOTE]
-> **Sucessor de:** [`Hash_ID`](../../Individual/a-Hash_ID/README.md) — identifique hashes primeiro, depois quebre-os.
+> **Sucessor de:** [`Hash_ID`](../../Individual/Hash_ID/README.md) — identifique hashes primeiro, depois quebre-os.
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [/learn](./learn/00-OVERVIEW.md)._
 
 ## 🎯 Objective
 
@@ -30,33 +29,26 @@ Construir uma ferramenta multi-threaded de quebra de hashes que suporta ataques 
 > [!NOTE]
 > Este projeto exige conforto com C++ e concorrência. Os módulos `learn/` cobrem o essencial, mas estes recursos ajudam a recuperar a base rapidamente.
 
-- [C++ Multithreading Tutorial — freeCodeCamp.org](https://www.youtube.com/watch?v=Z6RpuXlRytk) — explicação prática de threads e sincronização
-- [C++ Build System Tutorial | CMake — The Cherno](https://www.youtube.com/watch?v=BSwqK0mvb70) — introdução rápida ao CMake
-- [Hash Cracking Basics — Null Byte](https://www.youtube.com/watch?v=pmm6dseaT68) — conceitos práticos sobre ataques de dicionário e força bruta
+- [C++ Multithreading Tutorial — freeCodeCamp.org](https://youtu.be/gvQGKRlgop4?si=wtGQfEuwxbX5bIoT) — explicação prática de threads e sincronização
+- [C++ Build System Tutorial | CMake — The Cherno](https://youtu.be/5glH8dGoeCA?si=tCf6lnGwIYWTp1qx) — introdução rápida ao CMake
+- [Hash Cracking Basics — Null Byte](https://youtu.be/1yaHe7zWg1k?si=qGC1LDWNtKH-5aN2) — conceitos práticos sobre ataques de dicionário e força bruta
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Quebrar hashes MD5, SHA1, SHA256 e SHA512 com detecção automática
-- Ataques de dicionário usando wordlists mapeadas em memória
-- Ataques de força bruta com conjuntos de caracteres configuráveis
-- Mutações baseadas em regras (capitalização, leet speak, anexação de dígitos)
-- Multi-threading com particionamento de trabalho
-- Suporte a salt com posicionamento prefixo/sufixo
-- Exibição de progresso com velocidade, ETA e barra de progresso
-
-### Mínimo viável (MVP)
-
-- Quebrar MD5 e SHA256 com ataque de dicionário
-- Exibir resultado em texto simples
+- Concluir os **Desafios 1–3 (fáceis)** em `learn/04-CHALLENGES.md`: suporte a SHA3, quebra em lote e exibição colorida do tipo de hash.
+- Manter funcionando a quebra por dicionário, a detecção automática, o particionamento de trabalho e a execução multi-threaded que sustentam a base do projeto.
+- Demonstrar cada desafio com testes automatizados e uma execução usando as wordlists de demonstração.
 
 ### Stretch
 
-- Força bruta com particionamento de keyspace
-- Mutações baseadas em regras completas
-- Suporte a salt
-- Interface de terminal rica (velocidade, ETA, barra de progresso)
+- **Desafios 4–6 (intermediários):** arquivo de regras personalizado, retomada por arquivo de progresso e ataque de máscara.
+
+### Conquer
+
+- **Desafios 7–9 (avançados/especialista):** rainbow table, aceleração por GPU e quebra distribuída.
+- **Desafio 10 (desempenho):** suíte de benchmark comparando algoritmos, ataques e configurações de threads.
 
 ## ✅ Definition of Done
 
@@ -65,7 +57,7 @@ Construir uma ferramenta multi-threaded de quebra de hashes que suporta ataques 
 - [ ] Ataques de dicionário, brute force e regras funcionam
 - [ ] Multi-threading com particionamento de trabalho sem contenção
 - [ ] Testes automatizados passam
-- [ ] Completar pelo menos os Desafios Nível 1–3 listados em `learn/04-CHALLENGES.md` (ver `learn/04-CHALLENGES.md`)
+- [ ] Completar os desafios definidos no MVP (Desafios 1–3) em `learn/04-CHALLENGES.md`
 
 ## 🧪 Validation
 
@@ -147,13 +139,6 @@ hashcracker --hash 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d154
 - learncpp.com — https://www.learncpp.com/
 - Crypto 101 — https://www.crypto101.io/
 - C++ Concurrency patterns — artigos e capítulos relevantes (ver links indicados nos módulos `learn/`)
-
-## 🧭 Next Step
-
-Após concluir `Hash_Cracker`, você terá completado o **Ramo A** (Cryptography & Hashing). Avance para o [Purple Capstone](../../../PurpleTeam/README.md) ou explore outro ramo Red/Blue.
-
-> [!NOTE]
-> **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
 
 ---
 

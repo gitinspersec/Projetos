@@ -216,6 +216,6 @@ Monte um pequeno experimento:
   <img src="../assets/cat.gif" width="300" alt="Cat">
 </p>
 
-Agora você chegou ao final de seu projeto. Se conseguiu realizar os níveis 4 e 5, saiba que estará pronto para o que virá em seguida. **Parabéns!**
+Agora você chegou ao final de seu projeto. Se conseguiu realizar os níveis 2 ou 3+, saiba que estará pronto para o que virá em seguida. **Parabéns!**
 
 Minha recomendação agora é que você treine bem python e, se possível, _se arrisque em mais um projeto disponível_. Aliás, esse é o ponto mais forte de qualquer currículo ao lado das experiências: **os projetos**. Então, sem medo, quanto mais fizer, melhor.

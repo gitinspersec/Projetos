@@ -1,13 +1,12 @@
 # Pass Vault
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Individual-555)
+![Mode](https://img.shields.io/badge/Mode-Individual-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 ![Stack](https://img.shields.io/badge/Stack-Python-3776AB)
 
 > Gerenciador de senhas de linha de comando criptografado — derivação de chave Argon2id, criptografia autenticada AES-256-GCM, escritas atômicas e duráveis, bloqueio de arquivo consultivo (advisory file locking). Uma senha mestra protege cada credencial que você confia a ele.
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [/learn](./learn/00-Introdução.md)._
 
 > [!NOTE]
 > O projeto assume que não há experiência prévia com Python, mas avança mais rápido. O código-fonte é fortemente comentado como auxílio didático, a pasta `learn/` explica cada ideia criptográfica do zero, e cada recurso do Python é introduzido quando aparece pela primeira vez.
@@ -31,33 +30,26 @@ Construir um gerenciador de senhas de linha de comando que armazena credenciais 
 > [!NOTE]
 > Este projeto ensina criptografia aplicada e práticas de I/O nos módulos `learn/`. Se você tiver dúvidas sobre os fundamentos, estes recursos ajudam.
 
-- [Python Cryptography Tutorial — freeCodeCamp.org](https://www.youtube.com/watch?v=ro8BV1UUaS8) — uso prático de bibliotecas de criptografia em Python
-- [Argon2 Password Hashing Explained — YouTube](https://www.youtube.com/watch?v=wpvQ56Tq5z8) — entenda por que Argon2 é usado para senhas
-- [Diffie-Hellman, AES e hashing — HackerSploit](https://www.youtube.com/watch?v=Z6KQb7-ATVI) — visão geral de criptografia aplicada
+- [Python Cryptography Tutorial — freeCodeCamp.org](https://youtu.be/kb_scuDUHls?si=uNTS1JHybxxd_bqF) — uso prático de bibliotecas de criptografia em Python
+- [Password Storage Tier List](https://youtu.be/qgpsIBLvrGY?si=bXGNiS0lraiaP7ZZ) — entenda por que Argon2 é usado para senhas
+- [Key Exchange (Diffie-Hellman) - Computerphile](https://youtu.be/NmM9HA2MQGI?si=2S0oPa6cRwxg99q4) — visão geral de criptografia aplicada
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Armazenar credenciais em um único arquivo JSON criptografado em `~/.password-vault/vault.json` (modo `0600`)
-- Derivar chave AES de 32 bytes via Argon2id (parâmetros OWASP)
-- Criptografar o vault com AES-256-GCM
-- Escritas atômicas, duráveis e seguras para concorrência
-- Rotação de senha mestra
-- Gerador de senhas criptograficamente seguro
-- Comandos: `init`, `add`, `get`, `list`, `delete`, `gen`, `change-password`
-
-### Mínimo viável (MVP)
-
-- `init`, `add`, `get`, `list` funcionando com criptografia AES-GCM
-- Senha mestra protegendo o vault
+- Concluir os **Desafios de Nível 1 (1–4)** em `learn/04-Desafios.md`: `search`, `count`, timestamp de último uso e ocultação de senha com `--show`.
+- Manter o vault criptografado, os comandos básicos (`init`, `add`, `get`, `list`) e as garantias de senha mestra, escrita atômica, permissões e concorrência que formam a base do projeto.
+- Demonstrar cada desafio com testes automatizados e uma execução da CLI.
 
 ### Stretch
 
-- Rotação de senha mestra (`change-password`)
-- Parâmetros KDF armazenados no arquivo (vaults antigos permanecem legíveis)
-- Hierarquia de exceções tipadas
-- Painéis e tabelas coloridos com Rich
+- **Nível 2 (5–8):** export/import seguro, pontuação de força, cópia para a área de transferência e verificação opcional no `init`.
+
+### Conquer
+
+- **Nível 3 (9–12):** TOTP, atualização transparente do custo do KDF, backups versionados com restauração e UI web local.
+- **Nível 4 (13–15):** auditoria do modelo de ameaça de um gerenciador real, leitor do formato de vault em outra linguagem e modelagem de uma fraqueza deliberada.
 
 ## ✅ Definition of Done
 
@@ -145,7 +137,7 @@ just run -- get github
 
 ## 🧭 Next Step
 
-Após concluir `Pass_Vault`, avance para o projeto em equipe do mesmo ramo: [`Secrets`](../../Team/d-Secrets/README.md) — detecção de segredos expostos em bases de código e repositórios git.
+Após concluir `Pass_Vault`, avance para o projeto em equipe do mesmo ramo: [`Secrets`](../../Team/Secrets/README.md) — detecção de segredos expostos em bases de código e repositórios git.
 
 > [!NOTE]
 > **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.

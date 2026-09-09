@@ -1,13 +1,12 @@
 # Headers
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Individual-555)
+![Mode](https://img.shields.io/badge/Mode-Individual-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N2_B%C3%A1sico-green)
 ![Stack](https://img.shields.io/badge/Stack-Python-3776AB)
 
 > Faz uma única requisição a uma URL e avalia seus cabeçalhos de segurança HTTP com uma nota de A a F usando o mesmo modelo de rubrica ponderada do Mozilla Observatory.
 
-_Esta é uma visão geral rápida. A teoria de segurança, a arquitetura e os tutoriais completos estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida. A teoria de segurança, a arquitetura e os tutoriais completos estão nos [/learn](./learn/00-Introdução.md)._
 
 > [!NOTE]
 > Este projeto foi desenvolvido para alguém que nunca escreveu Python antes. O código-fonte é amplamente comentado como auxílio didático, a pasta `learn/` explica todos os conceitos do zero e toda a ferramenta está contida em um único arquivo legível.
@@ -30,30 +29,26 @@ Construir uma ferramenta de linha de comando que faz uma requisição HTTP a uma
 > Este projeto ensina Python e HTTP nos módulos `learn/`. Se você tiver dúvidas básicas, estes recursos práticos ajudam.
 
 - [Curso em Vídeo — Python para Iniciantes](https://www.cursoemvideo.com/course/curso-python-3/) — vídeo-aula passo a passo
-- [HTTP Security Headers Crash Course — Traversy Media](https://www.youtube.com/watch?v=Uj_WgdgL7X4) — visão prática do que cada header faz
+- [HTTP Security Headers Crash Course — Traversy Media](https://youtu.be/iYM2zFP3Zn0?si=cB1VHRk9zNEdBTtF) — visão prática do que cada header faz
 - [MDN Web Docs: HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) — referência oficial de headers e métodos
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Realizar uma requisição HTTPS e inspecionar os cabeçalhos da resposta
-- Avaliar seis cabeçalhos: `Strict-Transport-Security`, `Content-Security-Policy`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
-- Exibir cada resultado como `ok`, `weak` ou `missing` com explicação
-- Calcular pontuação de 0 a 100 e converter em nota de A a F
-- Seguir redirecionamentos e avaliar a URL final
-- Retornar códigos de saída significativos (0/1/2)
-
-### Mínimo viável (MVP)
-
-- Avaliar os 3 cabeçalhos mais importantes (HSTS, CSP, X-Content-Type-Options)
-- Exibir nota e pontuação em texto simples
+- Concluir os **Desafios 1–3 (aquecimento)** em `learn/04-Desafios.md`: adicionar um sétimo cabeçalho, criar a saída `--json` e adicionar a flag `--verbose`.
+- Preservar no fluxo principal a requisição HTTPS, a avaliação dos cabeçalhos, a pontuação/nota e os códigos de saída já definidos pelo projeto.
+- Demonstrar cada desafio com testes automatizados e uma execução da CLI.
 
 ### Stretch
 
-- Detectar valores sutilmente incorretos (ex: `max-age=0`)
-- Tabela colorida com Rich e recomendações
-- Integração com pipeline de CI via códigos de saída
+- **Desafios 4–7 (intermediários):** múltiplas URLs, limite mínimo de nota, cache em disco e aviso sobre redirecionamento HTTP/HTTPS.
+
+### Conquer
+
+- **Desafios 8–11 (avançados):** escaneamento assíncrono, análise estática de CSP, monitoramento contínuo e comparação entre User-Agents.
+- **Desafio 12 (especialista):** transformar o scanner em um serviço com API REST, incluindo validação contra SSRF, rate limiting, logs e deploy.
+- **Outras direções:** modo para daltônicos, importação de HAR, diff contra baseline e modo `--strict`.
 
 ## ✅ Definition of Done
 
@@ -143,12 +138,12 @@ just run -- https://example.com
 ## 🔗 Referências externas
 
 - MDN HTTP — https://developer.mozilla.org/en-US/docs/Web/HTTP
-- OWASP Cheat Sheet: Secure Headers — https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Security_Cheat_Sheet.html
+- OWASP Cheat Sheet: Secure Headers — https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html
 - HTTP Security Headers (Mozilla Observatory docs) — https://observatory.mozilla.org/
 
 ## 🧭 Next Step
 
-Após concluir `Headers`, avance para o projeto em equipe do mesmo ramo: [`V_Scanner`](../../Team/b-V_Scanner/README.md) — scanner de dependências Python em busca de vulnerabilidades (supply chain).
+Após concluir `Headers`, avance para o projeto em equipe do mesmo ramo: [`V_Scanner`](../../Team/V_Scanner/README.md) — scanner de dependências Python em busca de vulnerabilidades (supply chain).
 
 > [!NOTE]
 > **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.

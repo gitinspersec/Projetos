@@ -1,16 +1,15 @@
 # Secrets
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Team-555)
+![Mode](https://img.shields.io/badge/Mode-Team-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N5_Especialista-red)
 ![Stack](https://img.shields.io/badge/Stack-Go-00ADD8)
 
 > Scanner de segredos para bases de código e repositórios git, escrito em Go.
 
 > [!NOTE]
-> **Sucessor de:** [`Pass_Vault`](../../Individual/d-Pass_Vault/README.md) — do armazenamento seguro de segredos para a **detecção de segredos expostos**.
+> **Sucessor de:** [`Pass_Vault`](../../Individual/Pass_Vault/README.md) — do armazenamento seguro de segredos para a **detecção de segredos expostos**.
 
-_Esta é uma visão geral rápida. Teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida. Teoria de segurança, arquitetura e orientações completas estão nos [/learn](./learn/00-OVERVIEW.md)._
 
 ## 🎯 Objective
 
@@ -30,32 +29,26 @@ Construir um scanner que detecta segredos expostos (chaves, tokens, senhas, stri
 > [!NOTE]
 > Este projeto exige compreensão de detecção de segredos e análise de git. Se você travar na base, estes recursos ajudam a recuperar o fluxo.
 
-- [Secret Scanning Explained — Google Cloud](https://www.youtube.com/watch?v=2Z2EMDgkX0k) — por que secret scanning importa
-- [Git History and Secrets — freeCodeCamp.org](https://www.youtube.com/watch?v=UOc6-7Zl4cw) — varredura de repositórios e histórico
-- [How Have I Been Pwned works — Troy Hunt](https://www.youtube.com/watch?v=n7Xc-4IwJ58) — introdução a k-anonimato e vazamentos
+- [Secret Scanning Explained — Google Cloud](https://youtu.be/JIE89dneaGo?si=hNkQR7M0Ip8_4HhM) — por que secret scanning importa
+- [Git History and Secrets](https://youtu.be/Ala6PHlYjmw?si=w_RrDzD8LpnFuB9Z) — varredura de repositórios e histórico
+- [Have You Been Pwned? - Computerphile](https://youtu.be/hhUb5iknVJs?si=Q4wioSIQB7ao9naf) — introdução a k-anonimato e vazamentos
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- 150 regras de detecção (AWS, GitHub, GitLab, GCP, Azure, Slack, Stripe, Twilio, SendGrid, chaves SSH/PGP, senhas, strings de conexão, JWTs e mais)
-- Análise de entropia de Shannon para strings de alta aleatoriedade
-- Verificação de vazamento HIBP via protocolo de k-anonimato
-- Varredura de diretórios e histórico completo do git
-- Saída em tabelas coloridas, JSON ou SARIF v2.1.0
-- Defesa contra falsos positivos em 5 camadas
-
-### Mínimo viável (MVP)
-
-- Detectar segredos por regras em um diretório
-- Exibir resultados em texto simples
+- Concluir os **Desafios 1–3** em `learn/04-CHALLENGES.md`: hook de `pre-commit`, regras customizadas em YAML/TOML e cache incremental de escaneamento.
+- Manter a detecção por regras em diretórios, a análise de entropia, a saída de descobertas e os mecanismos de redução de falsos positivos que formam a base do projeto.
+- Demonstrar cada desafio com testes automatizados usando os arquivos de `testdata/`.
 
 ### Stretch
 
-- Verificação HIBP via k-anonimato
-- Varredura completa do histórico git
-- Saída SARIF v2.1.0
-- Pipeline concorrente com pools de workers limitados
+- **Desafios 4–5:** integração com `git blame` e escaneamento de múltiplos repositórios.
+
+### Conquer
+
+- **Desafios 6–7:** GitHub Action e sugestões de rotação de segredos.
+- **Desafio 8:** otimização da correspondência de keywords com Aho-Corasick.
 
 ## ✅ Definition of Done
 
@@ -64,7 +57,7 @@ Construir um scanner que detecta segredos expostos (chaves, tokens, senhas, stri
 - [ ] Regras de detecção cobrindo os principais provedores
 - [ ] Saída em terminal, JSON ou SARIF
 - [ ] Baixa taxa de falsos positivos (validação com testdata)
-- [ ] Completar pelo menos os Desafios Nível 1–3 listados em `learn/04-CHALLENGES.md` (ver `learn/04-CHALLENGES.md`)
+- [ ] Completar os desafios definidos no MVP (Desafios 1–3) em `learn/04-CHALLENGES.md`
 
 ## 🧪 Validation
 
@@ -160,13 +153,6 @@ portia scan .
 - HIBP API / k-anonimato — https://haveibeenpwned.com/API/v3
 - GitGuardian / TruffleHog guides — https://www.gitguardian.com/
 - Secret scanning research — artigos e guias indicados nos módulos `learn/`
-
-## 🧭 Next Step
-
-Após concluir `Secrets`, você terá completado o **Ramo D** (Secrets & Detection). Este projeto tem forte componente defensivo (detecção de exposição) e faz a ponte para a frente **Blue Team**. Avance para the [Purple Capstone](../../../PurpleTeam/README.md) ou explore projetos Blue.
-
-> [!NOTE]
-> **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
 
 ---
 

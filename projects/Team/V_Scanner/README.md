@@ -1,16 +1,15 @@
 # V_Scanner
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Team-555)
+![Mode](https://img.shields.io/badge/Mode-Team-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N4_Avan%C3%A7ado-orange)
 ![Stack](https://img.shields.io/badge/Stack-Go-00ADD8)
 
 > Atualizador de dependências Python e scanner de vulnerabilidades rápido escrito em Go.
 
 > [!NOTE]
-> **Sucessor de:** [`Headers`](../../Individual/b-Headers/README.md) — da inspeção de headers HTTP para a análise da cadeia de dependências (supply chain).
+> **Sucessor de:** [`Headers`](../../Individual/Headers/README.md) — da inspeção de headers HTTP para a análise da cadeia de dependências (supply chain).
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e orientações completas estão nos [/learn](./learn/00-OVERVIEW.md)._
 
 ## 🎯 Objective
 
@@ -32,30 +31,26 @@ Construir uma ferramenta em Go que escaneia dependências Python (`pyproject.tom
 
 - [Learn Go in 1 Hour — freeCodeCamp.org](https://www.youtube.com/watch?v=YS4e4q9oBaU) — visão geral rápida de Go
 - [Go CLI Tutorial — Tech With Tim](https://www.youtube.com/watch?v=ysEN5RaKOlA) — construção de ferramentas de linha de comando em Go
-- [Supply Chain Security Overview — OWASP](https://www.youtube.com/watch?v=5D0GKaNkr4A) — introdução prática ao problema de segurança de dependências
+- [Supply Chain Security Overview — OWASP](https://youtu.be/njm1nZlrR68?si=_TQy42Zon1iYbJNz) — introdução prática ao problema de segurança de dependências
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Escanear `pyproject.toml` e `requirements.txt` em busca de CVEs via OSV.dev
-- Atualizar todas as dependências Python para versões estáveis mais recentes
-- Consultas paralelas ao PyPI com cache local de ETag
-- Parsing completo de versões PEP 440 com filtragem de pre-releases
-- Atualizações de arquivos que preservam comentários e formatação
-- Configurável via `.angela.toml` ou `[tool.angela]` no `pyproject.toml`
-
-### Mínimo viável (MVP)
-
-- Escanear `requirements.txt` em busca de CVEs
-- Exibir vulnerabilidades encontradas em texto simples
+- Concluir os **Desafios 1–3 (fáceis)** em `learn/04-CHALLENGES.md`: severidade com cores, estatísticas de cache e saída `--json`.
+- Manter o escaneamento via OSV.dev, a leitura dos arquivos de dependências, a análise de versões e a saída de vulnerabilidades que formam a base do projeto.
+- Demonstrar cada desafio com testes automatizados e comandos reproduzíveis usando `testdata/`.
 
 ### Stretch
 
-- Atualização automática de dependências
-- Cache local de ETag para velocidade
-- Configuração via TOML
-- Integração com CI
+- **Desafios 4–6 (intermediários):** suporte a `requirements.in`, escaneamento de dependências transitivas e geração de SBOM.
+
+### Conquer
+
+- **Desafios 7–8 (avançados):** modo daemon de monitoramento contínuo e banco de dados de vulnerabilidades privado.
+- **Desempenho:** escanear mais de 10.000 pacotes com lotes concorrentes e/ou banco local.
+- **Segurança:** verificar assinaturas de pacotes e atender aos padrões do OWASP Dependency-Check.
+- **Integração no mundo real:** GitHub Security Advisories e implantação como função Lambda.
 
 ## ✅ Definition of Done
 
@@ -64,7 +59,7 @@ Construir uma ferramenta em Go que escaneia dependências Python (`pyproject.tom
 - [ ] Parsing PEP 440 correto com filtragem de pre-releases
 - [ ] Consultas paralelas ao PyPI com cache funcionando
 - [ ] Testes automatizados passam
-- [ ] Completar pelo menos os Desafios Nível 1–3 listados em `learn/04-CHALLENGES.md` (ver `learn/04-CHALLENGES.md`)
+- [ ] Completar os desafios definidos no MVP (Desafios 1–3) em `learn/04-CHALLENGES.md`
 
 ## 🧪 Validation
 
@@ -145,13 +140,6 @@ angela scan
 - Tour of Go — https://go.dev/tour/
 - OSV.dev docs — https://osv.dev/
 - PEP 440 — https://peps.python.org/pep-0440/
-
-## 🧭 Next Step
-
-Após concluir `V_Scanner`, você terá completado o **Ramo B** (Web & Supply Chain). Este projeto faz a ponte para a frente **Blue Team** (perfil defensivo de supply chain). Avance para o [Purple Capstone](../../../PurpleTeam/README.md) ou explore projetos Blue.
-
-> [!NOTE]
-> **Não é obrigatório** avançar imediatamente para o próximo projeto. Você pode trabalhar em múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
 
 ---
 

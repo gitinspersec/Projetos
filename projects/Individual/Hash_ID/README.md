@@ -1,13 +1,12 @@
 # Hash_ID
 
-![Team](https://img.shields.io/badge/Team-Red_Team-c62828)
-![Mode](https://img.shields.io/badge/Mode-Individual-555)
+![Mode](https://img.shields.io/badge/Mode-Individual-402)
 ![Difficulty](https://img.shields.io/badge/Difficulty-N1_Iniciante-brightgreen)
 ![Stack](https://img.shields.io/badge/Stack-Python-3776AB)
 
 > Identifique o algoritmo por trás de uma string de hash por seu prefixo, comprimento e conjunto de caracteres — o primeiro passo em qualquer fluxo de trabalho de quebra de senhas.
 
-_Esta é uma visão geral rápida — teoria de segurança, arquitetura e tutoriais completos estão nos [módulos de aprendizado](#learn)._
+_Esta é uma visão geral rápida — teoria de segurança, arquitetura e tutoriais completos estão em [/learn](./learn/00-Introdução.md)._
 
 > [!NOTE]
 > Esta ferramenta foi desenvolvida para alguém que nunca escreveu Python antes. O código-fonte é amplamente comentado como material de apoio ao aprendizado, a pasta `learn/` explica cada conceito do zero, e toda a ferramenta consiste em um único arquivo legível.
@@ -31,28 +30,25 @@ Construir uma ferramenta de linha de comando que identifica o algoritmo de hash 
 
 - [Curso em Vídeo — Python para Iniciantes](https://www.cursoemvideo.com/course/curso-python-3/) — vídeo-aula passo a passo
 - [Python Tutorial for Beginners — freeCodeCamp.org](https://www.youtube.com/watch?v=rfscVS0vtbw) — introdução prática a Python
-- [Hash functions explained — Computerphile](https://www.youtube.com/watch?v=TL4D7zGhjYU) — entenda hashes em 10 minutos
+- [Hash algorithms — Computerphile](https://youtu.be/b4b8ktEV4Bg?si=4KDOBMfntwpbWxkw) — entenda hashes em 10 minutos
 
 ## 🛠️ Scope
 
-### Obrigatório
+### MVP
 
-- Identificar ~30 formatos de hash por prefixo (`$2b$`, `$argon2id$`, `$apr1$`, `pbkdf2_sha256$`, `{SSHA}` e outros)
-- Identificar hashes hexadecimais comuns pelo comprimento (MD5, SHA-1, SHA-256, SHA-512, NTLM, MD4, RIPEMD, BLAKE2, SHA-3)
-- Reconhecer MySQL5, NetNTLMv1/v2 e DES crypt de 13 caracteres pelo formato
-- Retornar candidatos com níveis de confiança `high` / `medium` / `low` e justificativa
-- Códigos de saída limpos para scripts de shell
-
-### Mínimo viável (MVP)
-
-- Identificar os 5 hashes mais comuns (MD5, SHA-1, SHA-256, SHA-512, bcrypt)
-- Exibir o resultado em texto simples
+- **Desafios Nível 1 (1.1–1.3):** adicionar uma regra de prefixo, adicionar uma regra por comprimento hexadecimal e criar a saída `--json`.
+- **Desafios Nível 2 (2.1–2.3):** entrada por arquivo/stdin, dicas de modo do hashcat e reconhecimento de entradas que não são hashes.
+- Manter a identificação dos formatos existentes, os níveis de confiança e a justificativa funcionando enquanto esses desafios são implementados.
+- Demonstrar cada desafio com testes automatizados e uma execução da CLI.
 
 ### Stretch
 
-- Detectar entradas que não são hashes (JWTs, blobs em base64)
-- Tabela colorida com renderização avançada
-- Classificador com ML (ver `learn/04-Desafios.md`)
+- **Nível 3 (3.1–3.3):** identificação de múltiplos hashes, pontuação de confiança e estimativa de dificuldade de quebra.
+- **Nível 4 (4.1–4.3):** análise de dump real, comparação com ferramentas existentes e hook de `pre-commit`.
+
+### Conquer
+
+- **Nível 5 (5.1–5.2):** documentar as limitações estruturais do identificador e construir um classificador probabilístico com ML.
 
 ## ✅ Definition of Done
 
@@ -149,7 +145,7 @@ Nenhum compilador, biblioteca de sistema ou acesso à rede é necessário.
 
 ## 🧭 Next Step
 
-Após concluir `Hash_ID`, você pode avançar para o projeto em equipe do mesmo ramo: [`Hash_Cracker`](../../Team/a-Hash_Cracker/README.md) — quebra de hashes com ataques de dicionário, brute force e regras.
+Após concluir `Hash_ID`, você pode avançar para o projeto em equipe do mesmo ramo: [`Hash_Cracker`](../../Team/Hash_Cracker/README.md) — quebra de hashes com ataques de dicionário, brute force e regras.
 
 > [!NOTE]
 > **Não é obrigatório** avançar para o próximo projeto imediatamente. Você pode fazer múltiplos projetos primários em paralelo, respeitando as janelas de entrega do calendário.
