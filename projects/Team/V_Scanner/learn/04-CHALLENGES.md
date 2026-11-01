@@ -1,12 +1,25 @@
 # Desafios de Extensão
 
-Você construiu o projeto base. Agora torne-o seu estendendo-o com novos recursos.
+Os desafios estão organizados por dificuldade e mantêm sua numeração. Para a entrega final da trilha **Headers → V_Scanner**, haverá **um trio e uma dupla**. O projeto é um scanner de dependências Python implementado em Go.
 
-Estes desafios estão ordenados por dificuldade. Comece pelos mais fáceis para ganhar confiança e, em seguida, enfrente os mais difíceis quando quiser se aprofundar.
+**Base comum obrigatória:** desafios **1, 2 e 3**, preservando leitura de dependências, consulta ao OSV, análise de versões, cache e atualização de arquivos. Cada grupo mantém sua própria versão funcional, com testes das mudanças e demonstração reproduzível. As estatísticas devem usar contadores reais de hit/miss; JSON deve sair válido, sem cores ou progresso misturados ao documento.
+
+| Grupo | Foco do projeto final                  | Desafios obrigatórios      | Exigência principal                                                 |
+| ----- | -------------------------------------- | -------------------------- | ------------------------------------------------------------------- |
+| **1** | Mapa de dependências e inventário SBOM | **1–3 + 5 e 6**            | Grafo, vulnerabilidades transitivas e exportação; maior integração. |
+| **2** | Monitoramento de mudanças de risco     | **1–3 + 4 e recorte do 7** | Um arquivo, versões fixadas e monitor local periódico.              |
+
+**A entrega final é a base comum mais o escopo atribuído ao grupo.** Os recortes obrigatórios estão nos próprios desafios e delimitam o que será cobrado. As propostas mais amplas de resolvedor, daemon e integrações permanecem como aprofundamento opcional. Os números identificam os escopos.
+
+O desafio **8 (fontes privadas)**, as seções de desempenho, segurança e integração e as demandas do outro grupo são opcionais e não substituem as atribuídas. Cada ferramenta deve funcionar sem depender da implementação do outro grupo.
+
+**Na apresentação:** mostrem brevemente a base comum e concentrem a demonstração no diferencial, com um caso de sucesso, um caso de erro ou limite e as decisões tomadas. Separem o código fornecido do que foi desenvolvido e identifiquem os dados simulados.
 
 ## Desafios Fáceis
 
 ### Desafio 1: Adicionar Exibição de Severidade Codificada por Cores
+
+**Obrigatório para os dois grupos.**
 
 **O que construir:**
 Melhorar a saída de vulnerabilidades para mostrar a severidade com cores de fundo, não apenas a cor do texto.
@@ -31,6 +44,8 @@ Execute `angela scan --file testdata/pyproject.toml` e verifique se as vulnerabi
 
 ### Desafio 2: Mostrar Estatísticas de Hit do Cache
 
+**Obrigatório para os dois grupos.**
+
 **O que construir:**
 Adicionar um subcomando `stats` que mostre as taxas de hit/miss do cache, o tamanho do cache e as entradas mais antigas/recentes.
 
@@ -45,35 +60,36 @@ Ajuda os usuários a entender se o cache está funcionando. Se a taxa de hit for
 
 **Abordagem de implementação:**
 
-1.  **Adicionar comando** em `internal/cli/update.go`:
+1. **Adicionar comando** em `internal/cli/update.go`:
 
-    ```go
-    func newStatsCmd() *cobra.Command {
-        return &cobra.Command{
-            Use:   "stats",
-            Short: "Show cache statistics",
-            RunE: func(_ *cobra.Command, _ []string) error {
-                return runStats()
-            },
-        }
-    }
-    ```
+   ```go
+   func newStatsCmd() *cobra.Command {
+       return &cobra.Command{
+           Use:   "stats",
+           Short: "Show cache statistics",
+           RunE: func(_ *cobra.Command, _ []string) error {
+               return runStats()
+           },
+       }
+   }
+   ```
 
-2.  **Implementar runStats()** que:
-    - Liste todos os arquivos `.json` em `~/.angela/cache/`
-    - Analise cada um para obter o timestamp `cached_at`
-    - Calcule: total de entradas, tamanho total no disco, distribuição de idade
+2. **Implementar runStats()** que:
+   - Liste todos os arquivos `.json` em `~/.angela/cache/`
+   - Analise cada um para obter o timestamp `cached_at`
+   - Calcule: total de entradas, tamanho total no disco, distribuição de idade
 
-3.  **Formatar a saída** como:
-    ```
-    Cache Statistics
-    ────────────────────────────────────
-    Total entries:     42
-    Cache size:        1.2 MB
-    Oldest entry:      7 days ago (requests.json)
-    Newest entry:      5 minutes ago (flask.json)
-    Average age:       2 days 4 hours
-    ```
+3. **Formatar a saída** como:
+
+   ```text
+   Cache Statistics
+   ────────────────────────────────────
+   Total entries:     42
+   Cache size:        1.2 MB
+   Oldest entry:      7 days ago (requests.json)
+   Newest entry:      5 minutes ago (flask.json)
+   Average age:       2 days 4 hours
+   ```
 
 **Dicas:**
 
@@ -86,6 +102,8 @@ Ajuda os usuários a entender se o cache está funcionando. Se a taxa de hit for
 Execute a angela algumas vezes com pacotes diferentes, então `angela stats` deve mostrar o aumento na contagem de entradas.
 
 ### Desafio 3: Implementar Modo de Saída --json
+
+**Obrigatório para os dois grupos.**
 
 **O que construir:**
 Adicionar uma flag `--json` que exiba os resultados como JSON em vez da formatação bonita de terminal.
@@ -101,39 +119,40 @@ Pipelines de CI/CD precisam de saída legível por máquina. O GitHub Actions po
 
 **Abordagem de implementação:**
 
-1.  **Adicionar flag** aos comandos relevantes:
+1. **Adicionar flag** aos comandos relevantes:
 
-    ```go
-    var jsonOutput bool
-    cmd.Flags().BoolVar(&jsonOutput, "json", false, "output as JSON")
-    ```
+   ```go
+   var jsonOutput bool
+   cmd.Flags().BoolVar(&jsonOutput, "json", false, "output as JSON")
+   ```
 
-2.  **Criar structs JSON** em `pkg/types/types.go`:
+2. **Criar structs JSON** em `pkg/types/types.go`:
 
-    ```go
-    type JSONOutput struct {
-        Updates         []UpdateResult      `json:"updates"`
-        Vulnerabilities []VulnByPackage     `json:"vulnerabilities"`
-        Summary         ScanResult          `json:"summary"`
-    }
+   ```go
+   type JSONOutput struct {
+       Updates         []UpdateResult      `json:"updates"`
+       Vulnerabilities []VulnByPackage     `json:"vulnerabilities"`
+       Summary         ScanResult          `json:"summary"`
+   }
 
-    type VulnByPackage struct {
-        Package string          `json:"package"`
-        Vulns   []Vulnerability `json:"vulnerabilities"`
-    }
-    ```
+   type VulnByPackage struct {
+       Package string          `json:"package"`
+       Vulns   []Vulnerability `json:"vulnerabilities"`
+   }
+   ```
 
-3.  **Saída condicional** em `internal/cli/output.go`:
-    ```go
-    if jsonOutput {
-        data, _ := json.MarshalIndent(result, "", "  ")
-        fmt.Println(string(data))
-    } else {
-        PrintUpdates(result.Updates)
-        PrintVulnerabilities(result.Vulnerabilities)
-        PrintSummary(result.Summary, updated)
-    }
-    ```
+3. **Saída condicional** em `internal/cli/output.go`:
+
+   ```go
+   if jsonOutput {
+       data, _ := json.MarshalIndent(result, "", "  ")
+       fmt.Println(string(data))
+   } else {
+       PrintUpdates(result.Updates)
+       PrintVulnerabilities(result.Vulnerabilities)
+       PrintSummary(result.Summary, updated)
+   }
+   ```
 
 **Crédito extra:**
 Suportar `--json-compact` para saída em linha única (sem indentação) adequada para agregação de logs.
@@ -150,6 +169,12 @@ Deve retornar os nomes dos pacotes como um array JSON.
 
 ### Desafio 4: Adicionar Suporte a requirements.in
 
+**Obrigatório — Grupo 2 (2 integrantes), junto com o recorte do desafio 7.**
+
+**Recorte da entrega:** ler e atualizar `requirements.in`, preservando comentários e aproveitando o parser existente. Orientar a regeneração de arquivos produzidos pelo pip-tools após atualizar o `.in`. O monitor usa versões fixadas (`pacote==versão`); quando uma versão não estiver resolvida, informar análise incompleta em vez de presumir uma versão segura.
+
+**Demonstração própria:** alterar uma dependência do `.in`, mostrar a preservação dos comentários e usar o arquivo no monitor do desafio 7. Não é necessário implementar um resolvedor de versões.
+
 **O que construir:**
 Estender a angela para lidar com arquivos requirements.in (usados pelo pip-tools para compilação de dependências).
 
@@ -164,33 +189,34 @@ O workflow do pip-tools usa `requirements.in` para dependências de alto nível 
 
 **Abordagem de implementação:**
 
-1.  **Detectar tipo de arquivo** em `internal/cli/update.go:395-401`:
+1. **Detectar tipo de arquivo** em `internal/cli/update.go:395-401`:
 
-    ```go
-    func isRequirementsIn(path string) bool {
-        return strings.HasSuffix(strings.ToLower(path), ".in")
-    }
-    ```
+   ```go
+   func isRequirementsIn(path string) bool {
+       return strings.HasSuffix(strings.ToLower(path), ".in")
+   }
+   ```
 
-2.  **Reutilizar o parser** - requirements.in usa a mesma sintaxe que requirements.txt:
+2. **Reutilizar o parser** - requirements.in usa a mesma sintaxe que requirements.txt:
 
-    ```go
-    func parseDeps(file string) ([]types.Dependency, error) {
-        if isRequirementsTxt(file) || isRequirementsIn(file) {
-            return requirements.ParseFile(file)
-        }
-        return pyproject.ParseFile(file)
-    }
-    ```
+   ```go
+   func parseDeps(file string) ([]types.Dependency, error) {
+       if isRequirementsTxt(file) || isRequirementsIn(file) {
+           return requirements.ParseFile(file)
+       }
+       return pyproject.ParseFile(file)
+   }
+   ```
 
-3.  **Lidar com a atualização de forma diferente** - Após atualizar o requirements.in, sugerir a execução do pip-compile:
-    ```go
-    if updated && isRequirementsIn(file) {
-        fmt.Printf("\n  %s %s\n",
-            ui.HiYellow(ui.ArrowRight),
-            ui.HiBlackItalic("Run 'pip-compile' to regenerate requirements.txt"))
-    }
-    ```
+3. **Lidar com a atualização de forma diferente** - Após atualizar o requirements.in, sugerir a execução do pip-compile:
+
+   ```go
+   if updated && isRequirementsIn(file) {
+       fmt.Printf("\n  %s %s\n",
+           ui.HiYellow(ui.ArrowRight),
+           ui.HiBlackItalic("Run 'pip-compile' to regenerate requirements.txt"))
+   }
+   ```
 
 **Dicas:**
 
@@ -203,8 +229,19 @@ Crie um `test.in` com `requests>=2.28.0`, execute `angela update --file test.in`
 
 ### Desafio 5: Escanear Dependências Transitivas
 
+**Obrigatório — Grupo 1 (3 integrantes), junto com o desafio 6.**
+
+**Recorte da entrega:**
+
+- Obter o grafo de **um projeto com versões já resolvidas**, por ambiente instalado, arquivo de resolução ou resolvedor existente. Não é necessário construir PubGrub nem um resolvedor geral.
+- Distinguir dependências diretas e transitivas, percorrer pelo menos dois níveis, evitar repetição e tratar ciclos.
+- Consultar vulnerabilidades de todos os componentes e mostrar o caminho até um componente transitivo afetado. Versão ausente ou falha de consulta deve aparecer como análise incompleta.
+- Reutilizar o mesmo grafo na exportação do desafio 6. Testar ciclos, componentes repetidos e metadados ausentes.
+
+**Demonstração própria:** mostrar `aplicação → A → B → C`, com versões fixadas e um aviso simulado em B ou C, ausente das dependências diretas da aplicação. Exibir o caminho até o risco e o inventário exportado. As propostas de resolução própria abaixo são aprofundamento opcional.
+
 **O que construir:**
-Em vez de apenas escanear pacotes no pyproject.toml, resolva a árvore de dependências completa e escaneie tudo.
+Em vez de apenas escanear pacotes no pyproject.toml, obtenha a árvore de dependências com versões resolvidas e escaneie seus componentes. O recorte acima permite usar um resolvedor existente; criar um resolvedor é uma extensão opcional.
 
 **Por que isso é difícil:**
 A resolução de dependências é complexa. Você precisa:
@@ -222,26 +259,26 @@ A resolução de dependências é complexa. Você precisa:
 
 **Abordagem de implementação:**
 
-1.  **Fase de pesquisa**
-    - Leia a PEP 508 (especificadores de dependência)
-    - Estude o resolvedor do pip ou a implementação do Poetry
-    - Entenda o algoritmo PubGrub (https://github.com/pubgrub-rs/pubgrub)
+1. **Fase de pesquisa**
+   - Leia a PEP 508 (especificadores de dependência)
+   - Estude o resolvedor do pip ou a implementação do Poetry
+   - Entenda o algoritmo PubGrub (https://github.com/pubgrub-rs/pubgrub)
 
-2.  **Fase de design**
-    - Decida: PubGrub completo ou um resolvedor BFS simplificado?
-    - Para um projeto iniciante: BFS com "primeira versão compatível" é o suficiente
-    - Considere o desempenho: o cache de metadados de versão é crítico
+2. **Fase de design**
+   - Decida: PubGrub completo ou um resolvedor BFS simplificado?
+   - Para um projeto iniciante: BFS com "primeira versão compatível" é o suficiente
+   - Considere o desempenho: o cache de metadados de versão é crítico
 
-3.  **Fase de implementação**
-    - Comece com `func ResolveTree(deps []Dependency) ([]Dependency, error)`
-    - Para cada dependência, busque suas dependências nos metadados do PyPI
-    - Resolva recursivamente até que nenhum novo pacote seja encontrado
-    - Remova duplicatas: se um pacote aparecer múltiplas vezes, escolha a versão compatível mais alta
+3. **Fase de implementação**
+   - Comece com `func ResolveTree(deps []Dependency) ([]Dependency, error)`
+   - Para cada dependência, busque suas dependências nos metadados do PyPI
+   - Resolva recursivamente até que nenhum novo pacote seja encontrado
+   - Remova duplicatas: se um pacote aparecer múltiplas vezes, escolha a versão compatível mais alta
 
-4.  **Fase de teste**
-    - Teste com o flask (possui muitas dependências transitivas)
-    - Verifique se dependências circulares não causam loops infinitos
-    - Verifique se erros de requisitos conflitantes são exibidos claramente
+4. **Fase de teste**
+   - Teste com o flask (possui muitas dependências transitivas)
+   - Verifique se dependências circulares não causam loops infinitos
+   - Verifique se erros de requisitos conflitantes são exibidos claramente
 
 **Armadilhas:**
 
@@ -257,6 +294,12 @@ A resolução de dependências é complexa. Você precisa:
 
 ### Desafio 6: Gerar SBOM (Software Bill of Materials)
 
+**Obrigatório — Grupo 1 (3 integrantes), junto com o desafio 5.**
+
+**Recorte da entrega:** gerar **um formato**, CycloneDX ou SPDX, com versão do padrão declarada, componentes, versões, identificadores e relações do grafo. Incluir licença e hash de um artefato identificado quando disponíveis; explicitar ausências sem inventar metadados. Validar contra o esquema da versão e do formato escolhidos.
+
+**Demonstração própria:** exportar o grafo do desafio 5 e comprovar que a dependência transitiva afetada e suas relações aparecem no SBOM validado. Não são exigidos os dois formatos nem o suporte a `requirements.in` do outro grupo.
+
 **O que construir:**
 Adicionar o comando `angela sbom` que exporta um SBOM no formato CycloneDX ou SPDX.
 
@@ -271,15 +314,15 @@ Formatos SBOM são verbosos e exigem dados que a angela não coleta atualmente (
 
 **Mudanças de arquitetura necessárias:**
 
-```
+```text
 ┌─────────────────────┐
 │  angela sbom        │
 └──────────┬──────────┘
            │
            ▼
 ┌─────────────────────┐     ┌─────────────────────┐
-│  Coletar Metadados  │────▶│   PyPI JSON API    │
-│  - Licença          │     │   /pypi/{pkg}/json │
+│  Coletar Metadados  │────▶│   PyPI JSON API     │
+│  - Licença          │     │   /pypi/{pkg}/json  │
 │  - Autor            │     └─────────────────────┘
 │  - Hashes           │
 │  - Dependências     │
@@ -300,59 +343,60 @@ Formatos SBOM são verbosos e exigem dados que a angela não coleta atualmente (
 
 **Etapas de implementação:**
 
-1.  **Adicionar buscador de metadados do PyPI** em `internal/pypi/metadata.go`:
+1. **Adicionar buscador de metadados do PyPI** em `internal/pypi/metadata.go`:
 
-    ```go
-    type PackageMetadata struct {
-        Name         string
-        Version      string
-        License      string
-        Author       string
-        HomePage     string
-        SHA256Hash   string
-        Dependencies []string
-    }
+   ```go
+   type PackageMetadata struct {
+       Name         string
+       Version      string
+       License      string
+       Author       string
+       HomePage     string
+       SHA256Hash   string
+       Dependencies []string
+   }
 
-    func (c *Client) FetchMetadata(ctx context.Context, name, version string) (*PackageMetadata, error) {
-        url := fmt.Sprintf("https://pypi.org/pypi/%s/%s/json", name, version)
-        // ... requisição HTTP, parse do JSON ...
-    }
-    ```
+   func (c *Client) FetchMetadata(ctx context.Context, name, version string) (*PackageMetadata, error) {
+       url := fmt.Sprintf("https://pypi.org/pypi/%s/%s/json", name, version)
+       // ... requisição HTTP, parse do JSON ...
+   }
+   ```
 
-2.  **Criar gerador de SBOM** em `internal/sbom/cyclonedx.go`:
+2. **Criar gerador de SBOM** em `internal/sbom/cyclonedx.go`:
 
-    ```go
-    func GenerateCycloneDX(deps []Dependency, metadata map[string]*PackageMetadata) ([]byte, error) {
-        bom := CycloneDXBOM{
-            BOMFormat:    "CycloneDX",
-            SpecVersion:  "1.5",
-            Version:      1,
-            Components:   buildComponents(deps, metadata),
-            Dependencies: buildDependencies(deps),
-        }
-        return xml.MarshalIndent(bom, "", "  ")
-    }
-    ```
+   ```go
+   func GenerateCycloneDX(deps []Dependency, metadata map[string]*PackageMetadata) ([]byte, error) {
+       bom := CycloneDXBOM{
+           BOMFormat:    "CycloneDX",
+           SpecVersion:  "1.5",
+           Version:      1,
+           Components:   buildComponents(deps, metadata),
+           Dependencies: buildDependencies(deps),
+       }
+       return xml.MarshalIndent(bom, "", "  ")
+   }
+   ```
 
-3.  **Adicionar comando** em `internal/cli/update.go`:
-    ```go
-    func newSBOMCmd() *cobra.Command {
-        return &cobra.Command{
-            Use:   "sbom",
-            Short: "Generate Software Bill of Materials",
-            RunE:  runSBOM,
-        }
-    }
-    ```
+3. **Adicionar comando** em `internal/cli/update.go`:
+
+   ```go
+   func newSBOMCmd() *cobra.Command {
+       return &cobra.Command{
+           Use:   "sbom",
+           Short: "Generate Software Bill of Materials",
+           RunE:  runSBOM,
+       }
+   }
+   ```
 
 **Critérios de sucesso:**
 Seu SBOM deve:
 
 - [ ] Incluir todas as dependências diretas
-- [ ] Ter informações de licença para cada pacote
-- [ ] Fornecer hashes SHA256 para verificação
+- [ ] Incluir licenças disponíveis e explicitar metadados ausentes
+- [ ] Incluir hashes SHA256 de artefatos identificados quando disponíveis, sem inventar valores
 - [ ] Vincular dependências (A depende de B)
-- [ ] Validar contra o esquema CycloneDX
+- [ ] Validar contra o esquema da versão escolhida de CycloneDX ou SPDX
 
 **Teste se funciona:**
 
@@ -367,8 +411,23 @@ Deve passar na validação.
 
 ### Desafio 7: Implementar Monitoramento Contínuo
 
+**Obrigatório — Grupo 2 (2 integrantes), junto com o desafio 4.**
+
+**Recorte da entrega para a dupla:**
+
+- Implementar **um monitor em primeiro plano, com intervalo configurável**, para um arquivo `requirements.in` e dependências diretas com versões fixadas. Um ciclo por vez é suficiente.
+- Reler o arquivo e consultar vulnerabilidades a cada ciclo. Detectar tanto mudança de dependência quanto aviso novo com arquivo inalterado.
+- Persistir o último estado válido e comparar pacote, versão e identificador do aviso para registrar novidades e resoluções sem repetir alertas, inclusive após reinício.
+- Em timeout, erro da fonte, versão não resolvida ou arquivo inválido, registrar análise incompleta e preservar o estado válido. Uma falha não significa que um aviso foi resolvido.
+- Encerrar com segurança em interrupção. Atualizar dependências continua sendo uma ação explícita, separada do monitor.
+- Testar com relógio e respostas controlados, sem esperas longas nem dependência de um aviso real surgir durante a apresentação.
+
+**Demonstração própria:** mostrar estado inicial, aviso novo sem mudar o arquivo, repetição sem duplicar alerta e atualização para versão corrigida. Simular falha de consulta e reiniciar para comprovar preservação do estado. O foco é a mudança de risco ao longo do tempo.
+
+**Limite do recorte:** serviço de sistema, execução em background, watcher de arquivos, webhook, nuvem, grafo e SBOM são opcionais. A arquitetura e as fases abaixo são referências para a versão completa, não exigências adicionais para a dupla.
+
 **O que construir:**
-Um modo daemon que observa mudanças no pyproject.toml e verifica automaticamente por novas vulnerabilidades em segundo plano.
+Um monitor que verifica mudanças nas dependências e nos avisos de vulnerabilidade. Para a dupla, vale o loop periódico local descrito acima; o daemon em segundo plano é uma evolução opcional.
 
 **Tempo estimado:**
 20-30 horas
@@ -394,7 +453,7 @@ Antes de codificar, pense sobre:
 
 **Arquitetura de alto nível:**
 
-```
+```text
 ┌─────────────────────┐
 │   angela daemon     │
 └──────────┬──────────┘
@@ -474,29 +533,32 @@ go func() {
 
 **Desafios conhecidos:**
 
-1.  **Debouncing de eventos de arquivo**
-    - Problema: Editores de texto disparam múltiplos eventos de Write por salvamento
-    - Dica: Use um timer que reseta a cada evento. Só escaneie após 5 segundos de silêncio.
+1. **Debouncing de eventos de arquivo**
+   - Problema: Editores de texto disparam múltiplos eventos de Write por salvamento
+   - Dica: Use um timer que reseta a cada evento. Só escaneie após 5 segundos de silêncio.
 
-2.  **Detectando novas vulnerabilidades vs antigas**
-    - Problema: Como saber se a CVE-2024-1234 é nova ou já estava lá?
-    - Dica: Armazene os resultados do scan anterior em `daemon_state.json`. Compare o atual com o anterior.
+2. **Detectando novas vulnerabilidades vs antigas**
+   - Problema: Como saber se a CVE-2024-1234 é nova ou já estava lá?
+   - Dica: Armazene os resultados do scan anterior em `daemon_state.json`. Compare o atual com o anterior.
 
-3.  **Gerenciamento de ciclo de vida do daemon**
-    - Problema: Como o usuário inicia/para/reinicia o daemon?
-    - Dica: `angela daemon start --background` faz um fork e sai. `angela daemon stop` envia SIGTERM para o arquivo PID.
+3. **Gerenciamento de ciclo de vida do daemon**
+   - Problema: Como o usuário inicia/para/reinicia o daemon?
+   - Dica: `angela daemon start --background` faz um fork e sai. `angela daemon stop` envia SIGTERM para o arquivo PID.
 
 **Critérios de sucesso:**
-Seu daemon deve:
+No recorte obrigatório da dupla, o monitor deve:
 
-- [ ] Observar o pyproject.toml em busca de modificações
-- [ ] Escanear automaticamente após mudanças no arquivo (com debouncing)
-- [ ] Registrar novas vulnerabilidades conforme são descobertas
-- [ ] Desligar graciosamente no SIGTERM
-- [ ] Reiniciar sem perder o estado
-- [ ] Limitar a taxa para evitar sobrecarregar o OSV.dev
+- [ ] Reler o requirements.in a cada intervalo e perceber mudanças nas dependências
+- [ ] Detectar um novo aviso mesmo sem alteração no arquivo
+- [ ] Registrar avisos novos e resolvidos sem duplicar alertas
+- [ ] Encerrar com segurança em interrupção
+- [ ] Reiniciar sem perder o estado válido
+- [ ] Respeitar o intervalo configurado e executar apenas um ciclo por vez
+- [ ] Preservar o estado válido em falhas e indicar análise incompleta
 
 ### Desafio 8: Adicionar Suporte a Banco de Dados de Vulnerabilidades Privado
+
+**Opcional nesta entrega.** Não está atribuído a nenhum dos dois grupos.
 
 **O que construir:**
 Permitir que os usuários consultem bancos de dados de vulnerabilidades personalizados além do OSV.dev. Útil para empresas com avisos de segurança internos.
@@ -516,7 +578,7 @@ Você deve ter uma compreensão sólida do cliente OSV da angela e do design de 
 
 **Planejando este recurso:**
 
-**Decisão chave de design: definição da interface**
+#### Decisão chave de design: definição da interface
 
 ```go
 // pkg/vulnsource/source.go
@@ -694,7 +756,7 @@ O endpoint de lote do OSV.dev aceita no máximo 1000 pacotes por requisição. P
 
 **Abordagens de otimização:**
 
-**Abordagem 1: Requisições de Lote Concorrentes**
+#### Abordagem 1: Requisições de Lote Concorrentes
 
 ```go
 func (c *Client) ScanPackagesBatched(ctx context.Context, packages []PackageQuery) (map[string][]Vulnerability, error) {
@@ -735,7 +797,7 @@ func (c *Client) ScanPackagesBatched(ctx context.Context, packages []PackageQuer
 - Ganho: 5x mais rápido (5 lotes em paralelo)
 - Tradeoff: Maior uso de memória, uso mais agressivo da API
 
-**Abordagem 2: Cache Local do Banco de Dados de Vulnerabilidades**
+### Abordagem 2: Cache Local do Banco de Dados de Vulnerabilidades
 
 Baixar todo o banco de dados de vulnerabilidades do OSV.dev (é público) e consultar localmente:
 
@@ -801,9 +863,9 @@ Isso protege contra:
 
 **Implementação:**
 
-1.  **Baixar a chave pública do PyPI** de https://pypi.org/simple/.well-known/
-2.  **Verificar a assinatura da resposta** usando PGP ou similar
-3.  **Rejeitar dados não assinados ou assinados incorretamente**
+1. **Baixar a chave pública do PyPI** de https://pypi.org/simple/.well-known/
+2. **Verificar a assinatura da resposta** usando PGP ou similar
+3. **Rejeitar dados não assinados ou assinados incorretamente**
 
 Este é um desafio profundo que exige compreensão de:
 
@@ -827,42 +889,42 @@ Tornar a angela compatível com os requisitos do OWASP Dependency-Check para fer
 
 **Remediação:**
 
-1.  **Adicionar mapeamento CWE** - Dados do OSV incluem IDs CWE em alguns avisos. Extraia e exiba:
+1. **Adicionar mapeamento CWE** - Dados do OSV incluem IDs CWE em alguns avisos. Extraia e exiba:
 
-    ```
-    CVE-2023-32681 (CWE-113: Improper Neutralization of CRLF Sequences)
-    ```
+   ```text
+   CVE-2023-32681 (CWE-113: Improper Neutralization of CRLF Sequences)
+   ```
 
-2.  **Relatar pontuações CVSS** - Extraia do campo de severidade do OSV:
+2. **Relatar pontuações CVSS** - Extraia do campo de severidade do OSV:
 
-    ```
-    CVSS v3.1: 9.8 (CRITICAL)
-    Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-    ```
+   ```text
+   CVSS v3.1: 9.8 (CRITICAL)
+   Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+   ```
 
-3.  **Arquivo de supressão** - Suportar o formato XML do dependency-check:
+3. **Arquivo de supressão** - Suportar o formato XML do dependency-check:
 
-    ```xml
-    <suppressions>
-      <suppress>
-        <cve>CVE-2023-1234</cve>
-        <reason>False positive - doesn't affect our use case</reason>
-      </suppress>
-    </suppressions>
-    ```
+   ```xml
+   <suppressions>
+     <suppress>
+       <cve>CVE-2023-1234</cve>
+       <reason>False positive - doesn't affect our use case</reason>
+     </suppress>
+   </suppressions>
+   ```
 
-4.  **Gerar relatório HTML** - Coincidir com o formato de relatório do dependency-check para compatibilidade com ferramentas existentes.
+4. **Gerar relatório HTML** - Coincidir com o formato de relatório do dependency-check para compatibilidade com ferramentas existentes.
 
 ## Misture e Combine
 
 Combine recursos para projetos maiores:
 
-**Ideia de Projeto 1: Analisador de Cadeia de Suprimentos Completo**
+### Ideia de Projeto 1: Analisador de Cadeia de Suprimentos Completo
 
 - Combine o Desafio 5 (dependências transitivas) + Desafio 6 (geração de SBOM) + Desafio 8 (banco de dados de vulnerabilidades privado)
 - Resultado: Scanner de dependências de nível empresarial que mapeia toda a cadeia de suprimentos, gera SBOMs e consulta bancos de dados de vulnerabilidades internos.
 
-**Ideia de Projeto 2: Suíte de Integração CI/CD**
+### Ideia de Projeto 2: Suíte de Integração CI/CD
 
 - Combine o Desafio 3 (saída JSON) + Desafio 7 (modo daemon) + Desafio 4 (requirements.in)
 - Resultado: Sistema de monitoramento contínuo que se integra com GitHub Actions, fornece dados estruturados para anotações e suporta todos os formatos de dependência Python.
@@ -882,34 +944,34 @@ Fazer a angela buscar dados de vulnerabilidade da API GraphQL do GitHub além do
 
 **Plano de implementação:**
 
-1.  **Configurar cliente GraphQL**:
+1. **Configurar cliente GraphQL**:
 
-    ```go
-    import "github.com/shurcooL/graphql"
+   ```go
+   import "github.com/shurcooL/graphql"
 
-    client := graphql.NewClient(
-        "https://api.github.com/graphql",
-        oauth2Client,
-    )
-    ```
+   client := graphql.NewClient(
+       "https://api.github.com/graphql",
+       oauth2Client,
+   )
+   ```
 
-2.  **Consultar por avisos**:
+2. **Consultar por avisos**:
 
-    ```go
-    var query struct {
-        SecurityAdvisories struct {
-            Nodes []struct {
-                GHSAID      string
-                Severity    string
-                Description string
-                // ...
-            }
-        } `graphql:"securityAdvisories(ecosystem: PIP, first: 100)"`
-    }
-    ```
+   ```go
+   var query struct {
+       SecurityAdvisories struct {
+           Nodes []struct {
+               GHSAID      string
+               Severity    string
+               Description string
+               // ...
+           }
+       } `graphql:"securityAdvisories(ecosystem: PIP, first: 100)"`
+   }
+   ```
 
-3.  **Converter para o formato Vulnerability da angela**
-4.  **Mesclar com os resultados do OSV**
+3. **Converter para o formato Vulnerability da angela**
+4. **Mesclar com os resultados do OSV**
 
 **Cuidado com:**
 
@@ -930,34 +992,35 @@ Executar a angela como um AWS Lambda que escaneia repositórios em eventos de we
 
 **Etapas:**
 
-1.  **Conteinerizar a angela**:
+1. **Conteinerizar a angela**:
 
-    ```dockerfile
-    FROM golang:1.24 AS build
-    WORKDIR /app
-    COPY . .
-    RUN go build -o angela ./cmd/angela
+   ```dockerfile
+   FROM golang:1.24 AS build
+   WORKDIR /app
+   COPY . .
+   RUN go build -o angela ./cmd/angela
 
-    FROM public.ecr.aws/lambda/provided:al2
-    COPY --from=build /app/angela /var/task/angela
-    ENTRYPOINT ["/var/task/angela"]
-    ```
+   FROM public.ecr.aws/lambda/provided:al2
+   COPY --from=build /app/angela /var/task/angela
+   ENTRYPOINT ["/var/task/angela"]
+   ```
 
-2.  **Lidar com eventos Lambda**:
+2. **Lidar com eventos Lambda**:
 
-    ```go
-    func handler(ctx context.Context, event S3Event) error {
-        // Baixa pyproject.toml do S3
-        // Executa angela scan
-        // Faz o upload dos resultados de volta para o S3
-    }
-    ```
+   ```go
+   func handler(ctx context.Context, event S3Event) error {
+       // Baixa pyproject.toml do S3
+       // Executa angela scan
+       // Faz o upload dos resultados de volta para o S3
+   }
+   ```
 
-3.  **Implantar**:
-    ```bash
-    sam build
-    sam deploy --guided
-    ```
+3. **Implantar**:
+
+   ```bash
+   sam build
+   sam deploy --guided
+   ```
 
 **Checklist de produção:**
 
@@ -970,14 +1033,14 @@ Executar a angela como um AWS Lambda que escaneia repositórios em eventos de we
 
 Terminou um desafio? Compartilhe-o de volta:
 
-1.  **Faça um fork do repositório** em github.com/CarterPerez-dev/angela
-2.  **Implemente sua extensão** em uma branch de recurso (feature branch)
-3.  **Documente-a** - atualize a pasta learn/ com suas mudanças
-4.  **Envie um PR** com:
-    - Implementação
-    - Testes (mínimo de 80% de cobertura)
-    - Documentação
-    - Exemplo de uso
+1. **Faça um fork do repositório** em github.com/CarterPerez-dev/angela
+2. **Implemente sua extensão** em uma branch de recurso (feature branch)
+3. **Documente-a** - atualize a pasta learn/ com suas mudanças
+4. **Envie um PR** com:
+   - Implementação
+   - Testes (mínimo de 80% de cobertura)
+   - Documentação
+   - Exemplo de uso
 
 Boas extensões podem ser mescladas ao projeto principal.
 
@@ -1046,41 +1109,41 @@ Ensinar os outros é a melhor maneira de verificar se você entendeu.
 
 Travou em um desafio?
 
-1.  **Depure sistematicamente**
-    - O que você esperava que acontecesse?
-    - O que realmente aconteceu?
-    - Qual é a menor mudança de código que reproduz o problema?
+1. **Depure sistematicamente**
+   - O que você esperava que acontecesse?
+   - O que realmente aconteceu?
+   - Qual é a menor mudança de código que reproduz o problema?
 
-2.  **Leia o código existente**
-    - Como a angela lida com problemas semelhantes?
-    - O cliente OSV faz requisições concorrentes - você pode adaptar esse padrão?
+2. **Leia o código existente**
+   - Como a angela lida com problemas semelhantes?
+   - O cliente OSV faz requisições concorrentes - você pode adaptar esse padrão?
 
-3.  **Pesquise por problemas semelhantes**
-    - StackOverflow: `[go] http client retry logic`
-    - GitHub Issues: como outros projetos resolveram isso?
+3. **Pesquise por problemas semelhantes**
+   - StackOverflow: `[go] http client retry logic`
+   - GitHub Issues: como outros projetos resolveram isso?
 
-4.  **Peça ajuda**
-    - Abra uma Discussão no GitHub com:
-      - O que você está tentando construir
-      - O que você tentou até agora
-      - Mensagens de erro específicas ou comportamento inesperado
-      - Exemplo de código mínimo
+4. **Peça ajuda**
+   - Abra uma Discussão no GitHub com:
+     - O que você está tentando construir
+     - O que você tentou até agora
+     - Mensagens de erro específicas ou comportamento inesperado
+     - Exemplo de código mínimo
 
 Não apenas cole mensagens de erro. Explique seu entendimento do que _deveria_ acontecer e por que não está funcionando.
 
 ## Rastreador de Conclusão de Desafios
 
-Acompanhe seu progresso:
+Acompanhe seu progresso. Para esta entrega, são obrigatórios apenas os itens de todos os grupos e os atribuídos ao seu grupo, nos recortes definidos acima:
 
-- [ ] Desafio Fácil 1: Severidade Codificada por Cores
-- [ ] Desafio Fácil 2: Estatísticas de Cache
-- [ ] Desafio Fácil 3: Modo de Saída JSON
-- [ ] Desafio Intermediário 4: Suporte a requirements.in
-- [ ] Desafio Intermediário 5: Dependências Transitivas
-- [ ] Desafio Intermediário 6: Geração de SBOM
-- [ ] Desafio Avançado 7: Monitoramento Contínuo
-- [ ] Desafio Avançado 8: Banco de Dados de Vulnerabilidades Privado
-- [ ] Desempenho: mais de 10.000 Pacotes
-- [ ] Segurança: Verificação de Assinatura de Pacote
+- [ ] Desafio Fácil 1: Severidade Codificada por Cores — todos
+- [ ] Desafio Fácil 2: Estatísticas de Cache — todos
+- [ ] Desafio Fácil 3: Modo de Saída JSON — todos
+- [ ] Desafio Intermediário 4: Suporte a requirements.in — Grupo 2
+- [ ] Desafio Intermediário 5: Dependências Transitivas — Grupo 1
+- [ ] Desafio Intermediário 6: Geração de SBOM — Grupo 1
+- [ ] Desafio Avançado 7: Monitoramento Contínuo — Grupo 2, no recorte local
+- [ ] Desafio Avançado 8: Banco de Dados de Vulnerabilidades Privado — opcional
+- [ ] Desempenho: mais de 10.000 Pacotes — opcional
+- [ ] Segurança: Verificação de Assinatura de Pacote — opcional
 
 Completou todos eles? Você dominou o escaneamento de dependências. Hora de construir algo novo ou contribuir de volta para projetos de código aberto que precisam de melhores ferramentas de segurança.

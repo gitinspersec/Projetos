@@ -1,10 +1,26 @@
 # Desafios de Extensão
 
-Ideias para estender este projeto, ordenadas por dificuldade. Cada uma ensina uma habilidade diferente. Não sinta que precisa segui-las em ordem.
+Os desafios estão organizados por dificuldade e mantêm sua numeração. Para a entrega final da trilha **Hash_ID → Hash_Cracker**, os **três grupos de quatro integrantes** seguem a divisão abaixo.
+
+**Base comum obrigatória:** desafios **1, 2 e 3**, preservando os ataques, o progresso e a execução com múltiplas threads da base. Cada grupo mantém sua própria versão funcional, com testes das mudanças e demonstração reproduzível.
+
+| Grupo | Foco do projeto final                      | Desafios obrigatórios | Exigência principal                                                       |
+| ----- | ------------------------------------------ | --------------------- | ------------------------------------------------------------------------- |
+| **1** | Estratégias de busca com regras e máscaras | **1–3 + 4 e 6**       | Parsing e geração de candidatos; escopo intermediário.                    |
+| **2** | Execução retomável e medição de desempenho | **1–3 + 5 e 10**      | Consistência entre threads e experimentos; escopo intermediário/avançado. |
+| **3** | Pré-computação com rainbow tables          | **1–3 + 7**           | Cadeias, reduções e cobertura; maior aprofundamento conceitual.           |
+
+**A entrega final é a base comum mais o escopo atribuído ao grupo.** Os recortes obrigatórios estão nos próprios desafios. A quantidade de desafios não mede sozinha a dificuldade: o desafio 7 concentra uma implementação conceitualmente mais exigente. Os números identificam os escopos; a associação às equipes cabe ao professor.
+
+Os desafios **8 (GPU)** e **9 (distribuição em rede)** ficam como aprofundamentos opcionais. As demandas dos outros grupos também são opcionais e não substituem as atribuídas. Cada ferramenta deve funcionar sem depender da implementação de outro grupo.
+
+**Na apresentação:** mostrem brevemente a base comum e concentrem a demonstração no diferencial do grupo, com um caso de sucesso, um caso de erro ou limite e as decisões tomadas. Separem o que já existia do que foi desenvolvido.
 
 ## Desafios Fáceis
 
 ### 1. Adicionar Suporte a SHA3
+
+**Obrigatório para os três grupos.** Permitam escolher SHA3-256 e SHA3-512 explicitamente e não apresentem o comprimento do digest como identificação inequívoca do algoritmo.
 
 O SHA3 (Keccak) é uma família de hash completamente diferente do SHA2, baseada em uma construção de esponja (sponge construction) em vez de Merkle-Damgard. O OpenSSL o suporta através da mesma EVP API.
 
@@ -20,6 +36,8 @@ O SHA3 (Keccak) é uma família de hash completamente diferente do SHA2, baseada
 
 ### 2. Quebra de Hash em Lote (Batch)
 
+**Obrigatório para os três grupos.** Um algoritmo explicitamente escolhido por execução é suficiente. Informem alvos encontrados e não encontrados e tratem linhas inválidas; lotes com algoritmos mistos são opcionais.
+
 Atualmente, a ferramenta quebra um hash por vez. Dumps de violações reais têm milhões de hashes.
 
 **O que construir:** Aceitar um arquivo de hashes (um por linha) e quebrá-los todos em uma única execução. Relatar quais foram quebrados e quais não foram.
@@ -33,6 +51,8 @@ Atualmente, a ferramenta quebra um hash por vez. Dumps de violações reais têm
 - É assim que ferramentas de quebra reais funcionam. Quebrar 1000 hashes é apenas um pouco mais lento do que quebrar 1
 
 ### 3. Exibição Colorida do Tipo de Hash
+
+**Obrigatório para os três grupos.** Diferenciem algoritmo escolhido pelo usuário e hipótese de detecção automática; indiquem ambiguidades sem prometer certeza.
 
 Ao detectar automaticamente, mostre ao usuário qual tipo foi detectado antes do início da quebra.
 
@@ -49,11 +69,21 @@ Ao detectar automaticamente, mostre ao usuário qual tipo foi detectado antes do
 
 ### 4. Formato de Arquivo de Regras Personalizado
 
+**Obrigatório — Grupo 1 (4 integrantes), junto com o desafio 6.**
+
+**Recorte da entrega:**
+
+- Ler regras de um arquivo e integrá-las ao ataque de dicionário. Suportar `:`, `c`, `u`, `l`, `r`, `$X`, `^X` e `sXY`.
+- Aceitar composição de operações na mesma regra, com ordem documentada. Tratar comentários, linhas vazias e regras inválidas com indicação da linha.
+- Testar cada operação e pelo menos uma composição. Não é exigida compatibilidade completa com a linguagem do hashcat.
+
+**Demonstração própria:** partir de uma wordlist que contém `sec`, mas não `Sec42`, e recuperar o alvo sintético `Sec42` por regras. Comparar esse resultado com o dicionário puro e com a máscara do desafio 6, explicando quais candidatos cada estratégia gera.
+
 O conjunto de regras atual é fixo no código. Ferramentas de quebra reais como hashcat e john suportam arquivos de regras onde os usuários definem seus próprios padrões de mutação.
 
 **O que construir:** Um parser de arquivo de regras que lê regras de um arquivo de texto:
 
-```
+```text
 :           # não faz nada (tenta a palavra como está)
 c           # capitaliza a primeira letra
 u           # tudo em maiúsculas
@@ -75,6 +105,17 @@ se3         # substitui e por 3
 
 ### 5. Arquivo de Progresso para Quebra Resumível
 
+**Obrigatório — Grupo 2 (4 integrantes), junto com o desafio 10.**
+
+**Recorte da entrega:**
+
+- Implementar checkpoint periódico e `--resume` para **força bruta com múltiplas threads**. Retomar os outros modos é opcional.
+- Salvar alvo, algoritmo, parâmetros e trabalho concluído. Gravar em arquivo temporário e substituir o checkpoint de forma atômica.
+- Registrar intervalos concluídos ou uma fronteira segura. O maior índice visitado por uma thread não comprova que todas as anteriores terminaram; reprocessar uma parte é aceitável, pular candidatos não.
+- Recusar checkpoint corrompido ou incompatível com o alvo e os parâmetros. Testar cobertura em um espaço pequeno com mais de uma thread.
+
+**Demonstração própria:** interromper uma busca antes de encontrar o alvo, mostrar o estado salvo e retomar até o mesmo resultado de uma execução completa. Mostrar também a rejeição de um checkpoint incompatível e relacionar o trabalho preservado às medidas do desafio 10.
+
 Se você estiver fazendo brute force de uma senha de 8 caracteres e sua máquina travar em 60% do progresso, você perde todo esse trabalho.
 
 **O que construir:** Salvar periodicamente o progresso (índice atual, tempo decorrido, candidatos testados) em um arquivo. Ao reiniciar com `--resume`, continuar de onde parou.
@@ -83,23 +124,33 @@ Se você estiver fazendo brute force de uma senha de 8 caracteres e sua máquina
 
 **Dicas:**
 
-- Para brute force, salve o índice plano atual. Isso é tudo que você precisa
+- Para brute force sequencial, o índice plano indica a retomada. Com múltiplas threads, use intervalos concluídos ou uma fronteira segura, conforme o recorte acima
 - Para dicionário, salve o offset de bytes no arquivo
 - Escreva o checkpoint a cada N segundos, não a cada N candidatos (E/S é cara em relação ao hashing)
 
 ### 6. Ataque de Máscara (Mask Attack)
 
+**Obrigatório — Grupo 1 (4 integrantes), junto com o desafio 4.**
+
+**Recorte da entrega:**
+
+- Implementar `--mask` com `?l`, `?u`, `?d`, `?s`, `?a` e caracteres literais. Documentar os conjuntos e como representar um `?` literal.
+- Calcular o tamanho do espaço de busca, tratar máscara inválida e estouro numérico e gerar candidatos sob demanda.
+- Integrar a busca ao hashing, ao progresso e às threads. Testar que um domínio pequeno seja coberto sem omissões.
+
+**Demonstração própria:** a máscara `Sec?d?d` deve representar exatamente 100 candidatos e recuperar `Sec42`. Apresentar, junto com o desafio 4, uma tabela de informação prévia, candidatos e resultado para dicionário puro, regras e máscara. O foco é a escolha dos candidatos; um benchmark completo não é exigido deste grupo.
+
 Um ataque de máscara é um brute force mais inteligente. Em vez de tentar todos os caracteres em cada posição, você especifica um padrão: `?u?l?l?l?d?d?d?d` significa uma maiúscula, três minúsculas e quatro dígitos. Isso corresponde a senhas como `Pass1234`.
 
 **O que construir:** Uma flag `--mask` que aceita a sintaxe de máscara estilo hashcat:
 
-```
+```text
 ?l = minúscula    ?u = maiúscula
 ?d = dígito       ?s = especial
 ?a = tudo         A  = literal 'A'
 ```
 
-**O que você aprenderá:** O enorme ganho de eficiência de espaços de busca restritos. `?u?l?l?l?d?d?d?d` são 26*26*26*26*10*10*10*10 = 4,5 bilhões de candidatos. O brute force total de 8 caracteres do mesmo conjunto é de 218 trilhões. Isso é uma redução de 48.000x.
+**O que você aprenderá:** O enorme ganho de eficiência de espaços de busca restritos. `?u?l?l?l?d?d?d?d` são 26*26*26*26*10*10*10\*10 = 4,5 bilhões de candidatos. O brute force total de 8 caracteres do mesmo conjunto é de 218 trilhões. Isso é uma redução de 48.000x.
 
 **Dicas:**
 
@@ -110,6 +161,18 @@ Um ataque de máscara é um brute force mais inteligente. Em vez de tentar todos
 ## Desafios Avançados
 
 ### 7. Gerador e Consulta de Rainbow Table
+
+**Obrigatório — Grupo 3 (4 integrantes).**
+
+**Recorte da entrega:**
+
+- Implementar geração, gravação e consulta para **um algoritmo** e um domínio pequeno, por exemplo três caracteres de `a` a `f`.
+- Usar cadeias de hash e redução, com reduções determinísticas dependentes da posição. Armazenar pontos iniciais/finais e parâmetros; uma lista de todos os pares senha/hash não atende ao desafio.
+- Reconstruir cadeias e confirmar o candidato pelo hash. Tratar colisões, alvo ausente e parâmetros incompatíveis.
+- Medir geração, tamanho do arquivo e consulta separadamente e registrar a cobertura observada; não é necessário cobrir todo o domínio.
+- Explicar o compromisso entre pré-computação, armazenamento e consulta, incluindo por que salts diferentes limitam o reaproveitamento.
+
+**Demonstração própria:** desenhar uma cadeia, gerar a tabela uma vez e carregá-la em outra execução para recuperar dois alvos cobertos. Mostrar um alvo ausente e a cobertura em um conjunto conhecido. O foco é o trabalho reutilizado entre consultas; GPU e execução distribuída não são requisitos.
 
 Rainbow Tables são cadeias de hash pré-computadas que trocam espaço em disco por tempo de quebra. Em vez de fazer o hash de cada candidato em tempo de execução, você constrói uma tabela offline e faz uma consulta.
 
@@ -126,6 +189,8 @@ Rainbow Tables são cadeias de hash pré-computadas que trocam espaço em disco 
 - O artigo original de Martin Hellman de 1980 descreve o conceito. O artigo de Philippe Oechslin de 2003 introduz a melhoria "rainbow"
 
 ### 8. Quebra Acelerada por GPU com CUDA
+
+**Opcional nesta entrega.** Não está atribuído a nenhum dos três grupos e depende de hardware e ambiente compatíveis.
 
 A opção nuclear. Mover o loop de hash-e-comparação para a GPU.
 
@@ -145,6 +210,8 @@ A opção nuclear. Mover o loop de hash-e-comparação para a GPU.
 
 ### 9. Quebra Distribuída pela Rede
 
+**Opcional nesta entrega.** Não está atribuído a nenhum dos três grupos.
+
 Dividir o keyspace entre múltiplas máquinas. Um coordenador atribui intervalos de trabalho; os workers fazem o hash e reportam de volta.
 
 **O que construir:** Um coordenador que aceita conexões de nós workers, atribui intervalos de keyspace, coleta resultados e lida com falhas de workers (reatribuindo seu intervalo para outro worker).
@@ -163,11 +230,22 @@ Dividir o keyspace entre múltiplas máquinas. Um coordenador atribui intervalos
 
 ### 10. Suíte de Benchmark
 
+**Obrigatório — Grupo 2 (4 integrantes), junto com o desafio 5.**
+
+**Recorte da entrega:**
+
+- Implementar `--benchmark` com exportação CSV ou JSON e carga fixa, sem encerrar o experimento cedo por encontrar uma senha.
+- Comparar MD5 e SHA-256, dicionário e força bruta, com uma e duas threads. Registrar hardware, quantidade de candidatos e operações efetivamente executadas.
+- Fazer aquecimento e pelo menos cinco repetições por configuração; apresentar mediana e variação, tempo e taxa com unidade definida.
+- Medir separadamente o custo de ativar o checkpoint na mesma busca e relacioná-lo ao trabalho recuperado após interrupção. Não é obrigatório obter aceleração ou implementar uma otimização adicional.
+
+**Demonstração própria:** executar um benchmark curto e apresentar os dados completos em tabela ou gráfico. Explicar o efeito das threads e o custo de salvar progresso, junto com a retomada do desafio 5. Afinidade de CPU, comparação com GPU e cargas grandes são opcionais.
+
 Quão rápida é a ferramenta na realidade? Compare diferentes algoritmos de hash, configurações de threading e modos de ataque.
 
 **O que construir:** Um modo de benchmark (`--benchmark`) que executa testes padronizados e relata os resultados:
 
-```
+```text
 SHA256 dictionary (10K words):  2.4M h/s
 SHA256 brute force (6 chars):   2.1M h/s
 MD5 dictionary (10K words):     3.8M h/s
